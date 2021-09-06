@@ -119,7 +119,7 @@ function yack(fn, ...args) {
     ? fn(...args2)
     : (...args3) => foo(...args2, ...args3)
   }
-  
+
   return foo(...args)
 }
             </code>
