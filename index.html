@@ -12,38 +12,63 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css"
+    />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <div>
-          <img src="./img/ava.png" alt="Avatar" width="250" />
+        <div class="header-main">
+          <div>
+            <img src="./img/ava.png" alt="Avatar" width="250" />
+          </div>
+          <div>
+            <h1>Roman Fomin</h1>
+            <h3>Frontend developer</h3>
+            <ul class="contacts">
+              <li>
+                <a href="mailto:roman.a.fomin@mail.ru"
+                  ><i class="fas fa-envelope"></i> E-mail</a
+                >
+              </li>
+              <li>
+                <a href="https://github.com/livwvil"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </li>
+              <li>
+                <a href="https://t.me/roman_a_fomin"
+                  ><i class="fab fa-telegram"></i> Telegram</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <h1>Roman Fomin</h1>
-          <h3>Frontend developer</h3>
-          <ul class="contacts">
-            <li>
-              <a href="mailto:roman.a.fomin@mail.ru"
-                ><i class="fas fa-envelope"></i> E-mail</a
-              >
-            </li>
-            <li>
-              <a href="https://github.com/livwvil"
-                ><i class="fab fa-github"></i> GitHub</a
-              >
-            </li>
-            <li>
-              <a href="https://t.me/roman_a_fomin"
-                ><i class="fab fa-telegram"></i> Telegram</a
-              >
-            </li>
-          </ul>
+        <div class="header-nav">
+          <div class="header-nav-burger">
+            <span></span>
+          </div>
+          <nav class="header-nav-menu">
+            <ul class="header-nav-menu-list">
+              <li><a href="#about">About myself</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#code">Code example</a></li>
+              <li><a href="#experience">Experience</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="#languages">Languages</a></li>
+            </ul>
+          </nav>
         </div>
       </header>
       <main>
         <section class="about">
-          <h2>About myself</h2>
+          <h2 id="about">About myself</h2>
           <p>
             I have been doing commercial software development for two years now.
             I'm always looking for self-improvement opportunities, so now I'm
@@ -51,9 +76,9 @@
             help me learn quickly.
           </p>
         </section>
-        <section class="skills">
-          <h2>Skills</h2>
-          <ul>
+        <section>
+          <h2 id="skills">Skills</h2>
+          <ul class="skills">
             <li>HTML5</li>
             <li>CSS3</li>
             <li>JS</li>
@@ -80,17 +105,28 @@
           </ul>
         </section>
         <section class="code">
-          <h2>Code example</h2>
+          <h2 id="code">Code example</h2>
+          <a
+            class="kata-ref"
+            href="https://www.codewars.com/kata/55f91566e0d2317066000057"
+            >YACK (Yet Another Currying Kata)</a
+          >
           <pre>
             <code>
-function arrayDiff(a, b) {
-    return a.reduce((acc, val) => b.includes(val) ? acc : [...acc, val], [])
+function yack(fn, ...args) {
+  let foo = (...args2) => {
+    return args2.length >= fn.length
+    ? fn(...args2)
+    : (...args3) => foo(...args2, ...args3)
+  }
+  
+  return foo(...args)
 }
             </code>
             </pre>
         </section>
         <section class="experience">
-          <h2>Experience</h2>
+          <h2 id="experience">Experience</h2>
           <p>
             For two years I have been working as a software engineer at the
             Russian research and production enterprise RADIUS Avtomatika LLC.
@@ -102,7 +138,7 @@ function arrayDiff(a, b) {
           </p>
         </section>
         <section class="education">
-          <h2>Education</h2>
+          <h2 id="education">Education</h2>
           <p>
             In 2019, I graduated with a Bachelor's degree in Applied Mathematics
             and Computer Science, and in 2021 I graduated with a Master's degree
@@ -110,27 +146,40 @@ function arrayDiff(a, b) {
           </p>
         </section>
         <section class="languages">
-          <h2>Languages</h2>
+          <h2 id="languages">Languages</h2>
           <ul>
-            <li>Russian</li>
-            <li>English (approximately B1)</li>
+            <li>Russian (native)</li>
+            <li>English (B1)</li>
           </ul>
         </section>
       </main>
       <footer>
-        <a class="footer-github" href="https://github.com/livwvil">
+        <a class="footer-github-ref" href="https://github.com/livwvil">
           <i class="fab fa-github"></i>
         </a>
-        <span>2021</span>
+        <h5 class="copyright">© R.A. Fomin, 2021</h5>
         <a href="https://rs.school/js/">
           <img
-            class="filter-rs-logo"
-            src="https://rs.school/images/rs_school_js.svg"
+            class="rs-logo"
+            src="./img/rs_school_js.svg"
             width="100"
             alt="RS School logo"
           />
         </a>
       </footer>
     </div>
+    <script>
+      document
+        .querySelector(".header-nav-burger")
+        .addEventListener("click", function () {
+          let burgerClasses =
+            document.querySelector(".header-nav-burger").classList;
+          let menuClasses = document.querySelector(
+            ".header-nav-menu-list"
+          ).classList;
+          burgerClasses.toggle("active");
+          menuClasses.toggle("active");
+        });
+    </script>
   </body>
 </html>
