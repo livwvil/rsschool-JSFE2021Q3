@@ -3,112 +3,81 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
-const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === "dev";
 const isProd = !isDev;
-const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const SRC = path.resolve(__dirname, "./src");
 
-const optimization = () => {
-  const conf = {
+module.exports = {
+  entry: {
+    main: `${SRC}/ts/index.ts`,
+  },
+  output: {
+    filename: isDev ? "[name].js" : "[name]-[hash].js",
+    path: path.resolve(__dirname, "./dist"),
+    // assetModuleFilename: "assets/[hash][ext]", for imports inside scripts
+  },
+  devtool: isDev ? "inline-source-map" : false,
+  optimization: {
     splitChunks: {
       chunks: "all",
     },
-  };
-
-  if (isProd) {
-    conf.minimizer = [
-      new OptimizeCssAssetsWebpackPlugin(),
-      new TerserWebpackPlugin(),
-    ];
-  }
-  return conf;
-};
-
-module.exports = {
-  context: path.resolve(__dirname, "src"),
-  entry: {
-    main: ["@babel/polyfill", "./ts/index.ts"],
   },
-  output: {
-    filename: filename("js"),
-    path: path.resolve(__dirname, "dist"),
+  ...(isDev
+    ? {
+        devServer: {
+          open: true,
+          port: 5050,
+          hot: isDev,
+        },
+      }
+    : {}),
+  resolve: {
+    extensions: [".js", ".ts"],
   },
-  optimization: optimization(),
-  devServer: {
-    port: 5050,
-    hot: isDev,
+  module: {
+    rules: [
+      {
+        test: /\.[tj]s$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      // {
+      //   test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+      //   type: 'asset/resource',
+      // },
+      // {
+      //   test: /\.(woff(2)?|eot|ttf|otf)$/i,
+      //   type: 'asset/resource',
+      // },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+    ],
   },
-  devtool: isDev ? "source-map" : undefined,
   plugins: [
+    new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
-      template: "./index.html",
+      template: `${SRC}/index.html`,
       minify: {
         collapseWhitespace: isProd,
       },
     }),
-    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: isDev ? "[name].css" : "[name]-[hash].css",
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "./src/favicon.ico"),
-          to: path.resolve(__dirname, "dist"),
+          from: path.resolve(__dirname, "./src/assets/"),
+          to: path.resolve(__dirname, "./dist/assets/"),
         },
       ],
     }),
-    new MiniCssExtractPlugin({
-      filename: filename("css"),
-    }),
-    new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"],
-    }),
   ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(ts|js)x?$/i,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-typescript"],
-          },
-        },
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: [
-          /*isDev ? 'style-loader' : */ MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader",
-        ],
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: ["file-loader"],
-      },
-      {
-        test: /\.(ttf|woff|woff2|eot)$/,
-        use: ["file-loader"],
-      },
-    ],
-  },
 };
