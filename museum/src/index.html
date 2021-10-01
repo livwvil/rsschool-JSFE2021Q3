@@ -8,7 +8,226 @@
     <link rel="icon" href="./assets/favicon.ico" type="image/ico" />
   </head>
   <body>
-    <header class="shader">
+    <section class="modal-buy active">
+      <div class="modal-content-wrapper">
+        <div class="close-btn-wrapper">
+          <img class="close-btn" src="./assets/svg/close.svg" alt="" />
+        </div>
+        <div class="modal-content">
+          <form class="deal-wrapper" action="javascript:void(0);">
+            <div class="user-info">
+              <div class="logo-wrapper">
+                <img src="./assets/svg/logo_buy_tickets.svg" alt="" />
+                <h2>Booking&nbsp;Tickets</h2>
+                <h4>Tour to Louvre</h4>
+              </div>
+              <div class="date-time">
+                <div class="custom-select">
+                  <img class="icon" src="./assets/svg/icon_date.svg" alt="" />
+                  <img
+                    class="arrow"
+                    src="./assets/svg/icon_arrow.svg"
+                    alt=""
+                    onmouseover="this.nextElementSibling.focus()"
+                  />
+                  <input
+                    type="text"
+                    name="date"
+                    placeholder="Date"
+                    onfocus="(this.type='date')"
+                    onblur="(this.type='text')"
+                  />
+                </div>
+                <div class="custom-select">
+                  <img class="icon" src="./assets/svg/icon_time.svg" alt="" />
+                  <img
+                    class="arrow"
+                    src="./assets/svg/icon_arrow.svg"
+                    alt=""
+                    onmouseover="this.nextElementSibling.focus()"
+                  />
+                  <input
+                    type="text"
+                    name="time"
+                    placeholder="Time"
+                    onfocus="(this.type='time')"
+                    onblur="(this.type='text')"
+                  />
+                </div>
+              </div>
+              <div class="custom-input">
+                <img class="icon" src="./assets/svg/icon_name.svg" alt="" />
+                <input type="text" name="name" placeholder="Name" id="" />
+              </div>
+              <div class="custom-input">
+                <img class="icon" src="./assets/svg/icon_email.svg" alt="" />
+                <input type="email" name="email" placeholder="E-mail" id="" />
+              </div>
+              <div class="custom-input">
+                <img class="icon" src="./assets/svg/icon_tel.svg" alt="" />
+                <input type="tel" name="phone" placeholder="Phone" id="" />
+              </div>
+              <div class="custom-select">
+                <img class="icon" src="./assets/svg/icon_ballot.svg" alt="" />
+                <img class="arrow" src="./assets/svg/icon_arrow.svg" alt="" />
+                <select name="tt">
+                  <option value disabled selected hidden>Ticket Type</option>
+                  <option class="ticket_option" value="1">
+                    Permanent exhibition
+                  </option>
+                  <option class="ticket_option" value="2">
+                    Temporary exhibition
+                  </option>
+                  <option class="ticket_option" value="3">
+                    Combined Admission
+                  </option>
+                </select>
+              </div>
+              <div class="amount-wrapper">
+                <h3>Entry Ticket</h3>
+                <div class="category">
+                  <label for="basic">Basic 18+ (20 €)</label>
+                  <div class="custom-btn2">
+                    <button
+                      type="button"
+                      onclick="this.nextElementSibling.stepDown()"
+                    >
+                      –
+                    </button>
+                    <input
+                      class="number"
+                      type="number"
+                      name="basic"
+                      id="basic"
+                      min="0"
+                      max="20"
+                      value="1"
+                    />
+                    <button
+                      type="button"
+                      onclick="this.previousElementSibling.stepUp()"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="category">
+                  <label for="senior">Senior 65+ (10 €)</label>
+                  <div class="custom-btn2">
+                    <button
+                      type="button"
+                      onclick="this.nextElementSibling.stepDown()"
+                    >
+                      –
+                    </button>
+                    <input
+                      class="number"
+                      type="number"
+                      name="senior"
+                      id="senior"
+                      min="0"
+                      max="20"
+                      value="1"
+                    />
+                    <button
+                      type="button"
+                      onclick="this.previousElementSibling.stepUp()"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ticket-info">
+              <h3>Overview</h3>
+              <h4>Tour to Louvre</h4>
+              <img src="./assets/img/ticket.png" alt="" />
+              <div class="text">
+                <img src="./assets/svg/icon_date.svg" alt="" />
+                <span>Friday, August 19</span>
+              </div>
+              <div class="text">
+                <img src="./assets/svg/icon_time.svg" alt="" />
+                <span>16 : 30</span>
+              </div>
+              <div class="text">
+                <img src="./assets/svg/icon_check_circle_outline.svg" alt="" />
+                <span>Temporary exhibition</span>
+              </div>
+              <div class="price">
+                <div class="price-basic">
+                  <div class="big-text">
+                    <span class="amount">2</span>
+                    <span class="type">Basic (20 €)</span>
+                  </div>
+                  <span class="calculated-price">40 €</span>
+                </div>
+                <div class="price-senior">
+                  <div class="big-text">
+                    <span class="amount">2</span>
+                    <span class="type">Senior (10 €)</span>
+                  </div>
+                  <span class="calculated-price">20 €</span>
+                </div>
+              </div>
+              <hr />
+              <div class="total-price">
+                <h3>Total:</h3>
+                <span>60 €</span>
+              </div>
+              <div class="credit-card">
+                <div class="card-side front">
+                  <label>Card number</label>
+                  <input
+                    class="card-number"
+                    type="number"
+                    name="card-number"
+                    id=""
+                  />
+                  <label>Expiration date</label>
+                  <div class="exp-date">
+                    <input
+                      class="exp-date-month"
+                      type="number"
+                      name="exp-month"
+                      id=""
+                    />
+                    <input
+                      class="exp-date-year"
+                      type="number"
+                      name="exp-year"
+                      id=""
+                    />
+                  </div>
+                  <label>Cardholder name</label>
+                  <input
+                    class="cardholder-name"
+                    type="number"
+                    name="cardholder-name"
+                    id=""
+                  />
+                  <div class="bank-logos">
+                    <img src="./assets/img/Visa.png" alt="" />
+                    <img src="./assets/img/Mastercard.png" alt="" />
+                  </div>
+                </div>
+                <div class="card-side back">
+                  <div class="magnet-field"></div>
+                  <label class="tip1"> CVC/CVV </label>
+                  <input class="cvc-cvv" type="number" name="cvc-cvv" id="" />
+                  <label class="tip2">
+                    The last<br />3 or 4 digits<br />on back<br />of the card
+                  </label>
+                </div>
+              </div>
+              <button class="book-button">Book</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- <header class="shader">
       <div class="align-container">
         <div class="header-content-wrapper">
           <div class="logo-container">
@@ -476,11 +695,21 @@
             </nav>
           </div>
           <div class="social">
-            <a href="https://www.youtube.com/user/louvre"><img src="./assets/svg/Youtube.svg" alt="" /></a>
-            <a href="https://www.instagram.com/museelouvre/"><img src="./assets/svg/Instagram.svg" alt="" /></a>
-            <a href="https://www.facebook.com/museedulouvre"><img src="./assets/svg/Facebook.svg" alt="" /></a>
-            <a href="http://twitter.com/museelouvre"><img src="./assets/svg/Twitter.svg" alt="" /></a>
-            <a href="https://www.pinterest.fr/museedulouvre/"><img src="./assets/svg/Pinterest.svg" alt="" /></a>
+            <a href="https://www.youtube.com/user/louvre"
+              ><img src="./assets/svg/Youtube.svg" alt=""
+            /></a>
+            <a href="https://www.instagram.com/museelouvre/"
+              ><img src="./assets/svg/Instagram.svg" alt=""
+            /></a>
+            <a href="https://www.facebook.com/museedulouvre"
+              ><img src="./assets/svg/Facebook.svg" alt=""
+            /></a>
+            <a href="http://twitter.com/museelouvre"
+              ><img src="./assets/svg/Twitter.svg" alt=""
+            /></a>
+            <a href="https://www.pinterest.fr/museedulouvre/"
+              ><img src="./assets/svg/Pinterest.svg" alt=""
+            /></a>
           </div>
         </div>
         <hr />
@@ -490,6 +719,6 @@
           <span>Username</span>
         </div>
       </div>
-    </footer>
+    </footer> -->
   </body>
 </html>
