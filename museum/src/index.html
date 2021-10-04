@@ -8,7 +8,7 @@
     <link rel="icon" href="./assets/favicon.ico" type="image/ico" />
   </head>
   <body>
-    <section class="modal-buy active">
+    <section class="modal-buy">
       <div class="modal-content-wrapper">
         <div class="close-btn-wrapper">
           <img class="close-btn" src="./assets/svg/close.svg" alt="" />
@@ -111,7 +111,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="category">
+                <div class="category last">
                   <label for="senior">Senior 65+ (10 €)</label>
                   <div class="custom-btn2">
                     <button
@@ -140,94 +140,96 @@
               </div>
             </div>
             <div class="ticket-info">
-              <h3>Overview</h3>
-              <h4>Tour to Louvre</h4>
-              <img src="./assets/img/ticket.png" alt="" />
-              <div class="text">
-                <img src="./assets/svg/icon_date.svg" alt="" />
-                <span>Friday, August 19</span>
-              </div>
-              <div class="text">
-                <img src="./assets/svg/icon_time.svg" alt="" />
-                <span>16 : 30</span>
-              </div>
-              <div class="text">
-                <img src="./assets/svg/icon_check_circle_outline.svg" alt="" />
-                <span>Temporary exhibition</span>
-              </div>
-              <div class="price">
-                <div class="price-basic">
-                  <div class="big-text">
-                    <span class="amount">2</span>
-                    <span class="type">Basic (20 €)</span>
-                  </div>
-                  <span class="calculated-price">40 €</span>
+              <div class="ticket-info-wrapper">
+                <h3>Overview</h3>
+                <h4>Tour to Louvre</h4>
+                <img src="./assets/img/ticket.png" alt="" />
+                <div class="text">
+                  <img src="./assets/svg/icon_date.svg" alt="" />
+                  <span>Friday, August 19</span>
                 </div>
-                <div class="price-senior">
-                  <div class="big-text">
-                    <span class="amount">2</span>
-                    <span class="type">Senior (10 €)</span>
-                  </div>
-                  <span class="calculated-price">20 €</span>
+                <div class="text">
+                  <img src="./assets/svg/icon_time.svg" alt="" />
+                  <span>16 : 30</span>
                 </div>
-              </div>
-              <hr />
-              <div class="total-price">
-                <h3>Total:</h3>
-                <span>60 €</span>
-              </div>
-              <div class="credit-card">
-                <div class="card-side front">
-                  <label>Card number</label>
-                  <input
-                    class="card-number"
-                    type="number"
-                    name="card-number"
-                    id=""
-                  />
-                  <label>Expiration date</label>
-                  <div class="exp-date">
+                <div class="text">
+                  <img src="./assets/svg/icon_check_circle_outline.svg" alt="" />
+                  <span>Temporary exhibition</span>
+                </div>
+                <div class="price">
+                  <div class="price-basic">
+                    <div class="big-text">
+                      <span class="amount">2</span>
+                      <span class="type">Basic (20 €)</span>
+                    </div>
+                    <span class="calculated-price">40 €</span>
+                  </div>
+                  <div class="price-senior">
+                    <div class="big-text">
+                      <span class="amount">2</span>
+                      <span class="type">Senior (10 €)</span>
+                    </div>
+                    <span class="calculated-price">20 €</span>
+                  </div>
+                </div>
+                <hr />
+                <div class="total-price">
+                  <h3>Total:</h3>
+                  <span>60 €</span>
+                </div>
+                <div class="credit-card">
+                  <div class="card-side front">
+                    <label>Card number</label>
                     <input
-                      class="exp-date-month"
+                      class="card-number"
                       type="number"
-                      name="exp-month"
+                      name="card-number"
                       id=""
                     />
+                    <label>Expiration date</label>
+                    <div class="exp-date">
+                      <input
+                        class="exp-date-month"
+                        type="number"
+                        name="exp-month"
+                        id=""
+                      />
+                      <input
+                        class="exp-date-year"
+                        type="number"
+                        name="exp-year"
+                        id=""
+                      />
+                    </div>
+                    <label>Cardholder name</label>
                     <input
-                      class="exp-date-year"
+                      class="cardholder-name"
                       type="number"
-                      name="exp-year"
+                      name="cardholder-name"
                       id=""
                     />
+                    <div class="bank-logos">
+                      <img src="./assets/img/Visa.png" alt="" />
+                      <img src="./assets/img/Mastercard.png" alt="" />
+                    </div>
                   </div>
-                  <label>Cardholder name</label>
-                  <input
-                    class="cardholder-name"
-                    type="number"
-                    name="cardholder-name"
-                    id=""
-                  />
-                  <div class="bank-logos">
-                    <img src="./assets/img/Visa.png" alt="" />
-                    <img src="./assets/img/Mastercard.png" alt="" />
+                  <div class="card-side back">
+                    <div class="magnet-field"></div>
+                    <label class="tip1"> CVC/CVV </label>
+                    <input class="cvc-cvv" type="number" name="cvc-cvv" id="" />
+                    <label class="tip2">
+                      The last<br />3 or 4 digits<br />on back<br />of the card
+                    </label>
                   </div>
                 </div>
-                <div class="card-side back">
-                  <div class="magnet-field"></div>
-                  <label class="tip1"> CVC/CVV </label>
-                  <input class="cvc-cvv" type="number" name="cvc-cvv" id="" />
-                  <label class="tip2">
-                    The last<br />3 or 4 digits<br />on back<br />of the card
-                  </label>
-                </div>
+                <button class="book-button">Book</button>
               </div>
-              <button class="book-button">Book</button>
             </div>
           </form>
         </div>
       </div>
     </section>
-    <!-- <header class="shader">
+    <header class="shader">
       <div class="align-container">
         <div class="header-content-wrapper">
           <div class="logo-container">
@@ -719,6 +721,6 @@
           <span>Username</span>
         </div>
       </div>
-    </footer> -->
+    </footer>
   </body>
 </html>

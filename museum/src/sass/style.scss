@@ -918,9 +918,9 @@ $dbg-borger: none;
     max-height: 100vh;
     overflow: auto;
     position: relative;
-    // top: 50vh;
-    // transform: translateY(-50%);
-    // margin: auto auto;
+    top: 50vh;
+    transform: translateY(-50%);
+    margin: auto auto;
     max-width: 1440px;
     background-color: #fff;
     box-sizing: border-box;
@@ -935,7 +935,6 @@ $dbg-borger: none;
       }
     }
     .modal-content {
-
       padding: 32px 0;
       // background-color: pink;
 
@@ -947,6 +946,7 @@ $dbg-borger: none;
         flex-wrap: wrap;
         justify-content: center;
         column-gap: 40px;
+        row-gap: 51px;
         .user-info {
           flex-grow: 1;
           max-width: 530px;
@@ -1027,12 +1027,18 @@ $dbg-borger: none;
               top: 24px;
               right: 14px;
             }
+            @media (max-width: 504px) {
+              & {
+                width: 100%;
+              }
+            }
           }
           .date-time {
             display: flex;
+            row-gap: 10px;
+            flex-wrap: wrap;
             justify-content: space-between;
             input {
-              padding-right: 7px;
               width: 190px;
               &::-webkit-inner-spin-button,
               &::-webkit-calendar-picker-indicator {
@@ -1072,8 +1078,8 @@ $dbg-borger: none;
               font-weight: normal;
               font-size: 18px;
               color: #030303;
+              margin-bottom: 17px;
               .custom-btn2 {
-                margin-bottom: 17px;
                 display: flex;
                 justify-content: space-between;
                 border: 1px solid #000;
@@ -1113,131 +1119,125 @@ $dbg-borger: none;
                 }
               }
             }
+            .category.last {
+              margin-bottom: 13px;
+            }
           }
         }
         .ticket-info {
-          position: relative;
           max-width: 530px;
           min-width: 360px;
           border: 1px solid #000;
           padding: 25px 30px;
           box-sizing: border-box;
 
-          > img {
-            position: absolute;
-            top: 24px;
-            right: 29px;
-          }
-          h3 {
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 32px;
-            line-height: 37px;
-            color: #272727;
-            margin-bottom: 3px;
-          }
-          h4 {
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 22px;
-            line-height: 26px;
-            color: #740c11;
-            margin-bottom: 10px;
-          }
-          .text {
-            display: flex;
-            align-content: center;
-            margin-bottom: 6px;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 18px;
-            line-height: 21px;
-            color: #030303;
-            span {
-              margin-left: 15px;
+          .ticket-info-wrapper {
+            position: relative;
+            > img {
+              position: absolute;
+              top: 0;
+              right: 0;
             }
-            img {
-              margin-top: -2px;
+            h3 {
+              font-family: Roboto;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 32px;
+              line-height: 37px;
+              color: #272727;
+              margin-bottom: 3px;
             }
-          }
-          .price {
-            margin-top: 22px;
-            .price-basic,
-            .price-senior {
+            h4 {
+              font-family: Roboto;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 22px;
+              line-height: 26px;
+              color: #740c11;
+              margin-bottom: 10px;
+            }
+            .text {
+              display: flex;
+              align-content: center;
+              margin-bottom: 6px;
+              font-family: Roboto;
+              font-style: normal;
+              font-weight: 300;
+              font-size: 18px;
+              line-height: 21px;
+              color: #030303;
+              span {
+                margin-left: 15px;
+              }
+              img {
+                margin-top: -2px;
+              }
+            }
+            .price {
+              margin-top: 22px;
+              .price-basic,
+              .price-senior {
+                margin-bottom: 7px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 22px;
+                line-height: 26px;
+                color: #030303;
+                .big-text {
+                  display: flex;
+                  align-items: flex-start;
+                  .amount {
+                    height: 20px;
+                    margin-top: 2px;
+                    padding: 0px 11px;
+                    margin-right: 10px;
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 18px;
+                    line-height: 21px;
+                    color: #a4a4a3;
+                    background-color: #030303;
+                    border-radius: 5px;
+                  }
+                }
+              }
+            }
+            hr {
+              margin-top: 7px;
+              margin-bottom: 11px;
+              border: none;
+              color: #740c11;
+              background-color: #740c11;
+              height: 2px;
+            }
+            .total-price {
               margin-bottom: 7px;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
-
               font-family: Roboto;
               font-style: normal;
               font-weight: normal;
-              font-size: 22px;
-              line-height: 26px;
+              font-size: 32px;
+              line-height: 37px;
               color: #030303;
-              .big-text {
-                display: flex;
-                align-items: flex-start;
-                .amount {
-                  height: 20px;
-                  margin-top: 2px;
-                  padding: 0px 11px;
-                  margin-right: 10px;
-                  font-family: Roboto;
-                  font-style: normal;
-                  font-weight: normal;
-                  font-size: 18px;
-                  line-height: 21px;
-                  color: #a4a4a3;
-                  background-color: #030303;
-                  border-radius: 5px;
-                }
-              }
             }
-          }
-          hr {
-            margin-top: 7px;
-            margin-bottom: 11px;
-            border: none;
-            color: #740c11;
-            background-color: #740c11;
-            height: 2px;
-          }
-          .total-price {
-            margin-bottom: 7px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 32px;
-            line-height: 37px;
-            color: #030303;
-          }
-          .credit-card {
-            position: relative;
-            width: 470px;
-            height: 241px;
-            .card-side {
-              border-radius: 3px;
-              position: absolute;
-              width: 360px;
-              height: 211px;
-              padding: 15px 20px;
-              box-sizing: border-box;
-              font-family: Roboto;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 12px;
-              line-height: 14px;
-              color: #161615;
-
-              input {
-                height: 35px;
+            .credit-card {
+              position: relative;
+              width: 470px;
+              height: 241px;
+              .card-side {
+                border-radius: 3px;
+                position: absolute;
+                width: 360px;
+                height: 211px;
+                padding: 15px 20px;
                 box-sizing: border-box;
                 font-family: Roboto;
                 font-style: normal;
@@ -1245,112 +1245,202 @@ $dbg-borger: none;
                 font-size: 12px;
                 line-height: 14px;
                 color: #161615;
-                margin-bottom: 10px;
-                border: none;
-              }
-              label {
-                margin-bottom: 5px;
-              }
-              &.front {
-                display: flex;
-                flex-direction: column;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: #bcbcbc;
-                .card-number {
-                  max-width: 215px;
-                }
-                .exp-date-month,
-                .exp-date-year {
-                  max-width: 100px;
-                }
-                .exp-date-year {
-                  margin-left: 12px;
-                }
-                .cardholder-name {
+
+                input {
                   height: 35px;
-                  margin: 0;
-                }
-                .bank-logos {
-                  position: absolute;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  top: 35px;
-                  right: 20px;
-                  > img {
-                    margin-bottom: 15px;
-                  }
-                }
-              }
-              &.back {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                bottom: 0;
-                right: 0;
-                background-color: #939393;
-                .magnet-field {
-                  background-color: #000;
-                  height: 45px;
-                  margin-right: -20px;
-                  margin-bottom: 10px;
-                  margin-top: 10px;
-                  width: 100%;
-                }
-                .tip1 {
-                  margin-right: 15px;
-                  margin-top: 5px;
-                }
-                .cvc-cvv {
-                  width: 75px;
-                  height: 35px;
-                  margin-bottom: 7px;
-                }
-                .tip2 {
+                  box-sizing: border-box;
                   font-family: Roboto;
                   font-style: normal;
                   font-weight: normal;
-                  font-size: 10px;
-                  line-height: 12px;
+                  font-size: 12px;
+                  line-height: 14px;
                   color: #161615;
-                  margin-bottom: -2px;
-                  margin-right: 13px;
+                  margin-bottom: 10px;
+                  border: none;
+                }
+                label {
+                  margin-bottom: 5px;
+                }
+                &.front {
+                  display: flex;
+                  flex-direction: column;
+                  z-index: 1;
+                  top: 0;
+                  // left: 0;
+                  background-color: #bcbcbc;
+                  .card-number {
+                    max-width: 215px;
+                  }
+                  .exp-date-month,
+                  .exp-date-year {
+                    max-width: 100px;
+                  }
+                  .exp-date-year {
+                    margin-left: 12px;
+                  }
+                  .cardholder-name {
+                    height: 35px;
+                    margin: 0;
+                  }
+                  .bank-logos {
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    top: 35px;
+                    right: 20px;
+                    > img {
+                      margin-bottom: 15px;
+                    }
+                  }
+                }
+                &.back {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-end;
+                  bottom: 0;
+                  right: 0;
+                  background-color: #939393;
+                  .magnet-field {
+                    background-color: #000;
+                    height: 45px;
+                    margin-right: -20px;
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                    width: 100%;
+                  }
+                  .tip1 {
+                    margin-right: 15px;
+                    margin-top: 5px;
+                  }
+                  .cvc-cvv {
+                    width: 75px;
+                    height: 35px;
+                    margin-bottom: 7px;
+                  }
+                  .tip2 {
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 12px;
+                    color: #161615;
+                    margin-bottom: -2px;
+                    margin-right: 13px;
+                  }
+                }
+              }
+            }
+            .book-button {
+              position: relative;
+              width: 220px;
+              height: 45px;
+              background-color: #710707;
+              font-family: Roboto;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 22px;
+              line-height: 26px;
+              color: #ffffff;
+              margin: 27px 0 0 auto;
+              overflow: hidden;
+              & .circle {
+                position: absolute;
+                background-color: #fff;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                animation: scale 0.5s ease-out;
+                @keyframes scale {
+                  to {
+                    transform: translate(-50%, -50%) scale(3);
+                    opacity: 0;
+                  }
                 }
               }
             }
           }
-          .book-button {
-            position: relative;
-            width: 220px;
-            height: 45px;
-            background-color: #710707;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 22px;
-            line-height: 26px;
-            color: #ffffff;
-            margin: 27px 0 0 auto;
-            overflow: hidden;
-            & .circle {
-              position: absolute;
-              background-color: #fff;
-              width: 100px;
-              height: 100px;
-              border-radius: 50%;
-              transform: translate(-50%, -50%) scale(0);
-              animation: scale 0.5s ease-out;
-              @keyframes scale {
-                to {
-                  transform: translate(-50%, -50%) scale(3);
-                  opacity: 0;
-                }
+        }
+        @media (max-width: 970px) {
+          .user-info {
+            .date-time input {
+              width: 100%;
+            }
+            .logo-wrapper {
+              h4::after {
+                margin-bottom: 20px;
+              }
             }
           }
+          .ticket-info {
+            padding: 25px 15px;
+            width: 100%;
+            .ticket-info-wrapper {
+              .total-price {
+                margin-bottom: 12px;
+              }
+              .credit-card {
+                width: 100%;
+              }
+              .book-button {
+                margin: 23px 0 0 auto;
+              }
+            }
           }
         }
+        @media (max-width: 504px) {
+          .ticket-info .ticket-info-wrapper .credit-card {
+            height: 482px;
+            margin: 0 auto;
+            .front {
+              left: 50%;
+              transform: translateX(-50%);
+            }
+            .back {
+              top: 234px;
+              left: 50%;
+              transform: translateX(-50%);
+              bottom: 0;
+              right: 0;
+            }
+          }
+        }
+        @media (max-width: 420px) {
+          .ticket-info .ticket-info-wrapper {
+            >img {
+              width: 120px;
+            }
+            .credit-card .card-side {
+              width: 330px;
+            }
+            .credit-card .card-side.back .magnet-field {
+              width: calc(100% + 40px);
+            }
+            .book-button {
+              margin: 5px 0 0 auto;
+            }
+          }
+          .user-info {
+            .logo-wrapper {
+              h2 {
+                font-size: 32px;
+                line-height: 35px;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: 420px) {
+      & {
+        padding: 0px 30px;
+      }
+      .close-btn-wrapper {
+        margin: 0 0 0 auto;
+      }
+      .modal-content {
+        padding-top: 20px;
       }
     }
   }
