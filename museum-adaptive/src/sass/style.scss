@@ -3,6 +3,39 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Forum&display=swap");
 
+$extraLargeScreenWidth: 1920px;
+$largeScreenWidth: 1024px;
+$mediumScreenWidth: 768px;
+$smallScreenWidth: 420px;
+
+@mixin choose($prop, $xlValue, $lValue, $mValue: null, $sValue: null) {
+  #{$prop}: $xlValue;
+
+  @if ($mValue) {
+    @media (min-width: $mediumScreenWidth) and (max-width: $largeScreenWidth) {
+      #{$prop}: $lValue;
+    }
+  } @else {
+    @media (max-width: $largeScreenWidth) {
+      #{$prop}: $lValue;
+    }
+  }
+
+  @if ($sValue) {
+    @media (min-width: $smallScreenWidth) and (max-width: $mediumScreenWidth) {
+      #{$prop}: $mValue;
+    }
+
+    @media (max-width: $smallScreenWidth) {
+      #{$prop}: $sValue;
+    }
+  } @else {
+    @media (max-width: $mediumScreenWidth) {
+      #{$prop}: $mValue;
+    }
+  }
+}
+
 $bg-dark: #030303;
 $dark-red: #710707;
 $font-gold: #9d8665;
@@ -36,12 +69,14 @@ a {
   align-items: center;
 }
 $container-width: 1440px;
-$dbg-borger: none;
 
 .align-container {
   max-width: $container-width;
   margin: 0 auto;
-  border: $dbg-borger;
+  @media (max-width: 1024px) {
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
 }
 
 .shader {
@@ -51,11 +86,11 @@ $dbg-borger: none;
 .logo-container {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  // @include choose(align-items, baseline, baseline, baseline, flex-end);
 
   img {
-    width: 49px;
     padding-right: 25px;
+    @include choose(width, 49px, 49px, 49px, 29px);
   }
 
   span {
@@ -63,8 +98,27 @@ $dbg-borger: none;
     font-style: normal;
     font-weight: normal;
     font-size: 28px;
+    @include choose(font-size, 28px, 28px, 28px, 18px);
     letter-spacing: 5px;
     color: #ffffff;
+  }
+}
+
+.social {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  img {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    padding: 11px;
+    margin-left: 25px;
+    margin-bottom: 32px;
+  }
+  img:hover {
+    border: 1px solid $font-gold;
+    filter: invert(53%) sepia(39%) saturate(300%) hue-rotate(356deg)
+      brightness(95%) contrast(90%);
   }
 }
 
@@ -73,7 +127,7 @@ $dbg-borger: none;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 150px;
+  @include choose(height, 150px, 130px, 110px, 90px);
 
   nav .nav-menu {
     display: flex;
@@ -87,7 +141,7 @@ $dbg-borger: none;
       margin: 0;
     }
 
-    li {
+    .nav-item {
       list-style-type: none;
       margin-left: 55px;
       font-family: "Roboto", sans-serif;
@@ -96,11 +150,152 @@ $dbg-borger: none;
       font-size: 22px;
       letter-spacing: 2px;
       color: #ffffff;
-    }
 
-    li:hover {
-      color: $font-gold;
-      cursor: pointer;
+      &:hover {
+        color: $font-gold;
+        cursor: pointer;
+      }
+    }
+  }
+  .burger {
+    display: none;
+  }
+  @media (max-width: 1024px) {
+    nav {
+      display: none;
+    }
+    .burger {
+      display: block;
+      position: relative;
+      width: 32px;
+      height: 17px;
+      display: block;
+      // margin-right: 39px;
+      span,
+      &:before,
+      &:after {
+        position: absolute;
+        content: "";
+        background-color: white;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        transition: all 0.2s ease-in;
+      }
+      &:before {
+        top: 0;
+      }
+      &:after {
+        bottom: 0;
+      }
+      span {
+        top: 8px;
+      }
+      &.active {
+        &:before {
+          transition: all 0.2s ease-out;
+          transform: rotate(45deg);
+          top: 8px;
+        }
+        &:after {
+          transition: all 0.2s ease-out;
+          transform: rotate(-45deg);
+          bottom: 8px;
+        }
+        span {
+          transform: scale(0);
+        }
+      }
+    }
+  }
+}
+
+#welcome {
+  .mobile-nav {
+    box-sizing: border-box;
+    padding: 35px;
+    display: none;
+    &.active {
+      display: block;
+    }
+    .nav-menu {
+      width: 125px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 23px;
+      letter-spacing: 2px;
+      color: #ffffff;
+      .nav-item {
+        list-style: none;
+        margin-bottom: 25px;
+        a {
+          display: flex;
+          justify-content: space-between;
+        }
+        &:hover {
+          color: $font-gold;
+          cursor: pointer;
+        }
+      }
+    }
+    .additional {
+      margin-top: 35px;
+      &.active {
+        display: block;
+      }
+      .gallery {
+        display: grid;
+        gap: 20px;
+        grid-template-areas:
+        "a a"
+        "b c";
+        :nth-child(1) {
+          grid-area: a;
+        }
+        :nth-child(2) {
+          grid-area: b;
+        }
+        :nth-child(3) {
+          grid-area: c;
+        }
+      }
+      .mini-gallery {
+        display: none;
+        gap: 20px;
+        grid-template-areas: "a b c";
+        :nth-child(1) {
+          grid-area: a;
+        }
+        :nth-child(2) {
+          grid-area: b;
+        }
+        :nth-child(3) {
+          grid-area: c;
+        }
+      }
+      hr {
+        @include choose(margin-top, 34px, 34px, 34px, 20px);
+        @include choose(margin-bottom, 34px, 34px, 34px, 24px);
+      }
+      .social {
+        @include choose(gap, 25px, 25px, 25px, 5px);
+        gap: 25px;
+        justify-content: center;
+        img {
+          margin-left: 0px;
+          margin-bottom: 0px;
+        }
+      }
+      @media (max-width: $smallScreenWidth) {
+        .gallery {
+          display: none;
+        }
+        .mini-gallery {
+          display: grid;
+        }
+      }
     }
   }
 }
@@ -108,60 +303,68 @@ $dbg-borger: none;
 .welcome-section-wrapper {
   display: flex;
   justify-content: space-between;
-  height: 809px;
   color: #ffffff;
-
+  opacity: 1;
+  @include choose(flex-direction, row, row, column, column);
+  &.hidden {
+    opacity: 0;
+    display: none;
+  }
   .welcome-text .welcome-text-wrapper {
     position: relative;
-    margin-top: 463px;
-    border: $dbg-borger;
-
+    @include choose(margin-top, 463px, 334px, 0px, 0px);
+    @include choose(display, block, block, flex, flex);
+    flex-direction: column;
+    align-items: center;
     h1 {
-      position: absolute;
-      top: -367px;
-      margin-right: -240px;
+      @include choose(position, absolute, absolute, inherit, inherit);
+      @include choose(top, -367px, -319px, 0px, 0px);
+      @include choose(margin-right, -240px, -240px, 0px, 0px);
+      @include choose(margin-top, 0.67em, 0.67em, 0px, 5px);
+      @include choose(margin-bottom, 0.67em, 0.67em, 0.67em, 25px);
+      @include choose(text-align, inherit, inherit, center, center);
+      @include choose(padding-bottom, 25px, 25px, 0px, 0px);
       z-index: 1;
-      padding-bottom: 25px;
       font-family: "Forum", cursive;
       font-style: normal;
       font-weight: normal;
       line-height: 90px;
-      font-size: 80px;
+      @include choose(line-height, 90px, 90px, 60px, 40px);
+      @include choose(font-size, 80px, 50px, 40px, 28px);
       letter-spacing: 5px;
       text-transform: uppercase;
       color: #ffffff;
     }
     h2 {
-      position: absolute;
-      top: -366px;
+      @include choose(position, absolute, absolute, inherit, inherit);
+      @include choose(top, -366px, -337px, 0, 0);
+      @include choose(margin-right, -240px, -240px, 0px, 0px);
+      @include choose(padding-top, 258px, 258px, 0, 0);
+      @include choose(padding-bottom, 75px, 75px, 46px, 50px);
       z-index: 1;
-      padding-top: 258px;
-      margin-right: -240px;
-      padding-bottom: 75px;
       font-family: "Roboto", sans-serif;
       font-style: normal;
       font-weight: 300;
-      font-size: 28px;
+      @include choose(font-size, 28px, 24px, 20px, 16px);
       letter-spacing: 2px;
     }
 
     .discover-button {
-      // margin-top: 300px;
-      display: flex;
+      @include choose(display, flex, flex, none, none);
       align-items: center;
       justify-content: center;
       background-color: $dark-red;
       border-radius: 10px;
-      width: 360px;
-      height: 75px;
+      @include choose(width, 360px, 300px, 360px, 360px);
+      @include choose(height, 75px, 60px, 75px, 75px);
       &:hover {
-        background-color: #9D8665;
+        background-color: #9d8665;
       }
       span {
         font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: 200;
-        font-size: 22px;
+        @include choose(font-size, 22px, 20px, 22px, 22px);
         letter-spacing: 2px;
       }
     }
@@ -171,40 +374,68 @@ $dbg-borger: none;
     position: relative;
 
     .slider-controls {
-      position: absolute;
-      bottom: 0;
-      right: 0;
+      @include choose(margin-left, auto, auto, 0, 0);
+      @include choose(margin-right, 0, 0, 0, 0);
+      @include choose(margin-top, -65px, -52px, 0px, 0px);
+      @include choose(margin-bottom, 0px, 0px, 3px, 3px);
+      @include choose(
+        padding-left,
+        0px,
+        calc(0.8587 * (100% - 500px)),
+        0px,
+        0px
+      );
+      @include choose(
+        padding-right,
+        0px,
+        calc(0.1413 * (100% - 500px)),
+        0px,
+        0px
+      );
+
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 600px;
+      @include choose(width, 600px, 500px, 100%, 100%);
+      @include choose(height, 120px, 120px, 90px, 73px);
       height: 120px;
       background-color: #000000;
-      border: $dbg-borger;
+
       .slider-controls-wrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
-        width: 450px;
+        @include choose(width, 450px, 400px, 400px, 250px);
         height: 40px;
         justify-content: space-between;
         font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: 400;
-        font-size: 22px;
+        @include choose(font-size, 22px, 20px, 20px, 16px);
 
         .pages {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          @include choose(
+            justify-content,
+            space-between,
+            space-between,
+            space-between,
+            center
+          );
+          @include choose(letter-spacing, 0, 0, 0, 3px);
           width: 73px;
         }
         .thumbs {
           display: flex;
           justify-content: space-between;
-          width: 180px;
+          @include choose(width, 180px, 160px, 160px, 75px);
+
           .thumb {
             background-color: #fff;
+            @include choose(width, 16px, 12px, 12px, 7px);
+            @include choose(height, 16px, 12px, 12px, 7px);
             width: 16px;
             height: 16px;
             &:hover {
@@ -216,19 +447,21 @@ $dbg-borger: none;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          width: 80px;
+          @include choose(width, 80px, 80px, 80px, 76px);
+          @include choose(transform, none, none, none, scale(0.7));
           font-size: 30px;
           .right {
             transform: scale(-1, 1);
           }
-          *>img:hover {
-            filter: invert(57%) sepia(7%) saturate(1699%) hue-rotate(356deg) brightness(94%) contrast(83%);
+          * > img:hover {
+            filter: invert(57%) sepia(7%) saturate(1699%) hue-rotate(356deg)
+              brightness(94%) contrast(83%);
           }
         }
       }
     }
     .slider img {
-      max-width: 1000px;
+      @include choose(max-width, 1000px, 700px, 1000px, 1000px);
     }
   }
 }
@@ -481,17 +714,19 @@ $dbg-borger: none;
       margin-top: 40px;
       max-width: 200px;
       background-color: #fff;
-      >img {
+      > img {
         max-width: 12px;
       }
       .left {
         transform: scale(-1, 1);
       }
       img.active {
-        filter: invert(10%) sepia(3%) saturate(9%) hue-rotate(320deg) brightness(95%) contrast(74%);
+        filter: invert(10%) sepia(3%) saturate(9%) hue-rotate(320deg)
+          brightness(95%) contrast(74%);
       }
       img:hover {
-        filter: invert(11%) sepia(37%) saturate(7460%) hue-rotate(12deg) brightness(92%) contrast(116%);
+        filter: invert(11%) sepia(37%) saturate(7460%) hue-rotate(12deg)
+          brightness(92%) contrast(116%);
       }
     }
   }
@@ -832,23 +1067,6 @@ $dbg-borger: none;
           color: $font-gold;
           cursor: pointer;
         }
-      }
-    }
-    .social {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      img {
-        border: 1px solid #fff;
-        border-radius: 50%;
-        padding: 11px;
-        margin-left: 25px;
-        margin-bottom: 32px;
-      }
-      img:hover {
-        border: 1px solid $font-gold;
-        filter: invert(53%) sepia(39%) saturate(300%) hue-rotate(356deg)
-          brightness(95%) contrast(90%);
       }
     }
     padding-bottom: 25px;
@@ -1390,7 +1608,7 @@ $dbg-borger: none;
         }
         @media (max-width: 420px) {
           .ticket-info .ticket-info-wrapper {
-            >img {
+            > img {
               width: 120px;
             }
             .credit-card .card-side {
