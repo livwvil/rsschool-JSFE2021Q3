@@ -7,7 +7,7 @@ $bg-dark: #030303;
 $dark-red: #710707;
 $font-gold: #9d8665;
 img {
-  // width: 100%;
+  width: 100%;
 }
 * {
   padding: 0;
@@ -108,7 +108,7 @@ $dbg-borger: none;
 .welcome-section-wrapper {
   display: flex;
   justify-content: space-between;
-  height: 810px;
+  height: 809px;
   color: #ffffff;
 
   .welcome-text .welcome-text-wrapper {
@@ -249,18 +249,18 @@ $dbg-borger: none;
 
   h2:after {
     display: block;
-    margin-top: 25px;
+    margin-top: 24px;
     margin-bottom: 75px;
     content: "";
     background-color: $dark-red;
-    height: 3px;
+    height: 4px;
   }
 
   .gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
-    row-gap: 75px;
+    row-gap: 74px;
     column-gap: 60px;
     .card:hover {
       h3:after {
@@ -270,7 +270,7 @@ $dbg-borger: none;
     }
     figcaption {
       h3 {
-        margin-top: 21px;
+        margin-top: 20px;
         font-family: Forum;
         font-style: normal;
         font-weight: normal;
@@ -281,10 +281,11 @@ $dbg-borger: none;
       }
       h3:after {
         display: block;
-        margin: 10px 0px;
+        margin-top: 9px;
+        margin-bottom: 10px;
         content: "";
         background-color: $dark-red;
-        height: 2px;
+        height: 3px;
         max-width: 68%;
         transition: all 0.2s ease-out;
       }
@@ -361,11 +362,18 @@ $dbg-borger: none;
         left: 0;
       }
       :nth-child(1) {
-        z-index: 1;
+        max-width: 440px;
+        z-index: 2;
       }
       :nth-child(2) {
+        max-width: 39px;
         left: 421px;
-        z-index: 2;
+        z-index: 3;
+      }
+      :nth-child(3) {
+        max-width: 720px;
+        left: 0;
+        z-index: 1;
       }
     }
   }
@@ -402,8 +410,9 @@ $dbg-borger: none;
     display: flex;
     flex-direction: column;
     > button > img {
+      max-width: 220px;
       position: absolute;
-      top: 214px;
+      top: 215px;
       left: 610px;
       z-index: 1;
     }
@@ -472,6 +481,9 @@ $dbg-borger: none;
       margin-top: 40px;
       max-width: 200px;
       background-color: #fff;
+      >img {
+        max-width: 12px;
+      }
       .left {
         transform: scale(-1, 1);
       }
@@ -608,11 +620,6 @@ $dbg-borger: none;
         width: 721px;
         display: flex;
         justify-content: space-between;
-        // grid-template-columns: repeat(2, 1fr);
-        // grid-template-columns: repeat(2, 89%);
-        // grid-template-rows: repeat(4, 1fr);
-        // justify-content: stretch;
-        // column-gap: 135px;
         h4 {
           font-family: Roboto;
           font-style: normal;
@@ -629,7 +636,6 @@ $dbg-borger: none;
         }
         .left {
           margin-left: 60px;
-          // padding-right: 360px;
           h4 {
             margin-bottom: 51px;
           }
@@ -645,14 +651,12 @@ $dbg-borger: none;
             user-select: none;
           }
 
-          /* Hide the browser's default radio button */
           .container input {
             position: absolute;
             opacity: 0;
             cursor: pointer;
           }
 
-          /* Create a custom radio button */
           .checkmark {
             position: absolute;
             left: 0;
@@ -660,33 +664,22 @@ $dbg-borger: none;
             height: 13px;
             width: 13px;
             border: 2px solid #000;
-            // background-color: #000;
             border-radius: 50%;
           }
-
-          /* On mouse-over, add a grey background color */
           .container:hover input ~ .checkmark {
             background-color: #fff;
           }
-
-          /* When the radio button is checked, add a blue background */
           .container input:checked ~ .checkmark {
             // background-color: #000;
           }
-
-          /* Create the indicator (the dot/circle - hidden when not checked) */
           .checkmark:after {
             content: "";
             position: absolute;
             display: none;
           }
-
-          /* Show the indicator (dot/circle) when checked */
           .container input:checked ~ .checkmark:after {
             display: block;
           }
-
-          /* Style the indicator (dot/circle) */
           .container .checkmark:after {
             top: 3px;
             left: 3px;
@@ -920,18 +913,17 @@ $dbg-borger: none;
       margin: 0 29px 0 auto;
       padding-top: 30px;
       .close-btn {
-        // background-color: pink;
         width: 25px;
       }
     }
     .modal-content {
       padding: 32px 0;
-      // background-color: pink;
-
+      img {
+        width: auto;
+      }
       .deal-wrapper {
         margin: 0 auto;
         max-width: 970px;
-        // background-color: aquamarine;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
