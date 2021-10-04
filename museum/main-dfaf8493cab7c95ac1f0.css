@@ -1,0 +1,353 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Forum&display=swap);
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+*{padding:0;margin:0}html{scroll-behavior:smooth}body{background-color:#fff}button,a{text-decoration:none;background:none;color:inherit;border:none;padding:0;font:inherit;cursor:pointer;outline:inherit;display:flex;justify-content:center;align-items:center}.align-container{max-width:1440px;margin:0 auto;border:none}.shader{background-color:#000}.logo-container{display:flex;flex-direction:row;align-items:baseline}.logo-container img{width:49px;padding-right:25px}.logo-container span{font-family:"Forum",cursive;font-style:normal;font-weight:normal;font-size:28px;letter-spacing:5px;color:#fff}.header-content-wrapper{display:flex;flex-direction:row;justify-content:space-between;align-items:center;height:150px}.header-content-wrapper nav .nav-menu{display:flex;flex-direction:row}.header-content-wrapper nav .nav-menu :nth-child(5){margin-left:60px}.header-content-wrapper nav .nav-menu :nth-child(1){margin:0}.header-content-wrapper nav .nav-menu li{list-style-type:none;margin-left:55px;font-family:"Roboto",sans-serif;font-style:normal;font-weight:100;font-size:22px;letter-spacing:2px;color:#fff}.header-content-wrapper nav .nav-menu li:hover{color:#9d8665;cursor:pointer}.welcome-section-wrapper{display:flex;justify-content:space-between;height:810px;color:#fff}.welcome-section-wrapper .welcome-text .welcome-text-wrapper{position:relative;margin-top:463px;border:none}.welcome-section-wrapper .welcome-text .welcome-text-wrapper h1{position:absolute;top:-367px;margin-right:-240px;z-index:1;padding-bottom:25px;font-family:"Forum",cursive;font-style:normal;font-weight:normal;line-height:90px;font-size:80px;letter-spacing:5px;text-transform:uppercase;color:#fff}.welcome-section-wrapper .welcome-text .welcome-text-wrapper h2{position:absolute;top:-366px;z-index:1;padding-top:258px;margin-right:-240px;padding-bottom:75px;font-family:"Roboto",sans-serif;font-style:normal;font-weight:300;font-size:28px;letter-spacing:2px}.welcome-section-wrapper .welcome-text .welcome-text-wrapper .discover-button{display:flex;align-items:center;justify-content:center;background-color:#710707;border-radius:10px;width:360px;height:75px}.welcome-section-wrapper .welcome-text .welcome-text-wrapper .discover-button:hover{background-color:#9d8665}.welcome-section-wrapper .welcome-text .welcome-text-wrapper .discover-button span{font-family:"Roboto",sans-serif;font-style:normal;font-weight:200;font-size:22px;letter-spacing:2px}.welcome-section-wrapper .slider-wrapper{position:relative}.welcome-section-wrapper .slider-wrapper .slider-controls{position:absolute;bottom:0;right:0;display:flex;justify-content:center;align-items:center;width:600px;height:120px;background-color:#000;border:none}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper{display:flex;flex-direction:row;align-items:center;width:450px;height:40px;justify-content:space-between;font-family:"Roboto",sans-serif;font-style:normal;font-weight:400;font-size:22px}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .pages{display:flex;flex-direction:row;justify-content:space-between;width:73px}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .thumbs{display:flex;justify-content:space-between;width:180px}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .thumbs .thumb{background-color:#fff;width:16px;height:16px}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .thumbs .thumb:hover{background-color:#9d8665}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .arrows{display:flex;flex-direction:row;justify-content:space-between;width:80px;font-size:30px}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .arrows .right{transform:scale(-1, 1)}.welcome-section-wrapper .slider-wrapper .slider-controls .slider-controls-wrapper .arrows *>img:hover{filter:invert(57%) sepia(7%) saturate(1699%) hue-rotate(356deg) brightness(94%) contrast(83%)}.welcome-section-wrapper .slider-wrapper .slider img{max-width:1000px}.visiting-section-wrapper{padding:75px 0px}.visiting-section-wrapper h2{font-family:"Forum",cursive;font-style:normal;font-weight:normal;line-height:90px;font-size:80px;letter-spacing:5px;text-transform:uppercase;color:#9d8665}.visiting-section-wrapper h2:after{display:block;margin-top:25px;margin-bottom:75px;content:"";background-color:#710707;height:3px}.visiting-section-wrapper .gallery{display:grid;grid-template-columns:repeat(3, 1fr);justify-content:space-between;row-gap:75px;column-gap:60px}.visiting-section-wrapper .gallery .card:hover h3:after{max-width:100%;transition:all .2s ease-out}.visiting-section-wrapper .gallery figcaption h3{margin-top:21px;font-family:Forum;font-style:normal;font-weight:normal;font-size:32px;line-height:35px;letter-spacing:5px;text-transform:uppercase}.visiting-section-wrapper .gallery figcaption h3:after{display:block;margin:10px 0px;content:"";background-color:#710707;height:2px;max-width:68%;transition:all .2s ease-out}.visiting-section-wrapper .gallery figcaption h4{font-family:Roboto;font-style:normal;font-weight:200;font-size:22px;line-height:26px;margin-bottom:10px}.visiting-section-wrapper .gallery figcaption h5{font-family:Roboto;font-style:normal;font-weight:200;font-size:18px;line-height:21px}.explore-section-wrapper{display:grid;grid-template-columns:1fr 1fr;height:715px;color:#fff;padding:75px 0px}.explore-section-wrapper .description{max-width:658px}.explore-section-wrapper .description h2{font-family:"Forum",cursive;font-style:normal;font-weight:normal;line-height:90px;font-size:80px;letter-spacing:5px;text-transform:uppercase}.explore-section-wrapper .description h2:after{display:block;margin-top:25px;margin-bottom:75px;content:"";background-color:#710707;height:3px;width:660px}.explore-section-wrapper .description p{font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:38px;margin-bottom:25px}.explore-section-wrapper .description p mark{background-color:inherit;color:#caaa7d}.explore-section-wrapper .tool{padding-top:14px}.explore-section-wrapper .tool .figure-wrapper{position:relative}.explore-section-wrapper .tool .figure-wrapper img{position:absolute;top:0;left:0}.explore-section-wrapper .tool .figure-wrapper :nth-child(1){z-index:1}.explore-section-wrapper .tool .figure-wrapper :nth-child(2){left:421px;z-index:2}.video-section-wrapper .heading{margin:75px 0px;display:grid;grid-template-columns:repeat(2, 1fr);align-items:center}.video-section-wrapper .heading h2{color:#9d8665;font-family:Forum;font-style:normal;font-weight:normal;font-size:80px;line-height:90px;letter-spacing:5px;text-transform:uppercase}.video-section-wrapper .heading span{font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:38px}.video-section-wrapper .video{position:relative;display:flex;flex-direction:column}.video-section-wrapper .video>button>img{position:absolute;top:214px;left:610px;z-index:1}.video-section-wrapper .video .controls{display:flex;flex-direction:row;background-color:#000;justify-content:space-between;padding:25px 30px}.video-section-wrapper .video .controls .progress{margin-top:14px;height:8px;width:400px;-webkit-appearance:none}.video-section-wrapper .video .controls .progress.timeline{background:linear-gradient(to right, #710707 0%, #710707 54%, #b3b3b3 54%, #b3b3b3 100%)}.video-section-wrapper .video .controls .progress.volume{background:linear-gradient(to right, #710707 0%, #710707 44%, #b3b3b3 44%, #b3b3b3 100%)}.video-section-wrapper .video .controls .progress::-webkit-slider-thumb{width:15px;height:15px;border-radius:50%;-webkit-appearance:none;cursor:ew-resize;background:#fff}.video-section-wrapper .video .controls .timeline{width:67%}.video-section-wrapper .video .controls .volume{width:11%}.video-section-wrapper .video-gallery{margin-top:40px}.video-section-wrapper .video-gallery .gallery{display:flex;flex-direction:row;justify-content:space-between}.video-section-wrapper .video-gallery .gallery iframe{width:452px;height:254px}.video-section-wrapper .video-gallery .controls{display:flex;flex-direction:row;justify-content:space-between;margin:0 auto;margin-top:40px;max-width:200px;background-color:#fff}.video-section-wrapper .video-gallery .controls .left{transform:scale(-1, 1)}.video-section-wrapper .video-gallery .controls img.active{filter:invert(10%) sepia(3%) saturate(9%) hue-rotate(320deg) brightness(95%) contrast(74%)}.video-section-wrapper .video-gallery .controls img:hover{filter:invert(11%) sepia(37%) saturate(7460%) hue-rotate(12deg) brightness(92%) contrast(116%)}.gallery-section-wrapper{margin-top:75px;position:relative}.gallery-section-wrapper h2{padding-top:75px;color:#fff;font-family:Forum;font-style:normal;font-weight:normal;font-size:80px;line-height:90px;letter-spacing:5px;text-transform:uppercase}.gallery-section-wrapper .art-gallery{margin-top:75px;display:flex;justify-content:space-between}.gallery-section-wrapper .art-gallery .col1{margin-top:50px;display:flex;flex-direction:column;gap:24px}.gallery-section-wrapper .art-gallery .col2{display:flex;flex-direction:column;gap:24px}.gallery-section-wrapper .art-gallery .col3{margin-top:50px;display:flex;flex-direction:column;gap:24px}.gallery-section-wrapper .art-gallery>img{border:1px solid #fff}.gallery-section-wrapper>img{position:absolute;bottom:0;left:0}.custom-btn{margin-top:15px;margin-bottom:11px;display:flex;justify-content:space-between;border:3px solid #000}.custom-btn button{text-align:center;background:none;color:inherit;border:none;padding:0;cursor:pointer;outline:inherit;width:40px;height:43px;font-family:Roboto;font-style:normal;font-weight:normal;font-size:32px;line-height:37px}.custom-btn .number::-webkit-outer-spin-button,.custom-btn .number::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.custom-btn .number{all:unset;-webkit-appearance:none;margin:0;width:65px;text-align:center;font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:26px}.ticket-section-wrapper{margin-top:75px}.ticket-section-wrapper h2{font-family:"Forum",cursive;font-style:normal;font-weight:normal;line-height:90px;font-size:80px;letter-spacing:5px;text-transform:uppercase;color:#9d8665}.ticket-section-wrapper h2:after{display:block;margin-top:25px;margin-bottom:75px;content:"";background-color:#710707;height:3px}.ticket-section-wrapper .deal-wrapper{display:flex;flex-direction:row}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls{width:721px;display:flex;justify-content:space-between}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls h4{font-family:Roboto;font-style:normal;font-weight:bold;font-size:28px;line-height:33px}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls label{font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:26px}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left{margin-left:60px}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left h4{margin-bottom:51px}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .container{display:block;position:relative;padding-left:40px;margin-bottom:25px;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .container input{position:absolute;opacity:0;cursor:pointer}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .checkmark{position:absolute;left:0;top:4px;height:13px;width:13px;border:2px solid #000;border-radius:50%}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .container:hover input~.checkmark{background-color:#fff}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .checkmark:after{content:"";position:absolute;display:none}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .container input:checked~.checkmark:after{display:block}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .left .container .checkmark:after{top:3px;left:3px;width:7px;height:7px;border-radius:50%;background:#000}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .right{display:flex;flex-direction:column}.ticket-section-wrapper .deal-wrapper .form-wrapper .controls .right h4{margin-bottom:25px;align-self:flex-end}.ticket-section-wrapper .deal-wrapper .form-wrapper .summary{display:flex;flex-direction:column;align-items:flex-end;margin-top:40px}.ticket-section-wrapper .deal-wrapper .form-wrapper .summary h4{font-family:Roboto;font-style:normal;font-weight:bold;font-size:28px;line-height:33px;letter-spacing:1.65px}.ticket-section-wrapper .deal-wrapper .form-wrapper .summary .buy-btn{margin-top:60px;width:175px;height:50px;color:#fff;background-color:#000;border-radius:2px;border:none;font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:26px;letter-spacing:2px}.ticket-section-wrapper .deal-wrapper .form-wrapper .summary .buy-btn:hover{background-color:#9d8665;color:#000}.ticket-section-wrapper .paralax{margin-top:71px;width:100%;height:400px;background-size:cover;background-attachment:fixed}.contacts-section-wrapper{margin-top:75px}.contacts-section-wrapper h2{font-family:"Forum",cursive;font-style:normal;font-weight:normal;line-height:90px;font-size:80px;letter-spacing:5px;text-transform:uppercase;color:#9d8665}.contacts-section-wrapper h2:after{display:block;margin-top:25px;margin-bottom:75px;content:"";background-color:#710707;height:3px}.contacts-section-wrapper .location{display:flex;flex-direction:row;justify-content:space-between}.contacts-section-wrapper .location .text h4{font-family:Roboto;font-style:normal;font-weight:500;font-size:28px;line-height:33px;color:#000;margin-bottom:51px}.contacts-section-wrapper .location .text p{font-family:Roboto;font-style:normal;font-weight:300;font-size:22px;line-height:25px;color:#000;margin-bottom:26px}.contacts-section-wrapper .location .text p a{display:inline}.footer-wrapper .top{margin-top:70px;padding-top:84px;color:#fff;display:grid;grid-template-columns:repeat(2, 1fr);padding-bottom:25px}.footer-wrapper .top .navigation{display:flex;flex-direction:row;justify-content:space-between}.footer-wrapper .top .navigation nav{display:flex;flex-direction:row}.footer-wrapper .top .navigation .nav-menu{display:flex;flex-direction:column;align-items:flex-start;padding-top:4px;padding-left:142px;padding-right:30px}.footer-wrapper .top .navigation .nav-menu li{list-style-type:none;margin-bottom:26px;font-family:"Roboto",sans-serif;font-style:normal;font-weight:100;font-size:22px;letter-spacing:2px;color:#fff}.footer-wrapper .top .navigation .nav-menu li:hover{color:#9d8665;cursor:pointer}.footer-wrapper .top .social{display:flex;align-items:flex-end;justify-content:flex-end}.footer-wrapper .top .social img{border:1px solid #fff;border-radius:50%;padding:11px;margin-left:25px;margin-bottom:32px}.footer-wrapper .top .social img:hover{border:1px solid #9d8665;filter:invert(53%) sepia(39%) saturate(300%) hue-rotate(356deg) brightness(95%) contrast(90%)}.footer-wrapper hr{border:none;color:#666;background-color:#666;height:2px}.footer-wrapper .bottom{color:#fff;display:flex;flex-direction:row;justify-content:space-between;padding-top:51px;padding-bottom:75px;font-family:Roboto;font-style:normal;font-weight:200;font-size:22px;line-height:22px;letter-spacing:2px}.footer-wrapper .bottom :nth-child(2){margin-left:34px}.modal-buy{position:fixed;top:0;left:-100vw;margin:0;z-index:10;width:100%;height:100vh;background-color:rgba(0,0,0,0);opacity:0;transition:left .5s ease-out,opacity 1s ease-out}.modal-buy.active{left:0;background-color:rgba(0,0,0,.7);opacity:1;transition:left .5s ease-in,opacity .5s cubic-bezier(0.43, 0.4, 1, 1),background-color 1s cubic-bezier(1, -0.24, 0.11, -0.01)}.modal-buy .modal-content-wrapper{max-height:100vh;overflow:auto;position:relative;top:50vh;transform:translateY(-50%);margin:auto auto;max-width:1440px;background-color:#fff;box-sizing:border-box}.modal-buy .modal-content-wrapper .close-btn-wrapper{width:25px;margin:0 29px 0 auto;padding-top:30px}.modal-buy .modal-content-wrapper .close-btn-wrapper .close-btn{width:25px}.modal-buy .modal-content-wrapper .modal-content{padding:32px 0}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper{margin:0 auto;max-width:970px;display:flex;flex-wrap:wrap;justify-content:center;column-gap:40px;row-gap:51px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info{flex-grow:1;max-width:530px;min-width:360px;display:flex;flex-direction:column;gap:10px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .logo-wrapper h2{font-family:Forum;font-style:normal;font-weight:normal;font-size:50px;line-height:55px;text-transform:uppercase;color:#9d8665;margin-top:-4px;margin-bottom:15px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .logo-wrapper h4{font-family:Roboto;font-style:normal;font-weight:normal;font-size:18px;line-height:21px;color:#710707}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .logo-wrapper h4::after{display:block;margin-top:9px;margin-bottom:39px;content:"";background-color:#740c11;height:3px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info input,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info select{height:45px;margin-top:10px;font-family:Roboto;font-style:normal;font-weight:normal;font-size:18px;line-height:21px;display:flex;align-items:center;color:#030303}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info select{height:45px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select{position:relative}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input input,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input select,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select input,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select select{width:100%;padding-left:43px;box-sizing:border-box}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input select,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select select{-moz-appearance:none;-webkit-appearance:none}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input select::-ms-expand,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select select::-ms-expand{display:none}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input .icon,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input .arrow,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select .icon,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select .arrow{position:absolute;top:25px;left:16px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input .arrow,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select .arrow{left:auto;top:24px;right:14px}@media(max-width: 504px){.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-input,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .custom-select{width:100%}}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .date-time{display:flex;row-gap:10px;flex-wrap:wrap;justify-content:space-between}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .date-time input{width:190px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .date-time input::-webkit-inner-spin-button,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .date-time input::-webkit-calendar-picker-indicator{opacity:0}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper{box-sizing:border-box;padding:10px 15px 0px 15px;margin-top:10px;border:1px solid #000}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper h3{font-family:Forum;font-style:normal;font-weight:normal;font-size:18px;line-height:20px;text-transform:capitalize;color:#9d8665}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper h3::after{display:block;margin-top:4px;margin-bottom:14px;content:"";background-color:#740c11;height:2px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category{display:flex;justify-content:space-between;align-items:baseline;font-family:Roboto;font-style:normal;font-weight:normal;font-size:18px;color:#030303;margin-bottom:17px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category .custom-btn2{display:flex;justify-content:space-between;border:1px solid #000}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category .custom-btn2 button{background-color:#000;color:#fff;text-align:center;border:none;padding:0;cursor:pointer;outline:inherit;width:34px;height:24px;font-family:Roboto;font-style:normal;font-weight:normal;font-size:19px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category .custom-btn2 .number::-webkit-outer-spin-button,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category .custom-btn2 .number::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category .custom-btn2 .number{all:unset;-webkit-appearance:none;margin:0;width:32px;text-align:center;font-family:Roboto;font-style:normal;font-weight:normal;font-size:18px;line-height:21px;color:#030303}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .amount-wrapper .category.last{margin-bottom:13px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info{max-width:530px;min-width:360px;border:1px solid #000;padding:25px 30px;box-sizing:border-box}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper{position:relative}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper>img{position:absolute;top:0;right:0}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper h3{font-family:Roboto;font-style:normal;font-weight:500;font-size:32px;line-height:37px;color:#272727;margin-bottom:3px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper h4{font-family:Roboto;font-style:normal;font-weight:500;font-size:22px;line-height:26px;color:#740c11;margin-bottom:10px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .text{display:flex;align-content:center;margin-bottom:6px;font-family:Roboto;font-style:normal;font-weight:300;font-size:18px;line-height:21px;color:#030303}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .text span{margin-left:15px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .text img{margin-top:-2px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price{margin-top:22px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-basic,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-senior{margin-bottom:7px;display:flex;flex-direction:row;justify-content:space-between;font-family:Roboto;font-style:normal;font-weight:normal;font-size:22px;line-height:26px;color:#030303}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-basic .big-text,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-senior .big-text{display:flex;align-items:flex-start}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-basic .big-text .amount,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .price .price-senior .big-text .amount{height:20px;margin-top:2px;padding:0px 11px;margin-right:10px;font-family:Roboto;font-style:normal;font-weight:normal;font-size:18px;line-height:21px;color:#a4a4a3;background-color:#030303;border-radius:5px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper hr{margin-top:7px;margin-bottom:11px;border:none;color:#740c11;background-color:#740c11;height:2px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .total-price{margin-bottom:7px;display:flex;flex-direction:row;justify-content:space-between;font-family:Roboto;font-style:normal;font-weight:normal;font-size:32px;line-height:37px;color:#030303}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card{position:relative;width:470px;height:241px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side{border-radius:3px;position:absolute;width:360px;height:211px;padding:15px 20px;box-sizing:border-box;font-family:Roboto;font-style:normal;font-weight:normal;font-size:12px;line-height:14px;color:#161615}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side input{height:35px;box-sizing:border-box;font-family:Roboto;font-style:normal;font-weight:normal;font-size:12px;line-height:14px;color:#161615;margin-bottom:10px;border:none}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side label{margin-bottom:5px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front{display:flex;flex-direction:column;z-index:1;top:0;background-color:#bcbcbc}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .card-number{max-width:215px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .exp-date-month,.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .exp-date-year{max-width:100px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .exp-date-year{margin-left:12px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .cardholder-name{height:35px;margin:0}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .bank-logos{position:absolute;display:flex;flex-direction:column;align-items:center;top:35px;right:20px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.front .bank-logos>img{margin-bottom:15px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back{display:flex;flex-direction:column;align-items:flex-end;bottom:0;right:0;background-color:#939393}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back .magnet-field{background-color:#000;height:45px;margin-right:-20px;margin-bottom:10px;margin-top:10px;width:100%}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back .tip1{margin-right:15px;margin-top:5px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back .cvc-cvv{width:75px;height:35px;margin-bottom:7px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back .tip2{font-family:Roboto;font-style:normal;font-weight:normal;font-size:10px;line-height:12px;color:#161615;margin-bottom:-2px;margin-right:13px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .book-button{position:relative;width:220px;height:45px;background-color:#710707;font-family:Roboto;font-style:normal;font-weight:normal;font-size:22px;line-height:26px;color:#fff;margin:27px 0 0 auto;overflow:hidden}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .book-button .circle{position:absolute;background-color:#fff;width:100px;height:100px;border-radius:50%;transform:translate(-50%, -50%) scale(0);animation:scale .5s ease-out}@keyframes scale{to{transform:translate(-50%, -50%) scale(3);opacity:0}}@media(max-width: 970px){.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .date-time input{width:100%}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .logo-wrapper h4::after{margin-bottom:20px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info{padding:25px 15px;width:100%}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .total-price{margin-bottom:12px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card{width:100%}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .book-button{margin:23px 0 0 auto}}@media(max-width: 504px){.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card{height:482px;margin:0 auto}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .front{left:50%;transform:translateX(-50%)}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .back{top:234px;left:50%;transform:translateX(-50%);bottom:0;right:0}}@media(max-width: 420px){.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper>img{width:120px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side{width:330px}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .credit-card .card-side.back .magnet-field{width:calc(100% + 40px)}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .ticket-info .ticket-info-wrapper .book-button{margin:5px 0 0 auto}.modal-buy .modal-content-wrapper .modal-content .deal-wrapper .user-info .logo-wrapper h2{font-size:32px;line-height:35px}}@media(max-width: 420px){.modal-buy .modal-content-wrapper{padding:0px 30px}.modal-buy .modal-content-wrapper .close-btn-wrapper{margin:0 0 0 auto}.modal-buy .modal-content-wrapper .modal-content{padding-top:20px}}
