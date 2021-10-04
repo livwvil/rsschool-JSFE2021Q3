@@ -2,6 +2,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Forum&display=swap");
+
+$bg-dark: #030303;
+$dark-red: #710707;
+$font-gold: #9d8665;
 img {
   // width: 100%;
 }
@@ -95,7 +99,7 @@ $dbg-borger: none;
     }
 
     li:hover {
-      color: gold;
+      color: $font-gold;
       cursor: pointer;
     }
   }
@@ -146,11 +150,13 @@ $dbg-borger: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #710707;
+      background-color: $dark-red;
       border-radius: 10px;
       width: 360px;
       height: 75px;
-
+      &:hover {
+        background-color: #9D8665;
+      }
       span {
         font-family: "Roboto", sans-serif;
         font-style: normal;
@@ -197,7 +203,14 @@ $dbg-borger: none;
           display: flex;
           justify-content: space-between;
           width: 180px;
-          list-style-type: none;
+          .thumb {
+            background-color: #fff;
+            width: 16px;
+            height: 16px;
+            &:hover {
+              background-color: $font-gold;
+            }
+          }
         }
         .arrows {
           display: flex;
@@ -207,6 +220,9 @@ $dbg-borger: none;
           font-size: 30px;
           .right {
             transform: scale(-1, 1);
+          }
+          *>img:hover {
+            filter: invert(57%) sepia(7%) saturate(1699%) hue-rotate(356deg) brightness(94%) contrast(83%);
           }
         }
       }
@@ -228,7 +244,7 @@ $dbg-borger: none;
     font-size: 80px;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: #9d8665;
+    color: $font-gold;
   }
 
   h2:after {
@@ -236,7 +252,7 @@ $dbg-borger: none;
     margin-top: 25px;
     margin-bottom: 75px;
     content: "";
-    background-color: #710707;
+    background-color: $dark-red;
     height: 3px;
   }
 
@@ -267,7 +283,7 @@ $dbg-borger: none;
         display: block;
         margin: 10px 0px;
         content: "";
-        background-color: #710707;
+        background-color: $dark-red;
         height: 2px;
         max-width: 68%;
         transition: all 0.2s ease-out;
@@ -315,7 +331,7 @@ $dbg-borger: none;
       margin-top: 25px;
       margin-bottom: 75px;
       content: "";
-      background-color: #710707;
+      background-color: $dark-red;
       height: 3px;
       width: 660px;
     }
@@ -363,7 +379,7 @@ $dbg-borger: none;
     align-items: center;
 
     h2 {
-      color: #9d8665;
+      color: $font-gold;
       font-family: Forum;
       font-style: normal;
       font-weight: normal;
@@ -406,8 +422,8 @@ $dbg-borger: none;
       .progress.timeline {
         background: linear-gradient(
           to right,
-          #710707 0%,
-          #710707 54%,
+          $dark-red 0%,
+          $dark-red 54%,
           #b3b3b3 54%,
           #b3b3b3 100%
         );
@@ -415,8 +431,8 @@ $dbg-borger: none;
       .progress.volume {
         background: linear-gradient(
           to right,
-          #710707 0%,
-          #710707 44%,
+          $dark-red 0%,
+          $dark-red 44%,
           #b3b3b3 44%,
           #b3b3b3 100%
         );
@@ -443,42 +459,9 @@ $dbg-borger: none;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      .poster {
-        position: relative;
-        display: flex;
-        .interface-wrapper {
-          position: absolute;
-          z-index: 1;
-          top: 15px;
-          left: 11px;
-          width: 405px;
-          .title {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            .name {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              span {
-                padding-left: 9px;
-                font-family: Roboto;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 18px;
-                line-height: 38px;
-                color: #ffffff;
-              }
-            }
-          }
-        }
-        .play-btn {
-          position: absolute;
-          top: 88px;
-          left: 181px;
-        }
+      iframe {
+        width: 452px;
+        height: 254px;
       }
     }
     .controls {
@@ -493,8 +476,10 @@ $dbg-borger: none;
         transform: scale(-1, 1);
       }
       img.active {
-        // TODO
-        fill: #000;
+        filter: invert(10%) sepia(3%) saturate(9%) hue-rotate(320deg) brightness(95%) contrast(74%);
+      }
+      img:hover {
+        filter: invert(11%) sepia(37%) saturate(7460%) hue-rotate(12deg) brightness(92%) contrast(116%);
       }
     }
   }
@@ -602,7 +587,7 @@ $dbg-borger: none;
     font-size: 80px;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: #9d8665;
+    color: $font-gold;
   }
 
   h2:after {
@@ -610,7 +595,7 @@ $dbg-borger: none;
     margin-top: 25px;
     margin-bottom: 75px;
     content: "";
-    background-color: #710707;
+    background-color: $dark-red;
     height: 3px;
   }
 
@@ -739,6 +724,7 @@ $dbg-borger: none;
           height: 50px;
           color: #fff;
           background-color: #000;
+          border-radius: 2px;
           border: none;
           font-family: Roboto;
           font-style: normal;
@@ -746,6 +732,10 @@ $dbg-borger: none;
           font-size: 22px;
           line-height: 26px;
           letter-spacing: 2px;
+          &:hover {
+            background-color: $font-gold;
+            color: #000;
+          }
         }
       }
     }
@@ -770,7 +760,7 @@ $dbg-borger: none;
     font-size: 80px;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: #9d8665;
+    color: $font-gold;
   }
 
   h2:after {
@@ -778,7 +768,7 @@ $dbg-borger: none;
     margin-top: 25px;
     margin-bottom: 75px;
     content: "";
-    background-color: #710707;
+    background-color: $dark-red;
     height: 3px;
   }
   .location {
@@ -846,7 +836,7 @@ $dbg-borger: none;
         }
 
         li:hover {
-          color: gold;
+          color: $font-gold;
           cursor: pointer;
         }
       }
@@ -863,7 +853,7 @@ $dbg-borger: none;
         margin-bottom: 32px;
       }
       img:hover {
-        border: 1px solid #9d8665;
+        border: 1px solid $font-gold;
         filter: invert(53%) sepia(39%) saturate(300%) hue-rotate(356deg)
           brightness(95%) contrast(90%);
       }
@@ -962,7 +952,7 @@ $dbg-borger: none;
               font-size: 50px;
               line-height: 55px;
               text-transform: uppercase;
-              color: #9d8665;
+              color: $font-gold;
               margin-top: -4px;
               margin-bottom: 15px;
             }
@@ -972,7 +962,7 @@ $dbg-borger: none;
               font-weight: normal;
               font-size: 18px;
               line-height: 21px;
-              color: #710707;
+              color: $dark-red;
 
               &::after {
                 display: block;
@@ -995,7 +985,7 @@ $dbg-borger: none;
             line-height: 21px;
             display: flex;
             align-items: center;
-            color: #030303;
+            color: $bg-dark;
           }
           select {
             height: 45px;
@@ -1058,7 +1048,7 @@ $dbg-borger: none;
               font-size: 18px;
               line-height: 20px;
               text-transform: capitalize;
-              color: #9d8665;
+              color: $font-gold;
 
               &::after {
                 display: block;
@@ -1077,7 +1067,7 @@ $dbg-borger: none;
               font-style: normal;
               font-weight: normal;
               font-size: 18px;
-              color: #030303;
+              color: $bg-dark;
               margin-bottom: 17px;
               .custom-btn2 {
                 display: flex;
@@ -1115,7 +1105,7 @@ $dbg-borger: none;
                   font-size: 18px;
                   line-height: 21px;
 
-                  color: #030303;
+                  color: $bg-dark;
                 }
               }
             }
@@ -1165,7 +1155,7 @@ $dbg-borger: none;
               font-weight: 300;
               font-size: 18px;
               line-height: 21px;
-              color: #030303;
+              color: $bg-dark;
               span {
                 margin-left: 15px;
               }
@@ -1187,7 +1177,7 @@ $dbg-borger: none;
                 font-weight: normal;
                 font-size: 22px;
                 line-height: 26px;
-                color: #030303;
+                color: $bg-dark;
                 .big-text {
                   display: flex;
                   align-items: flex-start;
@@ -1202,7 +1192,7 @@ $dbg-borger: none;
                     font-size: 18px;
                     line-height: 21px;
                     color: #a4a4a3;
-                    background-color: #030303;
+                    background-color: $bg-dark;
                     border-radius: 5px;
                   }
                 }
@@ -1226,7 +1216,7 @@ $dbg-borger: none;
               font-weight: normal;
               font-size: 32px;
               line-height: 37px;
-              color: #030303;
+              color: $bg-dark;
             }
             .credit-card {
               position: relative;
@@ -1335,7 +1325,7 @@ $dbg-borger: none;
               position: relative;
               width: 220px;
               height: 45px;
-              background-color: #710707;
+              background-color: $dark-red;
               font-family: Roboto;
               font-style: normal;
               font-weight: normal;

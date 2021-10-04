@@ -14,7 +14,7 @@ export function randomizeImages() {
   let imagesShuffled = Array.from(images);
   shuffleArray(imagesShuffled);
   imagesShuffled.forEach((image, idx) => {
-    image.src = `assets/img/galery${idx+1}.png`
+    image.src = `assets/img/galery${idx+1}.jpg`
   })
 }
 randomizeImages()
