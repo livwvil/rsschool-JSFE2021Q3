@@ -85,8 +85,8 @@ bookBtn?.addEventListener("click", function (e) {
 
 const burgerBtn: HTMLElement | null = document.querySelector(".burger");
 const navMenu: HTMLElement | null = document.querySelector(".mobile-nav");
-const welcomesectionBlock: HTMLElement | null = document.querySelector(
-  ".welcome-section-wrapper"
+const welcomeTextBlock: HTMLElement | null = document.querySelector(
+  ".welcome-text-wrapper"
 );
 const mobileMenuLiItems: NodeListOf<HTMLImageElement> =
   document.querySelectorAll(
@@ -100,7 +100,7 @@ const mobileMenuToggler = (e: MouseEvent) => {
   let menuClasses = navMenu?.classList;
   menuClasses?.toggle("active");
 
-  let welcomeTextBlockClassList = welcomesectionBlock?.classList;
+  let welcomeTextBlockClassList = welcomeTextBlock?.classList;
   welcomeTextBlockClassList?.toggle("hidden");
 
   e.stopPropagation();
