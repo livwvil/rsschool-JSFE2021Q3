@@ -959,7 +959,7 @@ $container-width: 1440px;
 }
 
 .ticket-section-wrapper {
-  margin-top: 75px;
+  @include choose(margin-top, 75px, 54px, 25px, 17px);
 
   h2 {
     font-family: "Forum", cursive;
@@ -974,8 +974,8 @@ $container-width: 1440px;
 
   h2:after {
     display: block;
-    margin-top: 25px;
-    margin-bottom: 75px;
+    @include choose(margin-top, 25px, 12px, 5px, -6px);
+    @include choose(margin-bottom, 75px, 60px, 40px, 40px);
     content: "";
     background-color: $dark-red;
     height: 3px;
@@ -984,7 +984,21 @@ $container-width: 1440px;
   .deal-wrapper {
     display: flex;
     @include choose(flex-direction, row, row, row, column);
-
+    .masterpice {
+      .tall {
+        @include choose(display, block, none, block, none);
+        @include choose(max-width, auto, auto, 444px, 444px);
+      }
+      .wide {
+        @include choose(display, none, block, none, block);
+        @media (max-width: $smallScreenWidth) {
+          & {
+            object-fit: cover;
+            height: 160px;
+          }
+        }
+      }
+    }
     .form-wrapper {
       .controls {
         @include choose(max-width, 721px, 721px, 721px, 721px);
@@ -999,7 +1013,11 @@ $container-width: 1440px;
           flex-end,
           flex-end
         );
-
+        @media (max-width: $smallScreenWidth) {
+          & {
+            margin-left: -103px;
+          }
+        }
         h4 {
           font-family: Roboto;
           font-style: normal;
@@ -1075,8 +1093,29 @@ $container-width: 1440px;
           display: flex;
           flex-direction: column;
           h4 {
-            margin-bottom: 25px;
+            @include choose(margin-bottom, 25px, 30px, 39px, 11px);
+            @include choose(margin-right, initial, 75px, 75px, 59px);
+            @include choose(margin-top, initial, initial, initial, 33px);
+            @media (max-width: $smallScreenWidth) {
+              & {
+                font-size: 16px;
+              }
+            }
             align-self: flex-end;
+          }
+          label {
+            @media (max-width: $smallScreenWidth) {
+              & {
+                font-size: 16px;
+              }
+            }
+          }
+          .custom-btn {
+            @include choose(margin-top, 15px, 10px, 10px, 10px);
+            @include choose(margin-bottom, 11px, 30px, 26px, 19px);
+            .number {
+              @include choose(width, 65px, 89px, 89px, 89px);
+            }
           }
         }
       }
@@ -1084,7 +1123,8 @@ $container-width: 1440px;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        margin-top: 40px;
+        @include choose(margin-top, 40px, -5px, 13px, -5px);
+        @include choose(margin-left, initial, 55px, 20px, 28px);
         h4 {
           font-family: Roboto;
           font-style: normal;
@@ -1092,9 +1132,22 @@ $container-width: 1440px;
           font-size: 28px;
           line-height: 33px;
           letter-spacing: 1.65px;
+          @include choose(margin-right, initial, 25px, 25px, 52px);
+        }
+        @media (max-width: $smallScreenWidth) {
+          & {
+            margin-right: 103px;
+          }
+          h4 {
+            margin-top: 20px;
+            font-size: 16px;
+            letter-spacing: 0px;
+          }
         }
         .buy-btn {
-          margin-top: 60px;
+          @include choose(margin-top, 60px, 70px, 41px, 33px);
+          @include choose(margin-left, initial, 25px, 40px, 40px);
+
           width: 175px;
           height: 50px;
           color: #fff;
@@ -1107,6 +1160,11 @@ $container-width: 1440px;
           font-size: 22px;
           line-height: 26px;
           letter-spacing: 2px;
+          @media (max-width: $smallScreenWidth) {
+            & {
+              font-size: 16px;
+            }
+          }
           &:hover {
             background-color: $font-gold;
             color: #000;
@@ -1117,16 +1175,16 @@ $container-width: 1440px;
   }
 
   .paralax {
-    margin-top: 71px;
+    @include choose(margin-top, 76px, 59px, 39px, 40px);
+    @include choose(height, 400px, 400px, 300px, 300px);
     width: 100%;
-    height: 400px;
     background-size: cover;
     background-attachment: fixed;
   }
 }
 
 .contacts-section-wrapper {
-  margin-top: 75px;
+  @include choose(margin-top, 75px, 53px, 25px, 16px);
   h2 {
     font-family: "Forum", cursive;
     font-style: normal;
@@ -1140,8 +1198,8 @@ $container-width: 1440px;
 
   h2:after {
     display: block;
-    margin-top: 25px;
-    margin-bottom: 75px;
+    @include choose(margin-top, 25px, 12px, 5px, -6px);
+    @include choose(margin-bottom, 75px, 60px, 40px, 40px);
     content: "";
     background-color: $dark-red;
     height: 3px;
@@ -1151,14 +1209,17 @@ $container-width: 1440px;
     @include choose(flex-direction, row, row, column, column);
     justify-content: space-between;
     .text {
+      @include choose(margin-bottom, 0px, 0px, 26px, 26px);
+
+      width: 401px;
       h4 {
         font-family: Roboto;
         font-style: normal;
         font-weight: 500;
         @include choose(font-size, 28px, 24px, 20px, 16px);
-        line-height: 33px;
+        @include choose(line-height, 33px, 28px, 23px, 19px);
         color: #000000;
-        margin-bottom: 51px;
+        @include choose(margin-bottom, 51px, 34px, 39px, 37px);
       }
       p {
         font-family: Roboto;
@@ -1168,7 +1229,7 @@ $container-width: 1440px;
         @include choose(font-size, 22px, 20px, 18px, 16px);
         line-height: 25px;
         color: #000000;
-        margin-bottom: 26px;
+        @include choose(margin-bottom, 26px, 13px, 11px, 9px);
 
         a {
           display: inline;
@@ -1180,8 +1241,8 @@ $container-width: 1440px;
 
 .footer-wrapper {
   .top-wrapper {
-    margin-top: 70px;
-    @include choose(padding-top, 84px, 65px, 50px, 16px);
+    @include choose(margin-top, 70px, 64px, 68px, 40px);
+    @include choose(padding-top, 84px, 65px, 50px, 41px);
     @include choose(margin-bottom, 22px, 20px, 17px, 16px);
     color: #fff;
     display: grid;
