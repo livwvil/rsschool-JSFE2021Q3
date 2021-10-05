@@ -86,7 +86,7 @@ $container-width: 1440px;
 .logo-container {
   display: flex;
   flex-direction: row;
-
+  align-items: flex-start;
   img {
     padding-right: 25px;
     @include choose(width, 49px, 49px, 49px, 29px);
@@ -131,18 +131,12 @@ $container-width: 1440px;
   nav .nav-menu {
     display: flex;
     flex-direction: row;
-
+    gap: 55px;
     :nth-child(5) {
-      margin-left: 60px;
+      margin-left: 5px;
     }
-
-    :nth-child(1) {
-      margin: 0;
-    }
-
     .nav-item {
       list-style-type: none;
-      margin-left: 55px;
       font-family: "Roboto", sans-serif;
       font-style: normal;
       font-weight: 100;
@@ -481,13 +475,20 @@ $container-width: 1440px;
 }
 
 .visiting-section-wrapper {
-  padding: 75px 0px;
+  @include choose(
+    padding,
+    75px 0px,
+    53px 0px 58px 0px,
+    27px 0px 79px 0px,
+    16px 0px 41px 0px
+  );
 
   h2 {
     font-family: "Forum", cursive;
     font-style: normal;
     font-weight: normal;
     line-height: 90px;
+    @include choose(font-size, 80px, 50px, 40px, 28px);
     font-size: 80px;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -496,19 +497,43 @@ $container-width: 1440px;
 
   h2:after {
     display: block;
-    margin-top: 24px;
-    margin-bottom: 75px;
+    @include choose(margin-top, 24px, 12px, 5px, -6px);
+    @include choose(margin-bottom, 75px, 60px, 40px, 40px);
     content: "";
     background-color: $dark-red;
-    height: 4px;
+    @include choose(height, 4px, 3px, 3px, 3px);
   }
 
   .gallery {
     display: grid;
+    @include choose(
+      grid-template-columns,
+      repeat(3, 1fr),
+      repeat(2, 1fr),
+      repeat(2, 1fr),
+      repeat(1, 1fr)
+    );
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
-    row-gap: 74px;
-    column-gap: 60px;
+    @include choose(row-gap, 76px, 60px, 39px, 39px);
+    @include choose(column-gap, 60px, 108px, 56px, 3px);
+    & {
+      :nth-child(odd) {
+        @include choose(justify-content, flex-end, flex-end, flex-end, center);
+      }
+      :nth-child(even) {
+        @include choose(
+          justify-content,
+          flex-start,
+          flex-start,
+          flex-start,
+          center
+        );
+      }
+    }
+    img {
+      @include choose(max-width, auto, 330px, 280px, 280px);
+    }
     .card:hover {
       h3:after {
         max-width: 100%;
@@ -517,38 +542,38 @@ $container-width: 1440px;
     }
     figcaption {
       h3 {
-        margin-top: 20px;
+        @include choose(margin-top, 20px, 20px, 15px, 11px);
         font-family: Forum;
         font-style: normal;
         font-weight: normal;
-        font-size: 32px;
+        @include choose(font-size, 32px, 28px, 22px, 18px);
+        @include choose(letter-spacing, 5px, 3px, 3px, 5px);
         line-height: 35px;
-        letter-spacing: 5px;
         text-transform: uppercase;
       }
       h3:after {
         display: block;
-        margin-top: 9px;
-        margin-bottom: 10px;
+        @include choose(margin-top, 9px, 6px, 3px, 3px);
+        @include choose(margin-bottom, 10px, 6px, 8px, 7px);
         content: "";
         background-color: $dark-red;
-        height: 3px;
-        max-width: 68%;
+        @include choose(height, 3px, 3px, 2px, 2px);
+        @include choose(max-width, 68%, 45%, 54%, 54%);
         transition: all 0.2s ease-out;
       }
       h4 {
         font-family: Roboto;
         font-style: normal;
         font-weight: 200;
-        font-size: 22px;
+        @include choose(font-size, 22px, 20px, 18px, 16px);
+        @include choose(margin-bottom, 10px, 10px, 6px, 5px);
         line-height: 26px;
-        margin-bottom: 10px;
       }
       h5 {
         font-family: Roboto;
         font-style: normal;
         font-weight: 200;
-        font-size: 18px;
+        @include choose(font-size, 18px, 16px, 16px, 16px);
         line-height: 21px;
       }
     }
@@ -557,70 +582,110 @@ $container-width: 1440px;
 
 .explore-section-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  // gap: 60px;
-  height: 715px;
+  grid-template-areas: ". .";
+  @media (max-width: $largeScreenWidth) {
+    grid-template-areas:
+      "."
+      ".";
+  }
+  justify-content: space-between;
+  @include choose(height, 715px, auto, 100%, 100%);
+
   color: #ffffff;
-  padding: 75px 0px;
+  @include choose(padding, 75px 0px, 55px 0px, 25px 0px, 15px 0px);
 
   .description {
-    max-width: 658px;
+    @include choose(width, 658px, 100%, 100%, 100%);
+    @media (max-width: 1440px) {
+      @include choose(width, calc((100vw / 1440px) * 658px), 100%, 100%, 100%);
+    }
     h2 {
       font-family: "Forum", cursive;
       font-style: normal;
       font-weight: normal;
       line-height: 90px;
-      font-size: 80px;
+      @include choose(font-size, 80px, 50px, 40px, 28px);
       letter-spacing: 5px;
       text-transform: uppercase;
     }
     h2:after {
       display: block;
-      margin-top: 25px;
-      margin-bottom: 75px;
+      @include choose(margin-top, 25px, 10px, 7px, -5px);
+      @include choose(margin-bottom, 75px, 61px, 20px, 26px);
       content: "";
       background-color: $dark-red;
       height: 3px;
-      width: 660px;
+      @include choose(width, 660px, 100%, 100%, 100%);
+      @media (max-width: 1440px) {
+        @include choose(
+          width,
+          calc((100vw / 1440px) * 660px),
+          100%,
+          100%,
+          100%
+        );
+      }
     }
     p {
       font-family: Roboto;
       font-style: normal;
       font-weight: 300;
-      font-size: 22px;
+      @include choose(font-size, 22px, 20px, 20px, 20px);
       line-height: 38px;
-      margin-bottom: 25px;
+      @include choose(margin-bottom, 25px, 0, null, null);
 
       mark {
         background-color: inherit;
         color: #caaa7d;
       }
+
+      & {
+        @include choose(display, block, block, none, none);
+      }
+      &:nth-of-type(3) {
+        @include choose(display, block, none, none, none);
+      }
     }
   }
 
   .tool {
-    padding-top: 14px;
+    max-width: 720px;
+    @media (max-width: 1440px) {
+      @include choose(
+        max-width,
+        calc((100vw / 1440px) * 720px),
+        100%,
+        100%,
+        100%
+      );
+    }
+    align-self: center;
+    @include choose(justify-self, start, center, center, center);
+    @include choose(margin-top, 14px, 56px, 20px, 14px);
+    @include choose(padding-bottom, 14px, 0px, 14px, 20px);
 
     .figure-wrapper {
       position: relative;
       img {
-        position: absolute;
+        // position: absolute;
         top: 0;
         left: 0;
       }
-      :nth-child(1) {
-        max-width: 440px;
-        z-index: 2;
+      .light,
+      .slider {
+        position: absolute;
       }
-      :nth-child(2) {
-        max-width: 39px;
-        left: 421px;
-        z-index: 3;
+      .light {
+        // max-width: 440px;
+        width: calc(100% * 0.61);
       }
-      :nth-child(3) {
+      .slider {
+        width: calc(100% * 0.0542);
+        // max-width: 39px;
+        left: calc(58% + 3px);
+      }
+      .dark {
         max-width: 720px;
-        left: 0;
-        z-index: 1;
       }
     }
   }
@@ -628,9 +693,21 @@ $container-width: 1440px;
 
 .video-section-wrapper {
   .heading {
-    margin: 75px 0px;
+    @include choose(
+      margin,
+      75px 0px,
+      55px 0px 32px 0px,
+      25px 0px 5px 0px,
+      11px 0px -6px 0px
+    );
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    @include choose(
+      grid-template-columns,
+      repeat(2, 1fr),
+      repeat(1, 1fr),
+      repeat(1, 1fr),
+      repeat(1, 1fr)
+    );
     align-items: center;
 
     h2 {
@@ -638,13 +715,14 @@ $container-width: 1440px;
       font-family: Forum;
       font-style: normal;
       font-weight: normal;
-      font-size: 80px;
+      @include choose(font-size, 80px, 50px, 40px, 28px);
       line-height: 90px;
       letter-spacing: 5px;
       text-transform: uppercase;
     }
 
     span {
+      @include choose(display, block, none, none, none);
       font-family: Roboto;
       font-style: normal;
       font-weight: 300;
@@ -657,21 +735,42 @@ $container-width: 1440px;
     display: flex;
     flex-direction: column;
     > button > img {
-      max-width: 220px;
+      @include choose(width, 220px, 152px, 80px, 50px);
       position: absolute;
-      top: 215px;
-      left: 610px;
+      @include choose(
+        top,
+        calc((100% - 85px) / 2),
+        calc((100% - 59px) / 2),
+        calc((100% - 59px) / 2),
+        calc((100% - 59px) / 2)
+      );
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
       z-index: 1;
     }
     .controls {
+      position: relative;
       display: flex;
       flex-direction: row;
       background-color: #000000;
       justify-content: space-between;
-      padding: 25px 30px;
+      align-items: center;
+      @include choose(padding, 25px 30px, 14px 40px, 11px 30px, 18px 20px);
+      .play-big-btn {
+      }
+      .play-btn {
+        @include choose(width, auto, 23px, 26px, 13px);
+      }
+      .volume-btn {
+        @include choose(width, auto, 26px, 26px, 18px);
+      }
+      .fullscreen-btn {
+        @include choose(width, auto, 26px, 26px, 18px);
+      }
       .progress {
-        margin-top: 14px;
+        // margin-top: 14px;
         height: 8px;
+        @include choose(height, 8px, 5px, 5px, 5px);
         width: 400px;
         -webkit-appearance: none;
       }
@@ -683,6 +782,11 @@ $container-width: 1440px;
           #b3b3b3 54%,
           #b3b3b3 100%
         );
+        @media (max-width: $mediumScreenWidth) {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+        }
       }
       .progress.volume {
         background: linear-gradient(
@@ -694,30 +798,53 @@ $container-width: 1440px;
         );
       }
       .progress::-webkit-slider-thumb {
-        width: 15px;
-        height: 15px;
+        @include choose(width, 15px, 15px, 10px, 10px);
+        @include choose(height, 15px, 15px, 10px, 10px);
         border-radius: 50%;
         -webkit-appearance: none;
         cursor: ew-resize;
         background: #fff;
       }
       .timeline {
-        width: 67%;
+        @include choose(width, 67%, 63%, 100%, 100%);
       }
       .volume {
-        width: 11%;
+        @include choose(width, 11%, 17%, 73%, 59%);
       }
     }
   }
   .video-gallery {
-    margin-top: 40px;
+    @include choose(margin-top, 40px, 35px, 20px, 40px);
     .gallery {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      display: grid;
+      @include choose(
+        grid-template-columns,
+        repeat(3, 1fr),
+        repeat(3, 1fr),
+        repeat(2, 1fr),
+        repeat(2, 1fr)
+      );
+      @include choose(gap, 42px, 42px, 20px, 20px);
       iframe {
-        width: 452px;
-        height: 254px;
+        max-width: 452px;
+        max-height: 254px;
+        width: 100%;
+        height: calc((1440px - 2 * 42px) / 3 * 0.562);
+        @media (max-width: 1440px) {
+          & {
+            @include choose(
+              height,
+              null,
+              calc((100vw - 42 * 2px) / 3 * 0.562),
+              calc((100vw - 20 * 1px - 20 * 2px) / 2 * 0.562),
+              calc((100vw - 20 * 1px - 20 * 2px) / 2 * 0.562)
+            );
+            height: calc((100vw - 2 * 42px) / 3 * 0.562);
+          }
+        }
+        &:nth-of-type(3) {
+          @include choose(display, block, block, none, none);
+        }
       }
     }
     .controls {
@@ -725,11 +852,11 @@ $container-width: 1440px;
       flex-direction: row;
       justify-content: space-between;
       margin: 0 auto;
-      margin-top: 40px;
-      max-width: 200px;
+      @include choose(margin-top, 40px, 40px, 21px, 38px);
+      @include choose(max-width, 200px, 200px, 189px, 179px);
       background-color: #fff;
       > img {
-        max-width: 12px;
+        @include choose(max-width, 12px, 12px, 10px, 8px);
       }
       .left {
         transform: scale(-1, 1);
@@ -747,42 +874,37 @@ $container-width: 1440px;
 }
 
 .gallery-section-wrapper {
-  margin-top: 75px;
+  @include choose(margin-top, 75px, 60px, 80px, 38px);
   position: relative;
   h2 {
-    padding-top: 75px;
+    @include choose(padding-top, 75px, 52px, 25px, 16px);
     color: #fff;
     font-family: Forum;
     font-style: normal;
     font-weight: normal;
-    font-size: 80px;
+    @include choose(font-size, 80px, 50px, 40px, 28px);
     line-height: 90px;
     letter-spacing: 5px;
     text-transform: uppercase;
   }
   .art-gallery {
-    margin-top: 75px;
+    @include choose(margin-top, 75px, 53px, 53px, 14px);
     display: flex;
     justify-content: space-between;
-    .col1 {
-      margin-top: 50px;
+    @include choose(gap, 36px, 36px, 24px, 24px);
+    * {
       display: flex;
       flex-direction: column;
-      // justify-content: flex-end;
       gap: 24px;
     }
+    .col1 {
+      margin-top: 50px;
+    }
     .col2 {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
     }
     .col3 {
       margin-top: 50px;
-      display: flex;
-      // justify-content: flex-end;
-      flex-direction: column;
-      gap: 24px;
-      // padding-bottom: 14px;
+      @include choose(display, flex, flex, none, none);
     }
     > img {
       border: 1px solid white;
@@ -798,7 +920,6 @@ $container-width: 1440px;
 .custom-btn {
   margin-top: 15px;
   margin-bottom: 11px;
-  // margin-right: 10px;
   display: flex;
   justify-content: space-between;
   border: 3px solid #000;
@@ -845,7 +966,7 @@ $container-width: 1440px;
     font-style: normal;
     font-weight: normal;
     line-height: 90px;
-    font-size: 80px;
+    @include choose(font-size, 80px, 50px, 40px, 28px);
     letter-spacing: 5px;
     text-transform: uppercase;
     color: $font-gold;
@@ -862,13 +983,23 @@ $container-width: 1440px;
 
   .deal-wrapper {
     display: flex;
-    flex-direction: row;
+    @include choose(flex-direction, row, row, row, column);
 
     .form-wrapper {
       .controls {
-        width: 721px;
+        @include choose(max-width, 721px, 721px, 721px, 721px);
+        @include choose(width, 721px, 100%, 100%, 100%);
+
+        // width: 100%;
         display: flex;
-        justify-content: space-between;
+        @include choose(
+          justify-content,
+          space-between,
+          flex-end,
+          flex-end,
+          flex-end
+        );
+
         h4 {
           font-family: Roboto;
           font-style: normal;
@@ -884,6 +1015,8 @@ $container-width: 1440px;
           line-height: 26px;
         }
         .left {
+          @include choose(display, block, none, none, none);
+
           margin-left: 60px;
           h4 {
             margin-bottom: 51px;
@@ -999,7 +1132,7 @@ $container-width: 1440px;
     font-style: normal;
     font-weight: normal;
     line-height: 90px;
-    font-size: 80px;
+    @include choose(font-size, 80px, 50px, 40px, 28px);
     letter-spacing: 5px;
     text-transform: uppercase;
     color: $font-gold;
@@ -1015,14 +1148,14 @@ $container-width: 1440px;
   }
   .location {
     display: flex;
-    flex-direction: row;
+    @include choose(flex-direction, row, row, column, column);
     justify-content: space-between;
     .text {
       h4 {
         font-family: Roboto;
         font-style: normal;
         font-weight: 500;
-        font-size: 28px;
+        @include choose(font-size, 28px, 24px, 20px, 16px);
         line-height: 33px;
         color: #000000;
         margin-bottom: 51px;
@@ -1032,6 +1165,7 @@ $container-width: 1440px;
         font-style: normal;
         font-weight: 300;
         font-size: 22px;
+        @include choose(font-size, 22px, 20px, 18px, 16px);
         line-height: 25px;
         color: #000000;
         margin-bottom: 26px;
@@ -1045,45 +1179,97 @@ $container-width: 1440px;
 }
 
 .footer-wrapper {
-  .top {
+  .top-wrapper {
     margin-top: 70px;
-    padding-top: 84px;
+    @include choose(padding-top, 84px, 65px, 50px, 16px);
+    @include choose(margin-bottom, 22px, 20px, 17px, 16px);
     color: #fff;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    .navigation {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      nav {
-        display: flex;
-        flex-direction: row;
+    // grid-template-columns: repeat(auto-fit, auto);
+    grid-template-rows: repeat(2, 1fr);
+
+    grid-template-areas:
+      "a b . ."
+      ". b . c";
+    @media (max-width: $mediumScreenWidth) {
+      & {
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-areas:
+          "a . b b"
+          ". . b b"
+          ". c c c";
       }
+    }
+    @media (max-width: $smallScreenWidth) {
+      & {
+        grid-template-areas:
+          "a a a"
+          "b b b"
+          "c c c";
+      }
+    }
+    width: 100%;
+    .logo-container {
+      grid-area: a;
+      display: flex;
+      align-items: flex-start;
+      max-width: 195px;
+      min-width: 131px;
+    }
+    nav {
+      grid-area: b;
+      max-width: 393px;
+      min-width: 190px;
       .nav-menu {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding-top: 4px;
-        padding-left: 142px;
-        padding-right: 30px;
-        li {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-areas:
+          ". ."
+          ". ."
+          ". .";
+        @media (max-width: $smallScreenWidth) {
+          & {
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-areas:
+              ". . ."
+              ". . .";
+          }
+        }
+        grid-auto-flow: column;
+        row-gap: 26px;
+        justify-items: flex-start;
+
+        .nav-item {
           list-style-type: none;
-          margin-bottom: 26px;
+          // margin-bottom: 26px;
           font-family: "Roboto", sans-serif;
           font-style: normal;
           font-weight: 100;
-          font-size: 22px;
+          @include choose(justify-self, start, start, start, center);
+          @include choose(font-size, 22px, 22px, 18px, 16px);
           letter-spacing: 2px;
           color: #ffffff;
-        }
-
-        li:hover {
-          color: $font-gold;
-          cursor: pointer;
+          // &:nth-child(1n + 4) {
+          // @include choose(margin-left, 140px, 100px, 140px, 140px);
+          // }
+          &:hover {
+            color: $font-gold;
+            cursor: pointer;
+          }
         }
       }
     }
-    padding-bottom: 25px;
+    .social {
+      grid-area: c;
+      max-width: 340px;
+      min-width: 260px;
+      @include choose(align-self, start, start, center, end);
+      @include choose(justify-self, end, end, center, center);
+      gap: 25px;
+      img {
+        margin-left: 0px;
+      }
+    }
   }
   hr {
     border: none;
@@ -1095,17 +1281,22 @@ $container-width: 1440px;
     color: #fff;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding-top: 51px;
+    @include choose(padding-top, 51px, 51px, 41px, 41px);
     padding-bottom: 75px;
     font-family: Roboto;
     font-style: normal;
     font-weight: 200;
-    font-size: 22px;
+    @include choose(font-size, 22px, 22px, 22px, 16px);
     line-height: 22px;
     letter-spacing: 2px;
     :nth-child(2) {
-      margin-left: 34px;
+      @media (max-width: 540px) {
+        & {
+          display: none;
+        }
+      }
     }
   }
 }
