@@ -405,7 +405,7 @@ $container-width: 1440px;
       display: flex;
       justify-content: center;
       align-items: center;
-      @include choose(width, 600px, 500px, 100%, 100%);
+      @include choose(max-width, 600px, 500px, 100%, 100%);
       @include choose(height, 120px, 120px, 90px, 73px);
       height: 120px;
       background-color: #000000;
@@ -1210,8 +1210,7 @@ $container-width: 1440px;
     justify-content: space-between;
     .text {
       @include choose(margin-bottom, 0px, 0px, 26px, 26px);
-
-      width: 401px;
+      @include choose(width, 401px, 401px, 100%, 100%);
       h4 {
         font-family: Roboto;
         font-style: normal;
