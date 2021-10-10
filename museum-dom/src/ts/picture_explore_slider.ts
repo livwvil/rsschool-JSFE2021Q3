@@ -4,16 +4,16 @@ const backImg: HTMLImageElement | null = document.querySelector("#p-dark");
 const frontImgContainer: HTMLElement | null =
   document.querySelector("#light-container");
 
-  export function activatePeSlider() {
-    if (!peSliderImg || !frontImgContainer || !backImg) {
-      return;
-    }
-
-    backImg.addEventListener("load", () => {
-      // console.log("slider init started");
-      initPeSlider();
-    })
+export function activatePeSlider() {
+  if (!peSliderImg || !frontImgContainer || !backImg) {
+    return;
   }
+
+  backImg.addEventListener("load", () => {
+    // console.log("slider init started");
+    initPeSlider();
+  });
+}
 
 function initPeSlider() {
   if (!peSliderImg || !frontImgContainer || !backImg) {
@@ -72,32 +72,29 @@ function initPeSlider() {
 
   var isSlideiPicked = false;
 
-  document.addEventListener(
-    "mouseup",
-    (e: MouseEvent) => {
-      isSlideiPicked = false;
-    },
-    true
-  );
+  const handleStopSlide = (e: Event) => {
+    // e.preventDefault();
+    isSlideiPicked = false;
+  };
+  document.addEventListener("touchend", handleStopSlide, true);
+  document.addEventListener("mouseup", handleStopSlide, true);
 
-  peSliderImg.addEventListener(
-    "mousedown",
-    (e: MouseEvent) => {
-      isSlideiPicked = true;
-    },
-    true
-  );
+  const handleStartSlide = (e: Event) => {
+    isSlideiPicked = true;
+  };
+  peSliderImg.addEventListener("mousedown", handleStartSlide, true);
+  peSliderImg.addEventListener("touchstart", handleStartSlide, true);
 
-  document.addEventListener(
-    "mousemove",
-    (e: MouseEvent) => {
-      if (isSlideiPicked) {
-        e.preventDefault();
-        applySlider(e.clientX - peSliderImg.getBoundingClientRect().width / 2);
-      }
-    },
-    true
-  );
+  const handleMoveSlider = (e: MouseEvent | TouchEvent) => {
+    if (isSlideiPicked) {
+      e.preventDefault();
+      const pointerPos =
+        e instanceof MouseEvent ? e.clientX : e.changedTouches[0].clientX;
+      applySlider(pointerPos - peSliderImg.getBoundingClientRect().width / 2);
+    }
+  };
+  document.addEventListener("mousemove", handleMoveSlider, true);
+  document.addEventListener("touchmove", handleMoveSlider, true);
 
   applySlider(
     backImg.getBoundingClientRect().x +

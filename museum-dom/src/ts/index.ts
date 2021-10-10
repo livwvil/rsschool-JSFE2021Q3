@@ -2,8 +2,7 @@ import "../sass/style.scss";
 import { activatePeSlider } from "./picture_explore_slider";
 import { printSelfcheck } from "./self_check";
 import { shuffleArray } from "./tools";
-
-
+import { activateWelcomeSlider } from "./welcome_slider";
 
 export function randomizeImages() {
   let images: NodeListOf<HTMLImageElement> =
@@ -86,9 +85,7 @@ const welcomeTextBlock: HTMLElement | null = document.querySelector(
   ".welcome-text-wrapper"
 );
 const mobileMenuLiItems: NodeListOf<HTMLImageElement> =
-  document.querySelectorAll(
-    ".mobile-nav .nav-menu .nav-item"
-  );
+  document.querySelectorAll(".mobile-nav .nav-menu .nav-item");
 const mobileMenuBelongItems = [burgerBtn, ...mobileMenuLiItems];
 const mobileMenuToggler = (e: MouseEvent) => {
   let burgerClasses = burgerBtn?.classList;
@@ -113,7 +110,8 @@ document.addEventListener("click", (e: MouseEvent) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // console.log("DOMContentLoaded");
+  activateWelcomeSlider();
   activatePeSlider();
-  printSelfcheck(false)
+
+  printSelfcheck(false);
 });
