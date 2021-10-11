@@ -34,6 +34,7 @@ function timelineListener() {
   if (timeline) timeline.style.background = style;
 }
 timeline?.addEventListener("input", timelineListener);
+timeline?.addEventListener("change", timelineListener);
 
 let volume: HTMLInputElement | null =
   document.querySelector(".progress.volume");

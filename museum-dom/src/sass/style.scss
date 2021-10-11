@@ -843,14 +843,14 @@ $container-width: 1440px;
   .video-gallery {
     @include choose(margin-top, 40px, 35px, 20px, 40px);
     .gallery {
-      display: grid;
-      @include choose(
-        grid-template-columns,
-        repeat(3, 1fr),
-        repeat(3, 1fr),
-        repeat(2, 1fr),
-        repeat(2, 1fr)
-      );
+      // display: grid;
+      // @include choose(
+      //   grid-template-columns,
+      //   repeat(3, 1fr),
+      //   repeat(3, 1fr),
+      //   repeat(2, 1fr),
+      //   repeat(2, 1fr)
+      // );
       @include choose(gap, 42px, 42px, 20px, 20px);
       iframe {
         max-width: 452px;
@@ -884,17 +884,22 @@ $container-width: 1440px;
       background-color: #fff;
       > img {
         @include choose(max-width, 12px, 12px, 10px, 8px);
+        filter: invert(64%) sepia(31%) saturate(0%) hue-rotate(178deg)
+          brightness(89%) contrast(93%);
+        // &.active {
+        //   background-color: #d2b183;
+        // }
       }
       .left {
         transform: scale(-1, 1);
       }
       img.active {
-        filter: invert(10%) sepia(3%) saturate(9%) hue-rotate(320deg)
-          brightness(95%) contrast(74%);
+        filter: invert(12%) sepia(21%) saturate(0%) hue-rotate(183deg)
+          brightness(102%) contrast(81%);
       }
       img:hover {
-        filter: invert(11%) sepia(37%) saturate(7460%) hue-rotate(12deg)
-          brightness(92%) contrast(116%);
+        filter: invert(11%) sepia(95%) saturate(2338%) hue-rotate(346deg)
+          brightness(92%) contrast(109%);
       }
     }
   }
