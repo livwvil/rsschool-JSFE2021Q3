@@ -18,7 +18,7 @@ export function randomizeImages() {
   });
 }
 
-// randomizeImages();
+randomizeImages();
 
 let timeline: HTMLInputElement | null =
   document.querySelector(".progress.timeline");
@@ -166,5 +166,5 @@ document.addEventListener("DOMContentLoaded", () => {
   activateTickets();
   activateModalBuy();
   mapQuickFix();
-  printSelfcheck(false);
+  printSelfcheck();
 });
