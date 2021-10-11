@@ -50,6 +50,7 @@ function volumeListener() {
   if (volume) volume.style.background = style;
 }
 volume?.addEventListener("input", volumeListener);
+volume?.addEventListener("change", volumeListener);
 
 const buyBtn: HTMLElement | null = document.querySelector(".buy-btn");
 const closeBtn: HTMLElement | null = document.querySelector(".close-btn");

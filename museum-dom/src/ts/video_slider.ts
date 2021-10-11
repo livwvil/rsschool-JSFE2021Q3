@@ -10,8 +10,17 @@ let bigPlayBtn: HTMLImageElement | null = document.querySelector(
 let progress: HTMLInputElement | null = document.querySelector(
   "#video .progress.timeline"
 );
-let littlePlayBtn: HTMLImageElement | null =
-  document.querySelector("#video .play-btn img");
+let volume: HTMLInputElement | null = document.querySelector(
+  "#video .progress.volume"
+);
+let littlePlayBtn: HTMLImageElement | null = document.querySelector(
+  "#video .play-btn img"
+);
+
+let volumeBtn: HTMLImageElement | null = document.querySelector(
+  "#video .volume-btn img"
+);
+
 const thumbs: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
   "#video .video-gallery .controls .thumb"
 );
@@ -49,8 +58,6 @@ function initWelcomeSlider() {
 
   swiper.on("slideChange", function (e) {
     const imgIndex = e.realIndex + 1;
-
-    console.log(imgIndex);
 
     if (mainVideo) {
       const idxFromZero = imgIndex - 1;
@@ -113,19 +120,29 @@ function getProgressByTime(current: number, total: number) {
   return isFinite(progress) ? progress : 0;
 }
 function getTimeByProgress(progress: number, total: number) {
-  return total * progress / 100
+  return (total * progress) / 100;
 }
 
 function initMainVideoControls() {
-  if(!progress) {
-    return
+  if (
+    !progress ||
+    !mainVideo ||
+    !volumeBtn ||
+    !bigPlayBtn ||
+    !littlePlayBtn ||
+    !volume
+  ) {
+    return;
   }
 
   progress.value = "0";
   progress.dispatchEvent(new Event("change"));
-  
+
+  volume.value = "100";
+  volume.dispatchEvent(new Event("change"));
+
   [bigPlayBtn, littlePlayBtn, mainVideo].forEach((btn) => {
-    btn?.addEventListener("click", (e:Event) => {
+    btn?.addEventListener("click", (e: Event) => {
       if (mainVideo?.paused) {
         mainVideo?.play();
         mainVideoPlayView();
@@ -133,11 +150,11 @@ function initMainVideoControls() {
         mainVideo?.pause();
         mainVideoPauseView();
       }
-      e.stopPropagation()
+      e.stopPropagation();
     });
   });
-  
-  mainVideo?.addEventListener("timeupdate", (e) => {
+
+  mainVideo.addEventListener("timeupdate", (e) => {
     const timeProgress = getProgressByTime(
       mainVideo?.currentTime || 0,
       mainVideo?.duration || 0
@@ -147,17 +164,67 @@ function initMainVideoControls() {
       progress.dispatchEvent(new Event("change"));
       if (100 - timeProgress <= 0.5) {
         mainVideoStopView();
-        // mainVideo?.pause();
       }
     }
   });
 
-  progress?.addEventListener("input", () => {
-    if(!progress || !mainVideo) {
-      return
+  progress.addEventListener("input", () => {
+    if (!progress || !mainVideo) {
+      return;
     }
     const value = Math.round(Number.parseFloat(progress.value));
-    mainVideo.currentTime = getTimeByProgress(value, mainVideo.duration)
+    mainVideo.currentTime = getTimeByProgress(value, mainVideo.duration);
+  });
+
+  volumeBtn.addEventListener("click", () => {
+    if (mainVideo && volumeBtn) {
+      if (mainVideo.muted && mainVideo.volume !== 0) {
+        mainVideo.muted = false;
+        volumeBtn.src = "assets/svg/volume_control_mini.svg";
+      } else {
+        mainVideo.muted = true;
+        volumeBtn.src = "assets/svg/mute.svg";
+      }
+    }
+  });
+
+  volume.addEventListener("input", () => {
+    if (!volume || !mainVideo || !volumeBtn) {
+      return;
+    }
+    const value = Math.round(Number.parseFloat(volume.value));
+    mainVideo.volume = value / 100;
+
+    if (value <= 0.05) {
+      volume.value = "0";
+      mainVideo.volume = 0;
+      mainVideo.muted = true;
+      volumeBtn.src = "assets/svg/mute.svg";
+    } else {
+      mainVideo.muted = false;
+      volumeBtn.src = "assets/svg/volume_control_mini.svg";
+    }
+  });
+
+  document.addEventListener("keyup", (e: KeyboardEvent) => {
+    if (!mainVideo) {
+      return;
+    }
+
+    const pos = mainVideo.getBoundingClientRect().top;
+    const screenHeight =
+      window.innerHeight || document.documentElement.clientHeight;
+    if (pos <= screenHeight) {
+      e.preventDefault();
+      if (e.key === " ") {
+        littlePlayBtn?.click();
+      }
+      if (e.key === "m") {
+        volumeBtn?.click();
+      }
+      if (e.key === "f") {
+      }
+    }
   });
 }
 const fixPlayingTogether = () => {
