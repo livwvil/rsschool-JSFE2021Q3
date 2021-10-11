@@ -6,3 +6,20 @@ export function shuffleArray(array: any[]) {
     array[j] = temp;
   }
 }
+
+export const addRule = (function (style) {
+  const sheet: CSSStyleSheet | null = document.head.appendChild(style).sheet;
+  return function (selector: string, css: string | { [key: string]: string }) {
+    var propText =
+      typeof css === "string"
+        ? css
+        : Object.keys(css)
+            .map(function (p) {
+              return p + ":" + (p === "content" ? "'" + css[p] + "'" : css[p]);
+            })
+            .join(";");
+    if (sheet) {
+      sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
+    }
+  };
+})(document.createElement("style"));

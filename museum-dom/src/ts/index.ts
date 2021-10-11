@@ -1,6 +1,8 @@
 import "../sass/style.scss";
+import { activateModalBuy } from "./modal_buy";
 import { activatePeSlider } from "./picture_explore_slider";
 import { printSelfcheck } from "./self_check";
+import { activateTickets } from "./tickets";
 import { shuffleArray } from "./tools";
 import { activateWelcomeSlider } from "./welcome_slider";
 
@@ -109,9 +111,52 @@ document.addEventListener("click", (e: MouseEvent) => {
   }
 });
 
+// function mapQuickFix() {
+//   const text: HTMLElement | null = document.querySelector("#contacts text");
+//   const mapWrapper: HTMLElement | null =
+//     document.querySelector("#contacts map");
+//   const alignContainer: HTMLElement | null =
+//     document.querySelector("#contacts");
+
+//   if (!alignContainer || !mapWrapper || !text) {
+//     return;
+//   }
+
+//   const fixSliderMaxWidth = () => {
+//     const currentwelcomeTextWidth = text.getBoundingClientRect().width;
+//     const alignContainerStyles = window.getComputedStyle(alignContainer);
+
+//     const alignContainerWidth = alignContainer.getBoundingClientRect().width;
+//     const alignContainerPaddingLeft = Number.parseFloat(
+//       alignContainerStyles.paddingLeft
+//     );
+//     const alignContainerPaddingRight = Number.parseFloat(
+//       alignContainerStyles.paddingRight
+//     );
+
+//     const calculatedMapWidth =
+//       alignContainerWidth -
+//       (alignContainerPaddingLeft + alignContainerPaddingRight * 2) -
+//       currentwelcomeTextWidth;
+
+//     const newMapWidth =
+//       window.innerWidth <= 768
+//         ? "none"
+//         : `${Math.min(1000, calculatedMapWidth)}px`;
+
+//     mapWrapper.style.width = newMapWidth;
+//     mapWrapper.style.height = `${newMapWidth*(620/960)}px`;
+//   };
+
+//   window.addEventListener("resize", fixSliderMaxWidth);
+
+//   fixSliderMaxWidth();
+// }
+
 document.addEventListener("DOMContentLoaded", () => {
   activateWelcomeSlider();
   activatePeSlider();
-
+  activateTickets();
+  activateModalBuy();
   printSelfcheck(false);
 });

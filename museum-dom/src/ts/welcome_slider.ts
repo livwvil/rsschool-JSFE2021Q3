@@ -99,10 +99,6 @@ function welcomeSliderQuickFix() {
         ? "none"
         : `${Math.min(1000, calculatedSliderWidth)}px`;
 
-    if (newSliderWidth === "0px") {
-      debugger;
-    }
-
     [...sliderImgs, sliderWrapper].forEach((item) => {
       item.style.maxWidth = newSliderWidth;
     });

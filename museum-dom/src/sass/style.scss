@@ -1212,6 +1212,18 @@ $container-width: 1440px;
 
 .contacts-section-wrapper {
   @include choose(margin-top, 75px, 53px, 25px, 16px);
+  .map {
+    // @include choose(width, 960px, 682px, 711px, 363px);
+    // @include choose(height, 620px, 440px, 459px, 234px);
+    // flex: 3 0 auto;
+    // flex-grow: 1;
+    iframe {
+      width: 960px;
+      height: 620px;
+      // width: 100%;
+      // height: 100%;
+    }
+  }
   h2 {
     font-family: "Forum", cursive;
     font-style: normal;
@@ -1476,6 +1488,45 @@ $container-width: 1440px;
               }
             }
           }
+          // #modal-name-input:invalid {
+          //   border: 2px solid red;
+          // }
+          // #modal-email-input:invalid {
+          //   border: 2px solid red;
+          // }
+          // #modal-tel-input:invalid {
+          //   border: 2px solid red;
+          // }
+          .form__error {
+            color: rgb(223, 97, 97);
+            text-align: left;
+            font-size: 12px;
+            display: block;
+            margin-top: 3px;
+            display: none;
+            position: absolute;
+            z-index: 12;
+            border: 1px solid black;
+            background-color: #fff;
+            box-shadow: 10px 10px 40px -1px rgb(0 0 0 / 23%);
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 5px;
+          }
+          #modal-name-input:invalid:not(:placeholder-shown),
+          #modal-email-input:invalid:not(:placeholder-shown),
+          #modal-tel-input:invalid:not(:placeholder-shown) {
+            border-color: red;
+          }
+          #modal-name-input:invalid:not(:placeholder-shown):focus
+            + .form__error,
+          #modal-email-input:invalid:not(:placeholder-shown):focus
+            + .form__error,
+          #modal-tel-input:invalid:not(:placeholder-shown):focus
+            + .form__error {
+            display: block;
+          }
+
           input,
           select {
             height: 45px;

@@ -8,7 +8,7 @@
     <link rel="icon" href="./assets/favicon.ico" type="image/ico" />
   </head>
   <body>
-    <section class="modal-buy">
+    <section id="modal-buy" class="modal-buy">
       <div class="modal-content-wrapper">
         <div class="close-btn-wrapper">
           <img class="close-btn" src="./assets/svg/close.svg" alt="" />
@@ -31,6 +31,7 @@
                     onmouseover="this.nextElementSibling.focus()"
                   />
                   <input
+                    id="modal-date"
                     type="text"
                     name="date"
                     placeholder="Date"
@@ -47,6 +48,7 @@
                     onmouseover="this.nextElementSibling.focus()"
                   />
                   <input
+                    id="modal-time"
                     type="text"
                     name="time"
                     placeholder="Time"
@@ -57,28 +59,66 @@
               </div>
               <div class="custom-input">
                 <img class="icon" src="./assets/svg/icon_name.svg" alt="" />
-                <input type="text" name="name" placeholder="Name" id="" />
+                <input
+                  type="text"
+                  name="name"
+                  pattern="[A-Za-zА-Яа-я\s]{3,15}"
+                  placeholder="Name"
+                  id="modal-name-input"
+                />
+                <span class="form__error"
+                  >Имя пользователя должно содержать от 3 до 15 символов, в
+                  качестве символов могут быть использованы буквы английского
+                  или русского алфавита в нижнем или верхнем регистре и
+                  пробелы</span
+                >
               </div>
               <div class="custom-input">
                 <img class="icon" src="./assets/svg/icon_email.svg" alt="" />
-                <input type="email" name="email" placeholder="E-mail" id="" />
+                <input
+                  type="email"
+                  name="email"
+                  pattern="^[\w\-]{3,15}@[A-Za-z]{4,}\.[A-Z-a-z]{2,}$"
+                  placeholder="E-mail"
+                  id="modal-email-input"
+                />
+                <span class="form__error"
+                  >Введите e-mail вида username@example.com, где: username - имя
+                  пользователя, должно содержать от 3 до 15 символов (буквы,
+                  цифры, знак подчёркивания, дефис), не должно содержать
+                  пробелов; @ - символ собачки; example - домен первого уровня
+                  состоит минимум из 4 латинских букв; com - домен верхнего
+                  уровня, отделяется от домена первого уровня точкой и состоит
+                  минимум из 2 латинских букв</span
+                >
               </div>
               <div class="custom-input">
                 <img class="icon" src="./assets/svg/icon_tel.svg" alt="" />
-                <input type="tel" name="phone" placeholder="Phone" id="" />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  id="modal-tel-input"
+                />
+                <span class="form__error"
+                  >Номер телефона должен содержать только цифры; без разделения
+                  или с разделением на две или три цифры; разделение цифр может
+                  быть через дефис или пробел; с ограничением по количеству
+                  цифр: не больше 10 цифр</span
+                >
               </div>
               <div class="custom-select">
                 <img class="icon" src="./assets/svg/icon_ballot.svg" alt="" />
                 <img class="arrow" src="./assets/svg/icon_arrow.svg" alt="" />
                 <select name="tt">
                   <option value disabled selected hidden>Ticket Type</option>
-                  <option class="ticket_option" value="1">
+                  <option class="ticket_option" value="permanent">
                     Permanent exhibition
                   </option>
-                  <option class="ticket_option" value="2">
+                  <option class="ticket_option" value="temporary">
                     Temporary exhibition
                   </option>
-                  <option class="ticket_option" value="3">
+                  <option class="ticket_option" value="combined">
                     Combined Admission
                   </option>
                 </select>
@@ -86,7 +126,10 @@
               <div class="amount-wrapper">
                 <h3>Entry Ticket</h3>
                 <div class="category">
-                  <label for="basic">Basic 18+ (20 €)</label>
+                  <label for="basic"
+                    >Basic 18+ (<span id="entry-ticket-basic-price">20</span>
+                    €)</label
+                  >
                   <div class="custom-btn2">
                     <button
                       type="button"
@@ -98,9 +141,10 @@
                       class="number"
                       type="number"
                       name="basic"
-                      id="basic"
+                      id="modal-basic"
                       min="0"
                       max="20"
+                      onkeydown="return false"
                       value="1"
                     />
                     <button
@@ -112,7 +156,10 @@
                   </div>
                 </div>
                 <div class="category last">
-                  <label for="senior">Senior 65+ (10 €)</label>
+                  <label for="senior"
+                    >Senior 65+ (<span id="entry-ticket-senior-price">10</span>
+                    €)</label
+                  >
                   <div class="custom-btn2">
                     <button
                       type="button"
@@ -124,9 +171,10 @@
                       class="number"
                       type="number"
                       name="senior"
-                      id="senior"
+                      id="modal-senior"
                       min="0"
                       max="20"
+                      onkeydown="return false"
                       value="1"
                     />
                     <button
@@ -146,39 +194,53 @@
                 <img src="./assets/img/ticket.png" alt="" />
                 <div class="text">
                   <img src="./assets/svg/icon_date.svg" alt="" />
-                  <span>Friday, August 19</span>
+                  <span id="modal-overview-date">Friday, August 19</span>
                 </div>
                 <div class="text">
                   <img src="./assets/svg/icon_time.svg" alt="" />
-                  <span>16 : 30</span>
+                  <span id="modal-overview-time">16 : 30</span>
                 </div>
                 <div class="text">
                   <img
                     src="./assets/svg/icon_check_circle_outline.svg"
                     alt=""
                   />
-                  <span>Temporary exhibition</span>
+                  <span id="modal-overview-ticket-type"
+                    >Temporary exhibition</span
+                  >
                 </div>
                 <div class="price">
                   <div class="price-basic">
                     <div class="big-text">
-                      <span class="amount">2</span>
-                      <span class="type">Basic (20 €)</span>
+                      <span id="modal-overview-basic-amount" class="amount"
+                        >2</span
+                      >
+                      <span class="type"
+                        >Basic (<span id="modal-overview-basic-price">20</span>
+                        €)</span
+                      >
                     </div>
-                    <span class="calculated-price">40 €</span>
+                    <span><span class="calculated-price">40</span> €</span>
                   </div>
                   <div class="price-senior">
                     <div class="big-text">
-                      <span class="amount">2</span>
-                      <span class="type">Senior (10 €)</span>
+                      <span id="modal-overview-senior-amount" class="amount"
+                        >2</span
+                      >
+                      <span class="type"
+                        >Senior (<span id="modal-overview-senior-price"
+                          >10</span
+                        >
+                        €)</span
+                      >
                     </div>
-                    <span class="calculated-price">20 €</span>
+                    <span><span class="calculated-price">20</span> €</span>
                   </div>
                 </div>
                 <hr />
                 <div class="total-price">
                   <h3>Total:</h3>
-                  <span>60 €</span>
+                  <span><span id="total-price">60</span> €</span>
                 </div>
                 <div class="credit-card">
                   <div class="card-side front">
@@ -628,23 +690,28 @@
                       <h4>Ticket Type</h4>
                       <label class="container"
                         >Permanent exhibition
-                        <input type="radio" checked="checked" name="tt" />
+                        <input
+                          type="radio"
+                          checked="checked"
+                          name="tt"
+                          value="permanent"
+                        />
                         <span class="checkmark"></span>
                       </label>
                       <label class="container"
                         >Temporary exhibition
-                        <input type="radio" checked="checked" name="tt" />
+                        <input type="radio" name="tt" value="temporary" />
                         <span class="checkmark"></span>
                       </label>
                       <label class="container"
                         >Combined Admission
-                        <input type="radio" checked="checked" name="tt" />
+                        <input type="radio" name="tt" value="combined" />
                         <span class="checkmark"></span>
                       </label>
                     </div>
                     <div class="right">
                       <h4>Amount</h4>
-                      <label for="basic">Basic 18+</label>
+                      <label for="tickets-basic">Basic 18+</label>
                       <div class="custom-btn">
                         <button
                           type="button"
@@ -656,9 +723,10 @@
                           class="number"
                           type="number"
                           name="basic"
-                          id="basic"
+                          id="tickets-basic"
                           min="0"
                           max="20"
+                          onkeydown="return false"
                           value="1"
                         />
                         <button
@@ -668,7 +736,7 @@
                           +
                         </button>
                       </div>
-                      <label for="senior">Senior 65+</label>
+                      <label for="tickets-senior">Senior 65+</label>
                       <div class="custom-btn">
                         <button
                           type="button"
@@ -680,9 +748,10 @@
                           class="number"
                           type="number"
                           name="senior"
-                          id="senior"
+                          id="tickets-senior"
                           min="0"
                           max="20"
+                          onkeydown="return false"
                           value="1"
                         />
                         <button
@@ -695,7 +764,7 @@
                     </div>
                   </div>
                   <div class="summary">
-                    <h4>Total €220</h4>
+                    <h4>Total €<span id="tickets-total">220</span></h4>
                     <button class="buy-btn">Buy Now</button>
                   </div>
                 </form>
@@ -722,7 +791,12 @@
               <p>mail: <a href="mailto:info@louvre.fr">info@louvre.fr</a></p>
             </div>
             <div class="map">
-              <img src="./assets/img/map.png" alt="map" />
+              <iframe
+                src="https://api.mapbox.com/styles/v1/roman-a-fomin/ckumt07xh9he117nvt9hss7qh.html?title=false&access_token=pk.eyJ1Ijoicm9tYW4tYS1mb21pbiIsImEiOiJja3Vtc2piZ28xZ3U0MndvNjdpN3k5M2V4In0.2-QVprfDYe1qGdXrH7gaTg&zoomwheel=false#15.77/48.86113/2.336974"
+                title="Monochrome"
+                style="border: none"
+              ></iframe>
+              <!-- <img src="./assets/img/map.png" alt="map" /> -->
             </div>
           </div>
         </div>
