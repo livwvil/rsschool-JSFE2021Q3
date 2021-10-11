@@ -1,9 +1,11 @@
 import "../sass/style.scss";
+import { activateGalleryBubbling } from "./gallery";
 import { activateModalBuy } from "./modal_buy";
 import { activatePeSlider } from "./picture_explore_slider";
 import { printSelfcheck } from "./self_check";
 import { activateTickets } from "./tickets";
 import { shuffleArray } from "./tools";
+import { activateVideoSlider } from "./video_slider";
 import { activateWelcomeSlider } from "./welcome_slider";
 
 export function randomizeImages() {
@@ -158,6 +160,8 @@ function mapQuickFix() {
 document.addEventListener("DOMContentLoaded", () => {
   activateWelcomeSlider();
   activatePeSlider();
+  activateVideoSlider();
+  activateGalleryBubbling();
   activateTickets();
   activateModalBuy();
   mapQuickFix();

@@ -919,6 +919,7 @@ $container-width: 1440px;
     display: flex;
     justify-content: space-between;
     @include choose(gap, 36px, 36px, 24px, 24px);
+    overflow: hidden;
     * {
       display: flex;
       flex-direction: column;
@@ -933,8 +934,17 @@ $container-width: 1440px;
       margin-top: 50px;
       @include choose(display, flex, flex, none, none);
     }
-    > img {
-      border: 1px solid white;
+    img {
+      &.bubbling {
+        opacity: 0;
+        transform: translateY(5em);
+        transition: transform 4s cubic-bezier(0, 1, 0.3, 1) 0.25s,
+          opacity 0.3s ease-out 0.25s;
+        &.bubbled {
+          opacity: 1;
+          transform: none;
+        }
+      }
     }
   }
   > img {
@@ -1204,9 +1214,12 @@ $container-width: 1440px;
   .paralax {
     @include choose(margin-top, 76px, 59px, 39px, 40px);
     @include choose(height, 400px, 400px, 300px, 300px);
+
     width: 100%;
+    background-image: url("./assets/img/parallax.jpg");
     background-size: cover;
     background-attachment: fixed;
+    background-position: center;
   }
 }
 
