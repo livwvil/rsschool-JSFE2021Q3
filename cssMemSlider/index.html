@@ -56,11 +56,14 @@
       .checkmark {
         width: 12px;
         height: 12px;
-        border: 2px solid #71abfe;
+        border: 2px solid;
         border-radius: 50%;
+        border-color: #71abfe;
         background-color: #71abfe;
+        transition: border-color 0.2s, background-color 0.2s;
       }
       input:checked + .bullet .checkmark {
+        transition: border-color 0.2s, background-color 0.2s;
         background-color: transparent;
       }
       .slider-wrapper > :not(input:checked) + .bullet:hover .checkmark {
