@@ -1,12 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoJS Slider</title>
-</head>
-<body>
-  <h1>Init</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoJS Slider</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: rgb(179, 179, 179);
+      }
+      .slider-wrapper {
+        background-color: rgb(36, 33, 29);
+        margin: 0 auto;
+        width: 540px;
+        height: 500px;
+        box-sizing: border-box;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        overflow: hidden;
+      }
+
+      .meme {
+        order: 1;
+        padding-bottom: 20px;
+        width: 0;
+        height: 0;
+        transform: translateX(600px);
+        transition: transform 0.2s;
+      }
+
+      .caption {
+        order: 3;
+        color: aliceblue;
+        
+        opacity: 0;
+        margin-right: 0;
+        font-size: 0;
+        transform: translateX(600px);
+        transition: transform 0.2s, opacity 1.5s;
+      }
+      .bullet {
+        order: 2;
+        margin-left: 5px;
+      }
+
+      #rbm1:checked ~ .meme:nth-of-type(1),
+      #rbm2:checked ~ .meme:nth-of-type(2),
+      #rbm3:checked ~ .meme:nth-of-type(3),
+      #rbm4:checked ~ .meme:nth-of-type(4),
+      #rbm5:checked ~ .meme:nth-of-type(5) {
+        width: initial;
+        height: initial;
+        transform: none;
+        transition: transform 0.2s;
+      }
+
+      #rbm1:checked ~ .caption:nth-of-type(1),
+      #rbm2:checked ~ .caption:nth-of-type(2),
+      #rbm3:checked ~ .caption:nth-of-type(3),
+      #rbm4:checked ~ .caption:nth-of-type(4),
+      #rbm5:checked ~ .caption:nth-of-type(5) {
+        opacity: 1;
+        font-size: initial;
+        transform: none;
+        margin-right: auto;
+        /* transition: transform 0.2s, opacity 1.5s; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-wrapper">
+      <input class="bullet" type="radio" name="m" id="rbm5" />
+      <input class="bullet" type="radio" name="m" id="rbm4" />
+      <input class="bullet" type="radio" name="m" id="rbm3" />
+      <input class="bullet" type="radio" name="m" id="rbm2" />
+      <input class="bullet" type="radio" name="m" id="rbm1" checked />
+
+      <p class="caption">This is meme 1</p>
+      <img class="meme" src="./memes/1.jpg" alt="meme1" />
+
+      <p class="caption">This is meme 2</p>
+      <img class="meme" src="./memes/2.jpeg" alt="meme2" />
+
+      <p class="caption">This is meme 3</p>
+      <img class="meme" src="./memes/3.png" alt="meme3" />
+      
+      <p class="caption">This is meme 4</p>
+      <img class="meme" src="./memes/4.jpg" alt="meme4" />
+
+      <p class="caption">This is meme 5</p>
+      <img class="meme" src="./memes/5.jpg" alt="meme5" />
+    </div>
+  </body>
 </html>
