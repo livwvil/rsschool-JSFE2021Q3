@@ -1,0 +1,33 @@
+{
+  "name": "momentum",
+  "version": "1.0.0",
+  "description": "RS School \"momentum\" project",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev webpack --mode development",
+    "prod": "cross-env NODE_ENV=prod webpack --mode production",
+    "watch": "cross-env NODE_ENV=dev webpack --mode development --watch",
+    "start": "cross-env NODE_ENV=dev webpack-dev-server --mode development --open",
+    "stats": "cross-env NODE_ENV=prod webpack --mode production --json > stats.json && webpack-bundle-analyzer stats.json"
+  },
+  "author": "Roman Fomin <roman.a.fomin@mail.ru>",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.3.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.3.0",
+    "sass": "^1.42.0",
+    "sass-loader": "^12.1.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.3",
+    "webpack": "^5.53.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  }
+}
