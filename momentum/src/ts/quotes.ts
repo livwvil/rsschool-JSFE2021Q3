@@ -21,7 +21,7 @@ export function initQuotes() {
       return;
     }
 
-    const quotes = `/public/quotes/quotes.${t("quotes.lang")}.json`;
+    const quotes = `public/quotes/quotes.${t("quotes.lang")}.json`;
     try {
       const res = await fetch(quotes);
       const json = await res.json();
