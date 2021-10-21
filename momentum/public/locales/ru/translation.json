@@ -1,0 +1,23 @@
+{
+  "date_and_time": {
+    "locale": "ru-RU"
+  },
+  "greeting": {
+    "name_placeholder": "Введите имя",
+    "morning": "Доброе утро,",
+    "afternoon": "Добрый день,",
+    "evening": "Добрый вечер,",
+    "night": "Доброй ночи,"
+  },
+  "weather": {
+    "lang": "ru",
+    "cityNotFound": "Город не найден",
+    "wind": "Скорость ветра:",
+    "humidity": "Влажность:",
+    "windSpeedUnit": "м/с"
+  },
+  "quotes": {
+    "error": "При загрузке цитат произошла ошибка",
+    "lang": "ru"
+  }
+}
