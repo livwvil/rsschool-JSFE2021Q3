@@ -82,7 +82,7 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: isDev ? "[name].css" : "[name]-[hash].css",
+      filename: isDev ? "styles/[name].css" : "styles/[name]-[hash].css",
     }),
     new CopyWebpackPlugin({
       patterns: [

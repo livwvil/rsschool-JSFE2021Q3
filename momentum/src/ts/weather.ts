@@ -28,11 +28,11 @@ export function initWeather() {
       weatherIcon.className = "weather-icon owf";
       if (json && json.cod === 200) {
         weatherIcon.classList.add(`owf-${json.weather[0]?.id}`);
-        temperature.textContent = `${json.main.temp}°C ${json.weather[0].description}`;
+        temperature.textContent = `${Math.round(json.main.temp)}°C ${json.weather[0].description}`;
         weatherDescription.innerHTML = `${t("weather.wind")} ${
-          json.wind.speed
+          Math.round(json.wind.speed)
         } ${t("weather.windSpeedUnit")}<br>${t("weather.humidity")} ${
-          json.main.humidity
+          Math.round(json.main.humidity)
         }%`;
       } else {
         throw new Error();
