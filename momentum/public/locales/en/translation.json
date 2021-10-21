@@ -1,0 +1,23 @@
+{
+  "date_and_time": {
+    "locale": "en-US"
+  },
+  "greeting": {
+    "name_placeholder": "Enter name",
+    "morning": "Good morning,",
+    "afternoon": "Good afternoon,",
+    "evening": "Good evening,",
+    "night": "Good night,"
+  },
+  "weather": {
+    "lang": "en",
+    "cityNotFound": "City not found",
+    "wind": "Wind speed:",
+    "humidity": "Humidity:",
+    "windSpeedUnit": "m/s"
+  },
+  "quotes": {
+    "error": "An Error occures during quotes loading",
+    "lang": "en"
+  }
+}
