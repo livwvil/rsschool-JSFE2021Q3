@@ -10,6 +10,7 @@
     "night": "Доброй ночи,"
   },
   "weather": {
+    "ds": "Минск",
     "lang": "ru",
     "cityNotFound": "Город не найден",
     "wind": "Скорость ветра:",
@@ -19,5 +20,21 @@
   "quotes": {
     "error": "При загрузке цитат произошла ошибка",
     "lang": "ru"
+  },
+  "settings": {
+    "common_sect": "Общие настройки",
+    "visibility_sect": "Отображение блоков",
+    "s_lang": "Язык",
+    "imgtags_placeholder": "Введите тематические теги...",
+    "s_imgsrc": "Источник изображений",
+    "s_audio_v": "Аудиоплеер",
+    "s_weather_v": "Погода",
+    "s_time_v": "Время",
+    "s_date_v": "Дата",
+    "s_greeting_v": "Приветствие",
+    "s_quotes_v": "Цитаты",
+    "s_custom_v": "Своя штука",
+    "confirm_btn": "Применить",
+    "cancel_btn": "Отмена"
   }
 }

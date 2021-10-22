@@ -8,18 +8,62 @@
     <link rel="icon" href="./assets/favicon.ico" type="image/ico" />
   </head>
   <body>
+    <div class="settings-modal-container">
+      <div class="settings-window">
+        <div class="settings-wrapper">
+          <h3 class="s-sect common"></h3>
+
+          <label class="s-label" for="s_lang"></label>
+          <select name="language" id="s_lang"></select>
+
+          <label class="s-label" for="s_imgsrc"></label>
+          <select name="imgsrc" id="s_imgsrc"></select>
+
+          <input type="text" name="imgsrc" id="s_imgtags"></ш>
+
+          <h3 class="s-sect vis"></h3>
+
+          <label class="s-label" for="s_audio_v"></label>
+          <input type="checkbox" checked name="audioplayer" id="s_audio_v" />
+
+          <label class="s-label" for="s_weather_v"></label>
+          <input type="checkbox" checked name="weather" id="s_weather_v" />
+
+          <label class="s-label" for="s_time_v"></label>
+          <input type="checkbox" checked name="time" id="s_time_v" />
+
+          <label class="s-label" for="s_date_v"></label>
+          <input type="checkbox" checked name="date" id="s_date_v" />
+
+          <label class="s-label" for="s_greeting_v"></label>
+          <input type="checkbox" checked name="greeting" id="s_greeting_v" />
+
+          <label class="s-label" for="s_quotes_v"></label>
+          <input type="checkbox" checked name="quotes" id="s_quotes_v" />
+
+          <label class="s-label" for="s_custom_v"></label>
+          <input type="checkbox" checked name="custom" id="s_custom_v" />
+
+          <div class="buttons">
+            <button class="s-btn cancel-btn"></button>
+            <button class="s-btn confirm-btn"></button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="bg-container"></div>
     <div class="wrapper">
       <header class="header">
-        <div class="player">
+        <div id="audio" class="player">
+          <audio src=""></audio>
           <div class="player-controls">
             <button class="play-prev player-icon"></button>
-            <button class="play player-icon"></button>
+            <button id="play-pause-btn" class="play player-icon"></button>
             <button class="play-next player-icon"></button>
           </div>
           <ul class="play-list"></ul>
         </div>
-        <div class="weather">
+        <div id="weather" class="weather">
           <input type="text" class="city" />
           <i class="weather-icon owf"></i>
           <div class="weather-error"></div>
@@ -36,18 +80,21 @@
           <button class="slide-prev slider-icon"></button>
           <button class="slide-next slider-icon"></button>
         </div>
-        <time class="time"></time>
-        <date class="date"></date>
-        <div class="greeting-container">
+        <button class="settings-icon"></button>
+        <time id="time" class="time"></time>
+        <date id="date" class="date"></date>
+        <div id="greeting" class="greeting-container">
           <span class="greeting"></span>
           <input type="text" class="name" />
         </div>
       </main>
       <footer class="footer">
-        <button class="change-quote"></button>
-        <div class="quote-container">
-          <div class="quote"></div>
-          <div class="author"></div>
+        <div id="quotes">
+          <button class="change-quote"></button>
+          <div class="quote-container">
+            <div class="quote"></div>
+            <div class="author"></div>
+          </div>
         </div>
       </footer>
     </div>

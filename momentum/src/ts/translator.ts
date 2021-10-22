@@ -18,7 +18,7 @@ const initPromise = i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     backend: {
-      loadPath: "public/locales/{{lng}}/translation.json"
+      loadPath: "public/locales/{{lng}}/translation.json",
     },
     fallbackLng: "en",
     interpolation: {
@@ -28,7 +28,7 @@ const initPromise = i18n
 export { initPromise as i18nInitPromise };
 
 export function changeLanguage(lang: string) {
-  i18n.changeLanguage(lang);
+  i18n.language !== lang && i18n.changeLanguage(lang);
 }
 
 export function t(key: string) {
@@ -37,6 +37,14 @@ export function t(key: string) {
 
 export function onLanguageChanged(callback: () => void) {
   i18n.on("languageChanged", callback);
+}
+
+export function getAvaliableLanguages() {
+  const rb = i18n.getResourceBundle("en", "translation");
+  if (rb && rb.settings && rb.settings.lang) {
+    return Object.keys(rb.settings.lang);
+  }
+  return [];
 }
 
 document.addEventListener("keyup", (e) => {

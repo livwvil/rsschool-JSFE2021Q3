@@ -55,7 +55,7 @@ export function initWeather() {
   cityInput.addEventListener("change", changeCity);
 
   const storedUsername = localStorage.getItem("city");
-  cityInput.value = storedUsername ? storedUsername : "Минск";
+  cityInput.value = storedUsername ? storedUsername : t("weather.ds");
 
   getWeatherJson();
 
