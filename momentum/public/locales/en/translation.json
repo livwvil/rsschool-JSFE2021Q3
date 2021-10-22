@@ -10,6 +10,7 @@
     "night": "Good night,"
   },
   "weather": {
+    "ds": "Minsk",
     "lang": "en",
     "cityNotFound": "City not found",
     "wind": "Wind speed:",
@@ -19,5 +20,30 @@
   "quotes": {
     "error": "An Error occures during quotes loading",
     "lang": "en"
+  },
+  "settings": {
+    "common_sect": "Common settings",
+    "s_lang": "Language",
+    "imgtags_placeholder": "Input thematic tags...",
+    "s_imgsrc": "Images source",
+    "visibility_sect": "Blocks visibility",
+    "s_audio_v": "Audio player",
+    "s_weather_v": "Weather",
+    "s_time_v": "Time",
+    "s_date_v": "Date",
+    "s_greeting_v": "Greeting",
+    "s_quotes_v": "Quotes",
+    "s_custom_v": "Custom thing",
+    "confirm_btn": "Apply",
+    "cancel_btn": "Cancel",
+    "lang": {
+      "ru": "Русский",
+      "en": "English"
+    },
+    "imgsrc": {
+      "github": "GitHub",
+      "api1": "Unsplash API",
+      "api2": "Flickr API"
+    }
   }
 }
