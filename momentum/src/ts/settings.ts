@@ -100,15 +100,18 @@ export function initSettings() {
     }
 
     for (const setting of visibilityCheckboxes) {
-      const state: boolean = localStorage.getItem(setting.id) === "true";
+      const visibility = localStorage.getItem(setting.id);
+      const state: boolean = visibility !== null ? visibility === "true" : true;
       setting.checked = state;
     }
 
     languageSelect.innerHTML = "";
-    for (const lang of getAvaliableLanguages()) {
+    const langs = getAvaliableLanguages();
+    const savedLang = localStorage.getItem("app-lang") ? localStorage.getItem("app-lang") : langs[0];
+    for (const lang of langs) {
       const lng = document.createElement("option");
       lng.value = lang;
-      lng.selected = lang === localStorage.getItem("app-lang");
+      lng.selected = lang === savedLang;
       lng.textContent = t(`settings.lang.${lang}`);
       languageSelect.append(lng);
     }
