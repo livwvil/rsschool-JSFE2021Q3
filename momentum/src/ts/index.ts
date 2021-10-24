@@ -15,12 +15,22 @@ function initJs() {
   const dateAndTime = initDateAndTime();
   const currentTimeOfDay = dateAndTime.getCurrentTimeOfDay();
 
-  const slider = initSlider(currentTimeOfDay, 1);
+  const slider = initSlider(currentTimeOfDay, 0);
   const greeting = initGreeting(currentTimeOfDay);
   const weather = initWeather();
   const quotes = initQuotes();
   const audioplayer = initAudioplayer();
   const settings = initSettings();
+
+  const settingsChanged = (setting: string) => {
+    if (setting === "slider") {
+      slider && slider.onApiChanged();
+    }
+    if (setting === "language") {
+    }
+  };
+
+  settings && settings.setOnSettingsChanged(settingsChanged);
 
   const timeOfDayChanged = (timeOfDay: string) => {
     greeting && greeting.setGreeting(timeOfDay);
@@ -55,6 +65,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   initJs();
-
-  printSelfcheck(false);
+  printSelfcheck();
 });

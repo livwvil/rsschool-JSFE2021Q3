@@ -47,10 +47,10 @@ export function getAvaliableLanguages() {
   return [];
 }
 
-document.addEventListener("keyup", (e) => {
-  if (e.key === "q") {
-    changeLanguage("en");
-  } else if (e.key === "w") {
-    changeLanguage("ru");
-  }
-});
+// document.addEventListener("keyup", (e) => {
+//   if (e.key === "q") {
+//     changeLanguage("en");
+//   } else if (e.key === "w") {
+//     changeLanguage("ru");
+//   }
+// });

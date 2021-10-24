@@ -1,3 +1,5 @@
+import * as flickerAPI from "./flickerAPI";
+
 const slideNextElement: HTMLElement | null =
   document.querySelector(".slide-next");
 const slidePreviousElement: HTMLElement | null =
@@ -5,6 +7,7 @@ const slidePreviousElement: HTMLElement | null =
 const imageContainer: HTMLElement | null =
   document.querySelector(".bg-container");
 
+// max count for GitHub is 20
 const REPO_IMAGES_COUNT = 20;
 
 export function initSlider(timeOfDay: string, imageNumber: number) {
@@ -16,20 +19,55 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
   let currentImageNumber: number = imageNumber;
   let canSetImage: boolean = true;
 
+  let urlGenerator: AsyncGenerator<string, null, unknown>;
+  const imageUrls: string[] = [];
+
+  const getNextImageUrl = async () => {
+    const res = await urlGenerator.next();
+    if (!res.done && res.value) {
+      const url = res.value;
+      imageUrls.push(url);
+      return true;
+    }
+    return false;
+  };
+
+  const initImagesUrlGenerator = () => {
+    currentImageNumber = 0;
+    imageUrls.length = 0;
+    const api = localStorage.getItem("img-src") || "github";
+    const tags = localStorage.getItem("img-src-tags") || "";
+    if (api === "api2") {
+      urlGenerator = flickerAPI.getNextUrl(
+        `${currentTimeOfDay}, ${tags}`,
+        REPO_IMAGES_COUNT
+      );
+    } else {
+      const generator = async function* () {
+        const indices: number[] = [];
+        for (let i = 0; i < REPO_IMAGES_COUNT; i++) {
+          indices.push(i);
+        }
+        shuffleArray(indices);
+        for (let i = 0; i < REPO_IMAGES_COUNT; i++) {
+          const imageNumberStr = (indices[i] + 1).toString().padStart(2, "0");
+          yield `https://raw.githubusercontent.com/livwvil/stage1-tasks/assets/images/${currentTimeOfDay}/${imageNumberStr}.jpg`;
+        }
+        return null;
+      };
+      urlGenerator = generator();
+    }
+  };
+
   function getImageRef(imageNumber: number) {
-    const imageNumberStr = imageNumber.toString().padStart(2, "0");
-    return `https://raw.githubusercontent.com/livwvil/stage1-tasks/assets/images/${currentTimeOfDay}/${imageNumberStr}.jpg`;
+    return imageUrls[imageNumber];
   }
 
   function setImage(
     imageRef: string,
     imageLoadedCallback: (() => void) | void
   ) {
-    if (
-      !imageContainer ||
-      !canSetImage ||
-      imageContainer.children.length > 2
-    ) {
+    if (!imageContainer || !canSetImage || imageContainer.children.length > 2) {
       return;
     }
 
@@ -52,41 +90,67 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
 
   function changeTimeOfDay(timeOfDay: string) {
     currentTimeOfDay = timeOfDay;
-    const randomNumber = Math.round(Math.random() * 19) + 1;
-    const imageRef = getImageRef(randomNumber);
-    setImage(imageRef, () => {
-      currentImageNumber = randomNumber;
-    });
+    initApi();
   }
 
-  const setNextImage = (e: Event) => {
-    const imgNumber = ((currentImageNumber + 1 - 1) % REPO_IMAGES_COUNT) + 1;
+  const setNextImage = async () => {
+    if (
+      currentImageNumber < REPO_IMAGES_COUNT &&
+      currentImageNumber === imageUrls.length - 1
+    ) {
+      const urlFetched = await getNextImageUrl();
+    }
+
+    const imgNumber = (currentImageNumber + 1) % imageUrls.length;
     const imageRef = getImageRef(imgNumber);
     setImage(imageRef, () => {
       currentImageNumber = imgNumber;
     });
   };
 
-  const setPreviousImage = (e: Event) => {
+  const setPreviousImage = () => {
     const imgNumber =
-      currentImageNumber === 1
-        ? REPO_IMAGES_COUNT
-        : ((currentImageNumber - 1 - 1) % REPO_IMAGES_COUNT) + 1;
+      currentImageNumber === 0
+        ? imageUrls.length - 1
+        : (currentImageNumber - 1) % imageUrls.length;
     const imageRef = getImageRef(imgNumber);
     setImage(imageRef, () => {
       currentImageNumber = imgNumber;
     });
   };
 
-  setImage(getImageRef(currentImageNumber));
-  slideNextElement.addEventListener("click", setNextImage);
-  slidePreviousElement.addEventListener("click", setPreviousImage);
+  const onApiChanged = () => {
+    initApi();
+  };
+
+  const initApi = () => {
+    initImagesUrlGenerator();
+    getNextImageUrl().then((res) => {
+      if (res) {
+        setImage(getImageRef(currentImageNumber));
+        slideNextElement.addEventListener("click", setNextImage);
+        slidePreviousElement.addEventListener("click", setPreviousImage);
+      }
+    });
+  };
+
+  initApi();
 
   return {
     changeTimeOfDay: changeTimeOfDay,
+    onApiChanged: onApiChanged,
     finalize: () => {
       slideNextElement.removeEventListener("click", setNextImage);
       slidePreviousElement.removeEventListener("click", setPreviousImage);
     },
   };
+}
+
+function shuffleArray(array: any[]) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
 }

@@ -49,6 +49,8 @@ export function initSettings() {
   confirmBtn.textContent = t("settings.confirm_btn");
   imageTags.placeholder = t("settings.imgtags_placeholder");
 
+  let onSettingsChanged: (setting: string) => void = (setting: string) => {};
+
   function saveSettings() {
     if (
       !visibilityCheckboxes ||
@@ -130,9 +132,20 @@ export function initSettings() {
       return;
     }
 
+    const prevImageApi = localStorage.getItem("img-src")
+    const prevImageTags = localStorage.getItem("img-src-tags")
+    
     saveSettings();
+    
+    const curImageApi = localStorage.getItem("img-src")
+    const curImageTags = localStorage.getItem("img-src-tags")
+
+    if(prevImageApi !== curImageApi || prevImageTags !== curImageTags) {
+      onSettingsChanged("slider");
+    }
 
     changeLanguage(languageSelect.selectedOptions[0].value);
+
     for (const checkbox of visibilityCheckboxes) {
       const forHtmlId = checkbox.id.split("_")[1];
       const elem = document.querySelector(`#${forHtmlId}`);
@@ -175,6 +188,9 @@ export function initSettings() {
   cancelBtn.click();
 
   return {
+    setOnSettingsChanged: (callback: (setting: string) => void) => {
+      onSettingsChanged = callback;
+    },
     finalize: () => {
       settingsBtn.removeEventListener("click", toggleModal);
       settingsModalContainer.removeEventListener("click", toggleModal);
