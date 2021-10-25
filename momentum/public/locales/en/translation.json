@@ -45,5 +45,8 @@
       "api1": "Unsplash API",
       "api2": "Flickr API"
     }
+  },
+  "custom": {
+    "placeholder": "[ Input todo ]"
   }
 }

@@ -36,5 +36,8 @@
     "s_custom_v": "Своя штука",
     "confirm_btn": "Применить",
     "cancel_btn": "Отмена"
+  },
+  "custom": {
+    "placeholder": "[ Введите дело ]"
   }
 }
