@@ -57,9 +57,22 @@
         <div id="audio" class="player">
           <audio src=""></audio>
           <div class="player-controls">
-            <button class="play-prev player-icon"></button>
-            <button id="play-pause-btn" class="play player-icon"></button>
-            <button class="play-next player-icon"></button>
+            <div class="player-controls-buttons">
+              <button class="play-prev player-icon"></button>
+              <button id="play-pause-btn" class="play player-icon"></button>
+              <button class="play-next player-icon"></button>
+            </div>
+            <span class="title">Title</span>
+            <div class="progress">
+              <span class="player-progress-current">0:00</span>
+              /
+              <span class="player-progress-total">0:00</span>
+              <input type="range" name="progress" class="player-progress" value="0">
+            </div>
+            <div class="volume">
+              <button class="player-icon player-mute"></button>
+              <input type="range" name="volume" class="player-volume" value="100">
+            </div>
           </div>
           <ul class="play-list"></ul>
         </div>

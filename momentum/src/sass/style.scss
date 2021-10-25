@@ -90,11 +90,12 @@ body {
       select {
         width: 100px;
       }
-      .s-sect, input[type='text'] {
+      .s-sect,
+      input[type="text"] {
         width: 100%;
         grid-column: span 2;
       }
-      input[type='text'].hidden {
+      input[type="text"].hidden {
         display: none;
       }
       .s-label {
@@ -143,28 +144,65 @@ body {
     .player {
       .player-controls {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 120px;
+        flex-direction: column;
         margin-bottom: 28px;
+        width: 150px;
 
-        .play {
-          width: 40px;
-          height: 40px;
-          background-size: 40px 40px;
-          background-image: url("../assets/svg/play.svg");
+        input[type='range'] {
+          width: 100px;
+          margin-top: 10px;
         }
 
-        .pause {
-          background-image: url("../assets/svg/pause.svg");
+        .progress {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          font-size: 11px;
+        }
+        
+        .volume {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          
+          .player-mute {
+            width: 20px;
+            height: 20px;
+            border:none;
+            outline: none;
+            background: transparent;
+            background-image: url("../assets/svg/volume.svg");
+            background-repeat: no-repeat;
+            background-size: 20px;
+            &.active {
+              background-image: url("../assets/svg/mute.svg");
+            }
+          }
         }
 
-        .play-prev {
-          background-image: url("../assets/svg/play-prev.svg");
-        }
+        .player-controls-buttons {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          .play {
+            width: 40px;
+            height: 40px;
+            background-size: 40px 40px;
+            background-image: url("../assets/svg/play.svg");
+          }
 
-        .play-next {
-          background-image: url("../assets/svg/play-next.svg");
+          .pause {
+            background-image: url("../assets/svg/pause.svg");
+          }
+
+          .play-prev {
+            background-image: url("../assets/svg/play-prev.svg");
+          }
+
+          .play-next {
+            background-image: url("../assets/svg/play-next.svg");
+          }
         }
       }
 
@@ -376,17 +414,16 @@ body {
 #time,
 #date,
 #greeting,
-#quotes, 
+#quotes,
 #custom {
   transition: visibility 1s ease-in, opacity 1s ease-in;
-  
+
   &.hidden {
     opacity: 0;
     visibility: hidden;
     transition: visibility 1s ease-out, opacity 1s ease-out;
   }
 }
-
 
 .item-active::before {
   color: #c5b358;

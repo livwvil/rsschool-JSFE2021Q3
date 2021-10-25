@@ -8,8 +8,36 @@ const prevBtn: HTMLButtonElement | null = document.querySelector(".play-prev");
 const playlistContainer: HTMLElement | null =
   document.querySelector(".play-list");
 
+const title: HTMLSpanElement | null = document.querySelector(
+  ".player-controls .title"
+);
+const currentTime: HTMLSpanElement | null = document.querySelector(
+  ".player-progress-current"
+);
+const totalTime: HTMLSpanElement | null = document.querySelector(
+  ".player-progress-total"
+);
+const progress: HTMLInputElement | null =
+  document.querySelector(".player-progress");
+const volume: HTMLInputElement | null =
+  document.querySelector(".player-volume");
+const muteBtn: HTMLButtonElement | null =
+  document.querySelector(".player-mute");
+
 export function initAudioplayer() {
-  if (!audio || !playPauseBtn || !nextBtn || !prevBtn || !playlistContainer) {
+  if (
+    !audio ||
+    !playPauseBtn ||
+    !nextBtn ||
+    !prevBtn ||
+    !playlistContainer ||
+    !title ||
+    !currentTime ||
+    !totalTime ||
+    !muteBtn ||
+    !volume ||
+    !progress
+  ) {
     return;
   }
 
@@ -17,12 +45,12 @@ export function initAudioplayer() {
   let trackNumber = 0;
 
   function playAudio() {
-    if (!audio || !playlistContainer || !playPauseBtn) {
+    if (!audio || !playlistContainer || !playPauseBtn || !title) {
       return;
     }
 
     isPlay = true;
-    audio.src = playList[trackNumber].src;
+    setupTrack();
     for (let track of playlistContainer.children) {
       track.classList.remove("active");
     }
@@ -68,9 +96,81 @@ export function initAudioplayer() {
     playAudio();
   }
 
-  audio.volume = 0.2;
-  audio.src = playList[trackNumber].src;
+  const setupTrack = () => {
+    const track = playList[trackNumber];
+    audio.src = track.src;
+    title.textContent = track.title;
+    progress.value = "0";
+    progress.dispatchEvent(new Event("change"));
+    currentTime.textContent = "0:00";
+    totalTime.textContent = track.duration;
+  };
+
+  function getProgressByTime(current: number, total: number) {
+    let videoTime = Math.round(current);
+    let videoLength = Math.round(total);
+    const progress = (videoTime * 100) / videoLength;
+    return isFinite(progress) ? progress : 0;
+  }
+
+  function getTimeByProgress(progress: number, total: number) {
+    const result = (total * progress) / 100;
+    return isFinite(result) ? result : total;
+  }
+
+  function getTimeFormatted(curSeconds: number) {
+    const minutes = Math.floor(curSeconds / 60);
+    const seconds = Math.floor(curSeconds - minutes * 60);
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  }
+  const onTimeUpdate = (e: Event) => {
+    const timeProgress = getProgressByTime(
+      audio.currentTime || 0,
+      audio.duration || 0
+    );
+    if (progress) {
+      currentTime.textContent = getTimeFormatted(audio.currentTime);
+      progress.value = timeProgress.toString();
+      progress.dispatchEvent(new Event("change"));
+    }
+  };
+
+  const toggleMute = () => {
+    if (!audio.muted) {
+      volume.value = "0";
+      audio.muted = true;
+      muteBtn.classList.add("active");
+    } else {
+      volume.value = String(audio.volume * 100);
+      audio.muted = false;
+      muteBtn.classList.remove("active");
+    }
+  };
+
+  const onProgressChange = () => {
+    const value = Math.round(Number.parseFloat(progress.value));
+    audio.currentTime = getTimeByProgress(value, audio.duration);
+  };
+
+  const onVolumeChange = () => {
+    const value = Number.parseFloat(volume.value);
+    audio.volume = value / 100;
+    if (audio.volume <= 0.05 && !audio.muted) {
+      toggleMute();
+    } else if (audio.volume > 0.05 && audio.muted) {
+      toggleMute();
+    }
+  };
+
+  setupTrack();
   audio.addEventListener("ended", nextTrack);
+  audio.addEventListener("timeupdate", onTimeUpdate);
+  progress.addEventListener("input", onProgressChange);
+  volume.addEventListener("input", onVolumeChange);
+  muteBtn.addEventListener("click", toggleMute);
+
   playPauseBtn.addEventListener("click", play_pause);
   nextBtn.addEventListener("click", nextTrack);
   prevBtn.addEventListener("click", prevTrack);
@@ -95,6 +195,10 @@ export function initAudioplayer() {
       nextBtn.removeEventListener("click", nextTrack);
       prevBtn.removeEventListener("click", prevTrack);
       audio.removeEventListener("ended", nextTrack);
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      progress.removeEventListener("input", onProgressChange);
+      volume.removeEventListener("input", onVolumeChange);
+      muteBtn.removeEventListener("click", toggleMute);
       playlistContainer.innerHTML = "";
     },
   };
