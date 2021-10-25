@@ -142,14 +142,15 @@ body {
     align-items: flex-start;
 
     .player {
+      @include choose(font-size, 16px, 16px, 16px, 12px);
       .player-controls {
         display: flex;
         flex-direction: column;
         margin-bottom: 28px;
-        width: 150px;
+        @include choose(width, 150px, 150px, 150px, 150px);
 
         input[type="range"] {
-          width: 100px;
+          @include choose(width, 100px, 100px, 100px, 100px);
           margin-top: 10px;
         }
 
@@ -252,16 +253,15 @@ body {
       justify-content: space-between;
       align-items: flex-start;
       row-gap: 5px;
-      width: 180px;
+      @include choose(width, 180px, 180px, 180px, 120px);
+      @include choose(font-size, 18px, 18px, 18px, 12px);
       min-height: 180px;
       text-align: left;
 
       .city {
-        width: 170px;
-        height: 34px;
+        width: 100%;
         padding: 5px;
-        font-size: 20px;
-        line-height: 24px;
+        @include choose(font-size, 20px, 20px, 20px, 14px);
         color: #fff;
         border: 0;
         outline: 0;
@@ -402,7 +402,7 @@ body {
         }
       }
       .todo-input {
-        @include choose(width, 400px, 400px, 350px, 270px);
+        @include choose(width, 400px, 400px, 350px, 250px);
         padding: 5px;
         @include choose(font-size, 20px, 20px, 20px, 17px);
         color: #fff;
@@ -466,6 +466,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     height: 100%;
+    @include choose(font-size, 16px, 16px, 16px, 12px);
 
     .change-quote {
       margin-bottom: 30px;
