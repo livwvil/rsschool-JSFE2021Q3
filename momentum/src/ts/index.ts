@@ -1,5 +1,6 @@
 import "../sass/style.scss";
 import { initAudioplayer } from "./audioplayer";
+import { initCustomWidget } from "./customWidget";
 import { initDateAndTime } from "./date_and_time";
 import { initGreeting } from "./greeteng";
 import { initQuotes } from "./quotes";
@@ -21,6 +22,7 @@ function initJs() {
   const quotes = initQuotes();
   const audioplayer = initAudioplayer();
   const settings = initSettings();
+  const custom = initCustomWidget();
 
   const settingsChanged = (setting: string) => {
     if (setting === "slider") {
@@ -46,6 +48,7 @@ function initJs() {
   quotes && finalizeCallbacks.push(quotes.finalize);
   audioplayer && finalizeCallbacks.push(audioplayer.finalize);
   settings && finalizeCallbacks.push(settings.finalize);
+  custom && finalizeCallbacks.push(custom.finalize);
 }
 
 function reInitJs() {
@@ -66,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   initJs();
   printSelfcheck();
-  
+
   const appHeight = () => {
     const doc = document.documentElement;
     doc.style.setProperty("--app-height", `${window.innerHeight}px`);
