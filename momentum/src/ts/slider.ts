@@ -1,4 +1,5 @@
 import * as flickerAPI from "./flickerAPI";
+import * as githubAPI from "./githubAPI";
 
 const slideNextElement: HTMLElement | null =
   document.querySelector(".slide-next");
@@ -6,6 +7,7 @@ const slidePreviousElement: HTMLElement | null =
   document.querySelector(".slide-prev");
 const imageContainer: HTMLElement | null =
   document.querySelector(".bg-container");
+const loaderElement: HTMLElement | null = document.querySelector(".loader");
 
 // max count for GitHub is 20
 const REPO_IMAGES_COUNT = 20;
@@ -23,7 +25,9 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
   const imageUrls: string[] = [];
 
   const getNextImageUrl = async () => {
+    loaderElement?.classList.add("active");
     const res = await urlGenerator.next();
+    loaderElement?.classList.remove("active");
     if (!res.done && res.value) {
       const url = res.value;
       imageUrls.push(url);
@@ -35,24 +39,14 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
   const initImagesUrlGenerator = () => {
     currentImageNumber = 0;
     imageUrls.length = 0;
+
     const api = localStorage.getItem("img-src") || "github";
     const tags = localStorage.getItem("img-src-tags") || currentTimeOfDay;
+
     if (api === "api2") {
-      urlGenerator = flickerAPI.getNextUrl(tags, REPO_IMAGES_COUNT);
+      urlGenerator = flickerAPI.getNextUrl(tags);
     } else {
-      const generator = async function* () {
-        const indices: number[] = [];
-        for (let i = 0; i < REPO_IMAGES_COUNT; i++) {
-          indices.push(i);
-        }
-        shuffleArray(indices);
-        for (let i = 0; i < REPO_IMAGES_COUNT; i++) {
-          const imageNumberStr = (indices[i] + 1).toString().padStart(2, "0");
-          yield `https://raw.githubusercontent.com/livwvil/stage1-tasks/assets/images/${currentTimeOfDay}/${imageNumberStr}.jpg`;
-        }
-        return null;
-      };
-      urlGenerator = generator();
+      urlGenerator = githubAPI.getNextUrl(REPO_IMAGES_COUNT, currentTimeOfDay);
     }
   };
 
@@ -141,13 +135,4 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
       slidePreviousElement.removeEventListener("click", setPreviousImage);
     },
   };
-}
-
-function shuffleArray(array: any[]) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
 }

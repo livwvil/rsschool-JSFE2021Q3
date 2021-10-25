@@ -1,93 +1,70 @@
 const API_KEY = "b58301c7eeb6d2ab498252d8612244fd";
-const API_SEARCH_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&media=photos`;
-const API_PHOTO_SIZES_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${API_KEY}`;
+const API_SEARCH_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&sort=interestingness-desc&content_type=7&media=photos&&extras=url_h,tags&format=json&nojsoncallback=1`;
 
-const getSearchHref = (tags: string, amount: number) => {
-  return `${API_SEARCH_ENDPOINT}&tags=${tags}&per_page=${String(amount)}`;
-};
-
-const getSizesHref = (photoId: string) => {
-  return `${API_PHOTO_SIZES_ENDPOINT}&photo_id=${photoId}`;
-};
-
-async function getXmlAsDocument(href: string) {
-  const resp = await fetch(href);
-  const text = await resp.text();
-  const doc = new window.DOMParser().parseFromString(text, "text/xml");
-  return doc;
+interface ApiResponse {
+  stat: string;
+  photos: Photos;
 }
 
-interface FlickerImage {
+interface Photos {
+  page: number;
+  pages: number;
+  perpage: number;
+  photo: Photo[];
+  total: number;
+}
+
+interface Photo {
+  farm: number;
+  height_h: number;
   id: string;
+  isfamily: number;
+  isfriend: number;
+  ispublic: number;
+  owner: string;
+  secret: string;
+  server: string;
+  tags: string;
   title: string;
+  url_h: string;
+  width_h: number;
 }
 
-interface FlickerImageSize {
-  width: number;
-  height: number;
-  source: string;
-}
+const getSearchHref = (tags: string) => {
+  return `${API_SEARCH_ENDPOINT}&tags=${tags}`;
+};
 
-async function getImages(tags: string, amount: number) {
-  const findResultDocument = await getXmlAsDocument(
-    getSearchHref(tags, amount)
-  );
-  const photoDescriptors = findResultDocument.querySelectorAll("photo");
-
-  const images: FlickerImage[] = [...photoDescriptors].map((photo) => {
-    return {
-      id: photo.getAttribute("id") || "",
-      title: photo.getAttribute("title") || "",
-    };
-  });
-
-  return images;
-}
-
-async function getImageUrl(imageId: string) {
-  const photoSizes = await getXmlAsDocument(getSizesHref(imageId));
-  const sizeDescriptors = photoSizes.querySelectorAll("size");
-  const sizes: FlickerImageSize[] = [...sizeDescriptors].map((size) => {
-    const w = parseFloat(size.getAttribute("width") || "");
-    const h = parseFloat(size.getAttribute("height") || "");
-    return {
-      width: isNaN(w) ? 0 : w,
-      height: isNaN(h) ? 0 : h,
-      source: size.getAttribute("source") || "",
-    };
-  });
-
-  sizes.sort((a, b) => {
-    return b.width - a.width;
-  });
-
-  const result = sizes.filter((size) => {
-    const sizeCond = 1080 <= size.width && size.width <= 2600;
-    const ratioCond = size.width / size.height > 1;
-    return sizeCond;
-  });
-
-  if (result.length === 0) {
+async function getApiResponse(href: string) {
+  try {
+    const resp = await fetch(href);
+    const respJson: ApiResponse = await resp.json();
+    if (respJson.stat === "ok") {
+      return respJson.photos;
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
     return null;
-  } else {
-    return result[0].source;
   }
 }
 
-export async function* getNextUrl(imageTags: string, urlsAmount: number) {
-  const images = await getImages(imageTags, urlsAmount * 10);
-  let urlsFound = 0;
-  for (const image of images) {
-    if (urlsFound >= urlsAmount) {
-      break;
-    }
+let foundImages: number;
 
-    const url = await getImageUrl(image.id);
-    if (url) {
-      urlsFound++;
-      yield url;
+export async function* getNextUrl(imageTags: string) {
+  const href = getSearchHref(imageTags);
+  const response = await getApiResponse(href);
+  if (response) {
+    console.log(response);
+    foundImages = response.photo.length;
+    for (const link of response.photo) {
+      if(link.url_h) {
+        yield link.url_h;
+      }
     }
   }
-
   return null;
+}
+
+export function getLastRequestedImagesAmount() {
+  return foundImages;
 }
