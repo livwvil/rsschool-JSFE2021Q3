@@ -54,7 +54,6 @@ export async function* getNextUrl(imageTags: string) {
   const href = getSearchHref(imageTags);
   const response = await getApiResponse(href);
   if (response) {
-    console.log(response);
     foundImages = response.photo.length;
     for (const link of response.photo) {
       if(link.url_h) {
