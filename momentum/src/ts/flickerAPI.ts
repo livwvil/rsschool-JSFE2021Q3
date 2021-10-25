@@ -1,5 +1,5 @@
 const API_KEY = "b58301c7eeb6d2ab498252d8612244fd";
-const API_SEARCH_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&media=photos&tag_mode=all`;
+const API_SEARCH_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&media=photos`;
 const API_PHOTO_SIZES_ENDPOINT = `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${API_KEY}`;
 
 const getSearchHref = (tags: string, amount: number) => {

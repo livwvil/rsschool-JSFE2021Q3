@@ -36,12 +36,9 @@ export function initSlider(timeOfDay: string, imageNumber: number) {
     currentImageNumber = 0;
     imageUrls.length = 0;
     const api = localStorage.getItem("img-src") || "github";
-    const tags = localStorage.getItem("img-src-tags") || "";
+    const tags = localStorage.getItem("img-src-tags") || currentTimeOfDay;
     if (api === "api2") {
-      urlGenerator = flickerAPI.getNextUrl(
-        `${currentTimeOfDay}, ${tags}`,
-        REPO_IMAGES_COUNT
-      );
+      urlGenerator = flickerAPI.getNextUrl(tags, REPO_IMAGES_COUNT);
     } else {
       const generator = async function* () {
         const indices: number[] = [];
