@@ -14,29 +14,29 @@ $smallScreenWidth: 420px;
 @mixin choose($prop, $xlValue, $lValue, $mValue: null, $sValue: null) {
   #{$prop}: $xlValue;
 
-  @if ($mValue) {
-    @media (min-width: $mediumScreenWidth) and (max-width: $largeScreenWidth) {
-      #{$prop}: $lValue;
-    }
-  } @else {
-    @media (max-width: $largeScreenWidth) {
-      #{$prop}: $lValue;
-    }
-  }
+  // @if ($mValue) {
+  //   @media (min-width: $mediumScreenWidth) and (max-width: $largeScreenWidth) {
+  //     #{$prop}: $lValue;
+  //   }
+  // } @else {
+  //   @media (max-width: $largeScreenWidth) {
+  //     #{$prop}: $lValue;
+  //   }
+  // }
 
-  @if ($sValue) {
-    @media (min-width: $smallScreenWidth) and (max-width: $mediumScreenWidth) {
-      #{$prop}: $mValue;
-    }
+  // @if ($sValue) {
+  //   @media (min-width: $smallScreenWidth) and (max-width: $mediumScreenWidth) {
+  //     #{$prop}: $mValue;
+  //   }
 
-    @media (max-width: $smallScreenWidth) {
-      #{$prop}: $sValue;
-    }
-  } @else {
-    @media (max-width: $mediumScreenWidth) {
-      #{$prop}: $mValue;
-    }
-  }
+  //   @media (max-width: $smallScreenWidth) {
+  //     #{$prop}: $sValue;
+  //   }
+  // } @else {
+  //   @media (max-width: $mediumScreenWidth) {
+  //     #{$prop}: $mValue;
+  //   }
+  // }
 }
 
 :root {
@@ -131,15 +131,48 @@ $smallScreenWidth: 420px;
   }
 }
 
+
+.player-icon,
+.slider-icon,
+.change-quote {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.player-icon:hover,
+.slider-icon:hover,
+.change-quote:hover {
+  opacity: 1;
+}
+
+.player-icon:active,
+.slider-icon:active,
+.change-quote:active {
+  border: 0;
+  outline: 0;
+  transform: scale(1.1);
+}
+
 body {
-  // min-width: 320px;
-  // min-height: 100vh;
   font-family: "Arial", sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
   background-color: grey;
 }
+
+// $def_icon_size: calc(var(--app-height)*0.027);
+// $big_icon_size: calc(var(--app-height)*0.036);
+
 
 .settings-modal-container {
   visibility: hidden;
@@ -216,7 +249,7 @@ body {
   display: grid;
   grid-template-rows: 1fr auto 1fr;
   height: var(--app-height);
-  padding: 20px;
+  padding: calc(var(--app-height)*0.02);
 
   .header {
     display: flex;
@@ -224,54 +257,63 @@ body {
     align-items: flex-start;
 
     .player {
-      @include choose(font-size, 16px, 16px, 16px, 12px);
+      width: calc(var(--app-height)*0.21);
+      font-size: calc(var(--app-height)*0.018);
       .player-controls {
         display: flex;
         flex-direction: column;
-        margin-bottom: 28px;
-        @include choose(width, 150px, 150px, 150px, 150px);
+        margin-bottom: calc(var(--app-height)*0.017);
 
         input[type="range"] {
-          @include choose(width, 100px, 100px, 100px, 100px);
-          margin-top: 10px;
+          width: calc(var(--app-height)*0.14);
         }
 
         .progress {
           display: flex;
           justify-content: space-between;
-          align-items: flex-end;
-          font-size: 11px;
+          align-items: center;
+          font-size: calc(var(--app-height)*0.011);
+          margin-top: calc(var(--app-height)*0.01);
         }
 
         .volume {
           display: flex;
           justify-content: space-between;
-          align-items: flex-end;
+          align-items: center;
+          margin-top: calc(var(--app-height)*0.01);
 
           .player-mute {
-            width: 20px;
-            height: 20px;
             border: none;
             outline: none;
             background: transparent;
             background-image: url("../assets/svg/volume.svg");
             background-repeat: no-repeat;
-            background-size: 20px;
+            width: calc(var(--app-height)*0.022);
+            height: calc(var(--app-height)*0.022);
+            background-size: calc(var(--app-height)*0.022);
             &.active {
               background-image: url("../assets/svg/mute.svg");
-            }
+              width: calc(var(--app-height)*0.022);
+              height: calc(var(--app-height)*0.022);
+              background-size: calc(var(--app-height)*0.022);
+              }
           }
         }
 
         .player-controls-buttons {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          margin-bottom: 10px;
+          justify-content: space-around;
+          margin-bottom: calc(var(--app-height)*0.012);
+          .player-icon {
+            width: calc(var(--app-height)*0.027);
+            height: calc(var(--app-height)*0.027);
+            background-size: calc(var(--app-height)*0.027);
+          }
           .play {
-            width: 40px;
-            height: 40px;
-            background-size: 40px 40px;
+            width: calc(var(--app-height)*0.036);
+            height: calc(var(--app-height)*0.036);
+            background-size: calc(var(--app-height)*0.036);
             background-image: url("../assets/svg/play.svg");
           }
 
@@ -295,8 +337,8 @@ body {
 
       .play-item {
         position: relative;
-        padding: 5px 5px 5px 5px;
-        padding-left: 25px;
+        padding: calc(var(--app-height)*0.004);
+        padding-left: 35px;
         list-style: none;
         opacity: 0.8;
         cursor: pointer;
@@ -309,19 +351,18 @@ body {
         &::before {
           background-image: url(../assets/svg/play.svg);
           content: "";
-          width: 20px;
-          height: 20px;
-          background-size: 20px;
+          width:  calc(var(--app-height)*0.022);
+          height: calc(var(--app-height)*0.022);
+          background-size: calc(var(--app-height)*0.022);
           position: absolute;
           left: 0;
-          top: 4px;
         }
         &.active::before {
           background-image: url(../assets/svg/pause.svg);
           content: "";
-          width: 20px;
-          height: 20px;
-          background-size: 20px;
+          width: calc(var(--app-height)*0.022);
+          height: calc(var(--app-height)*0.022);
+          background-size: calc(var(--app-height)*0.022);
           position: absolute;
           left: 0;
           top: 4px;
@@ -337,16 +378,15 @@ body {
       flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
-      row-gap: 5px;
-      @include choose(width, 180px, 180px, 180px, 120px);
-      @include choose(font-size, 18px, 18px, 18px, 12px);
-      min-height: 180px;
+      width: calc(var(--app-height)*0.21);
+      font-size: calc(var(--app-height)*0.017);
+      min-height: calc(var(--app-height)*0.245);
       text-align: left;
 
       .city {
         width: 100%;
-        padding: 5px;
-        @include choose(font-size, 20px, 20px, 20px, 14px);
+        padding: calc(var(--app-height)*0.009);
+        font-size: calc(var(--app-height)*0.025);
         color: #fff;
         border: 0;
         outline: 0;
@@ -354,7 +394,7 @@ body {
         background-color: transparent;
 
         &::placeholder {
-          font-size: 20px;
+          font-size: calc(var(--app-height)*0.025);
           color: #fff;
           opacity: 0.6;
         }
@@ -365,7 +405,7 @@ body {
       }
 
       .weather-error {
-        margin-top: -10px;
+        margin-top: calc(var(--app-height)*(-0.02));
       }
 
       .description-container {
@@ -405,9 +445,9 @@ body {
         background-color: transparent;
         border: none;
         outline: none;
-        width: 32px;
-        height: 32px;
-        background-size: 32px;
+        width: calc(var(--app-height)*0.036);
+        height: calc(var(--app-height)*0.036);
+        background-size: calc(var(--app-height)*0.036);
         opacity: 0.8;
         cursor: pointer;
   
@@ -425,45 +465,45 @@ body {
         cursor: pointer;
 
         &.slide-prev {
-          left: 20px;
+          left: 0;
           background-image: url("../assets/svg/slider-prev.svg");
         }
 
         &.slide-next {
-          right: 20px;
+          right: 0;
           background-image: url("../assets/svg/slider-next.svg");
         }
       }
     }
 
     .time {
-      margin-bottom: 10px;
       font-family: "Arial-MT";
-      @include choose(font-size, 120px, 100px, 72px, 50px);
+      font-size: calc(var(--app-height)*0.09);
       letter-spacing: -4px;
     }
 
     .date {
-      @include choose(font-size, 32px, 24px, 24px, 24px);
-      margin-bottom: 20px;
+      font-size: calc(var(--app-height)*0.03);
+      margin-bottom: calc(var(--app-height)*0.017);
     }
 
     .greeting-container {
       display: flex;
       flex-wrap: wrap;
-      @include choose(font-size, 45px, 40px, 32px, 24px);
+      font-size: calc(var(--app-height)*0.034);
+      margin-bottom: calc(var(--app-height)*0.03);
 
       .greeting {
         flex: 1;
-        padding: 10px;
+        padding: 0px calc(var(--app-height)*0.017);
         text-align: right;
         white-space: nowrap;
       }
 
       .name {
         flex: 1;
-        @include choose(max-width, 350px, 300px, 250px, 200px);
-        padding: 10px;
+        max-width: calc(var(--app-height)*0.385);
+        padding: 0px calc(var(--app-height)*0.017);
         color: #fff;
         background-color: transparent;
         border: 0;
@@ -501,9 +541,9 @@ body {
         }
       }
       .todo-input {
-        @include choose(width, 400px, 400px, 350px, 250px);
+        width: calc(var(--app-height)*0.37);
         padding: 5px;
-        @include choose(font-size, 20px, 20px, 20px, 17px);
+        font-size: calc(var(--app-height)*0.027);
         color: #fff;
         border: 0;
         outline: 0;
@@ -516,8 +556,7 @@ body {
         border: none;
         outline: none;
         color: #fff;
-        padding: 5px;
-        @include choose(font-size, 20px, 20px, 19px, 17px);
+        font-size: calc(var(--app-height)*0.036);
         text-align: center;
         cursor: pointer;
         transform: scale(0.8);
@@ -530,16 +569,13 @@ body {
           transform: scale(1.1);
         }
       }
-      .todo-title {
-        @include choose(font-size, 20px, 20px, 19px, 17px);
-      }
       .todo-ch:checked + .todo-title {
         text-decoration: line-through black;
       }
       .todos {
-        margin-top: 10px;
+        margin-top: calc(var(--app-height)*0.018);
         list-style: none;
-        @include choose(height, 200px, 200px, 150px, 100px);
+        height: calc(var(--app-height)*0.17);
         overflow-y: overlay;
 
         &::-webkit-scrollbar {
@@ -565,16 +601,19 @@ body {
     justify-content: flex-end;
     align-items: center;
     height: 100%;
-    @include choose(font-size, 16px, 16px, 16px, 12px);
+    font-size: calc(var(--app-height)*0.02);
 
     .change-quote {
-      margin-bottom: 30px;
+      margin-bottom: calc(var(--app-height)*0.017);
       background-image: url("../assets/svg/reload.svg");
+      width: calc(var(--app-height)*0.036);
+      height: calc(var(--app-height)*0.036);
+      background-size: calc(var(--app-height)*0.036);
     }
 
     .quote-container {
       .quote {
-        margin-bottom: 10px;
+        margin-bottom: calc(var(--app-height)*0.017);
       }
     }
   }
@@ -598,34 +637,4 @@ body {
 
 .item-active::before {
   color: #c5b358;
-}
-
-.player-icon,
-.slider-icon,
-.change-quote {
-  width: 32px;
-  height: 32px;
-  background-size: 32px 32px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-  opacity: 0.8;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.player-icon:hover,
-.slider-icon:hover,
-.change-quote:hover {
-  opacity: 1;
-}
-
-.player-icon:active,
-.slider-icon:active,
-.change-quote:active {
-  border: 0;
-  outline: 0;
-  transform: scale(1.1);
 }
