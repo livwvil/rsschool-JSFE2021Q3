@@ -1,10 +1,10 @@
 import '@/styles/style.scss';
-import WelcomeView from '@/views/welcome/welcome';
-import SettingsView from '@/views/settings/settings';
-import MeshView from '@/views/mesh/mesh';
+import WelcomeView from '@/views/Welcome/Welcome';
+import SettingsView from '@/views/Settings/Settings';
+import MeshView from '@/views/Mesh/Mesh';
 
-import FooterComponent from '@/components/footer/footer';
-import HeaderComponent from '@/components/header/header';
+import FooterComponent from '@/components/Footer/Footer';
+import HeaderComponent from '@/components/Header/Header';
 import ArtistQuiz from './views/ArtistQuiz/ArtistQuiz';
 
 const views = [

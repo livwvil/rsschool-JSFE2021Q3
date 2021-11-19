@@ -1,4 +1,4 @@
-import '@/components/button/style.scss';
+import '@/components/Button/style.scss';
 
 const Button = (text, width, height) => {
   const w = width || 'auto';

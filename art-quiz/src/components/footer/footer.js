@@ -1,5 +1,5 @@
-import '@/components/footer/style.scss';
-import FooterHTML from '@/components/footer/footer.html';
+import '@/components/Footer/style.scss';
+import FooterHTML from '@/components/Footer/footer.html';
 
 const FooterComponent = () => {
   const template = document.createElement('template');

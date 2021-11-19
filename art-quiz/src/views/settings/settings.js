@@ -1,4 +1,4 @@
-import SettingsComponent from '@/components/settings/settings';
+import SettingsComponent from '@/components/Settings/Settings';
 
 const SettingsView = () => {
   const container = document.createDocumentFragment();

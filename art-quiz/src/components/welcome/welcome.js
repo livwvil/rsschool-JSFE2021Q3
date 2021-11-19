@@ -1,7 +1,7 @@
-import '@/components/welcome/style.scss';
-import WelcomeHTML from '@/components/welcome/welcome.html';
-import Button from '@/components/button/button';
-import createFragmentFromString from '@/components/utils';
+import '@/components/Welcome/style.scss';
+import WelcomeHTML from '@/components/Welcome/welcome.html';
+import Button from '@/components/Button/Button';
+import createFragmentFromString from '@/utils';
 
 const WelcomeComponent = () => {
   const fragment = createFragmentFromString(WelcomeHTML);

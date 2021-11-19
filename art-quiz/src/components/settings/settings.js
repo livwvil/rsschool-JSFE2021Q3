@@ -1,7 +1,7 @@
-import '@/components/settings/style.scss';
-import SettingsHTML from '@/components/settings/settings.html';
-import Button from '@/components/button/button';
-import createFragmentFromString from '@/components/utils';
+import '@/components/Settings/style.scss';
+import SettingsHTML from '@/components/Settings/settings.html';
+import Button from '@/components/Button/Button';
+import createFragmentFromString from '@/utils';
 
 const SettingsComponent = () => {
   const fragment = createFragmentFromString(SettingsHTML);

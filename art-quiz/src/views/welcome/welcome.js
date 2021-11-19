@@ -1,4 +1,4 @@
-import WelcomeComponent from '@/components/welcome/welcome';
+import WelcomeComponent from '@/components/Welcome/Welcome';
 
 const WelcomeView = () => {
   const container = document.createDocumentFragment();

@@ -1,6 +1,6 @@
-import '@/components/card/style.scss';
-import CardHTML from '@/components/card/card.html';
-import createFragmentFromString from '../utils';
+import '@/components/Card/style.scss';
+import CardHTML from '@/components/Card/card.html';
+import createFragmentFromString from '../../utils';
 
 const RetryButton = (text) => {
   const inner = document.createElement('div');

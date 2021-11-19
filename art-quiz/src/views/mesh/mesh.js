@@ -1,5 +1,5 @@
-import '@/views/mesh/style.scss';
-import Card from '@/components/card/card';
+import '@/views/Mesh/style.scss';
+import Card from '@/components/Card/Card';
 
 const url = 'https://www.austenjewellers.co.uk/wp-content/uploads/2020/04/1-2.jpg';
 

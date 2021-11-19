@@ -1,7 +1,7 @@
 import Timer from '@/components/Timer/Timer';
 import '@/views/ArtistQuiz/style.scss';
-import Card from '@/components/card/card';
-import Button from '@/components/button/button';
+import Card from '@/components/Card/Card';
+import Button from '@/components/Button/Button';
 
 const url = '/assets/img/77.jpg';
 
