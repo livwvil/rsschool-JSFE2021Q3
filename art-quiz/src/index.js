@@ -1,1 +1,4 @@
-import '@/styles/style.scss';
+import App from './app';
+
+const root = document.querySelector('#root');
+root.append(App());

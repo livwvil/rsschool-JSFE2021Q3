@@ -38,7 +38,8 @@ module.exports = (env, options) => {
               presets: ['@babel/preset-env'],
             },
           },
-        }, {
+        },
+        {
           test: /\.(sa|sc|c)ss$/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -48,15 +49,19 @@ module.exports = (env, options) => {
             },
             'sass-loader',
           ],
-        }, {
-          test: /\.(png|svg|jpe?g|gif|ttf)$/,
-          use: {
-            loader: 'file-loader',
-          },
-        }, {
-          test: /\.html$/,
-          use: {
-            loader: 'html-loader',
+        },
+        // {
+        //   test: /\.(png|svg|jpe?g|gif|ttf)$/,
+        //   use: {
+        //     loader: 'file-loader',
+        //   },
+        // },
+        {
+          test: /\.html$/i,
+          loader: 'html-loader',
+          options: {
+            // Disables attributes processing
+            sources: false,
           },
         },
       ],
