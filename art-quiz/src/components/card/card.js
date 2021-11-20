@@ -1,6 +1,4 @@
 import '@/components/Card/style.scss';
-import CardHTML from '@/components/Card/card.html';
-import createFragmentFromString from '../../utils';
 
 const RetryButton = (text) => {
   const inner = document.createElement('div');
@@ -13,52 +11,116 @@ const RetryButton = (text) => {
   return button;
 };
 
-const Desc = (title, text) => {
-  const titleElem = document.createElement('span');
-  titleElem.classList.add('title');
-  titleElem.innerText = title;
-
-  const textElem = document.createElement('span');
-  textElem.classList.add('text');
-  textElem.innerText = text;
-
+const Desc = (desc) => {
   const container = document.createElement('div');
   container.classList.add('description');
-  container.append(titleElem);
-  container.append(textElem);
+
+  if (desc && desc.title) {
+    const titleElem = document.createElement('span');
+    titleElem.classList.add('title');
+    titleElem.innerText = desc.title;
+    container.append(titleElem);
+  }
+
+  if (desc && desc.text) {
+    const textElem = document.createElement('span');
+    textElem.classList.add('text');
+    textElem.innerText = desc.text;
+    container.append(textElem);
+  }
 
   return container;
 };
 
-const Card = (caption, isPopupButton, shouldActivatePopup, shouldFadeContent, imageUrl) => {
-  const fragment = createFragmentFromString(CardHTML);
+const getCaptionPart = (caption) => {
+  const captionContainer = document.createElement('div');
+  captionContainer.classList.add('caption');
 
-  const nameElem = fragment.querySelector('.name');
-  const valueElem = fragment.querySelector('.value');
+  if (caption && caption.name) {
+    const nameTextElem = document.createElement('span');
+    nameTextElem.classList.add('name');
+    nameTextElem.innerText = caption.name;
+    captionContainer.append(nameTextElem);
+  }
+
+  if (caption && caption.value) {
+    const valueTextElem = document.createElement('span');
+    valueTextElem.classList.add('value');
+    valueTextElem.innerText = caption.value;
+    captionContainer.append(valueTextElem);
+  }
+
+  return captionContainer;
+};
+
+const getContentPart = (image, popup) => {
+  const getImagePart = () => {
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image');
+    imageContainer.style.backgroundImage = `url(${image.url})`;
+    if (image.shouldFade) {
+      imageContainer.classList.add('fade');
+    }
+
+    if ('highlightAnswerAs' in image) {
+      imageContainer.addEventListener('click', () => {
+        imageContainer.innerHTML = '';
+        const filter = document.createElement('div');
+        filter.classList.add('filter');
+        filter.classList.add(image.highlightAnswerAs ? 'right' : 'not-right');
+        imageContainer.append(filter);
+      });
+    }
+
+    return imageContainer;
+  };
+
+  const getPopupPart = () => {
+    const popupContainer = document.createElement('div');
+    popupContainer.classList.add('popup');
+
+    if (popup.desc) {
+      if ('truthSign' in popup.desc) {
+        popupContainer.classList.add('guess-result');
+        popupContainer.classList.add(popup.desc.truthSign ? 'right' : 'not-right');
+      } else {
+        popupContainer.append(Desc(popup.desc));
+      }
+    } else {
+      popupContainer.classList.add('retry-btn');
+      popupContainer.append(RetryButton('Play again'));
+    }
+
+    if (popup.isActive) {
+      popupContainer.classList.add('active');
+    }
+
+    return popupContainer;
+  };
+
+  const contentContainer = document.createElement('div');
+  contentContainer.classList.add('content');
+
+  contentContainer.append(getImagePart());
+
+  if (popup) {
+    contentContainer.append(getPopupPart());
+  }
+
+  return contentContainer;
+};
+
+const Card = (caption, image, popup) => {
+  const cardContainer = document.createElement('div');
+  cardContainer.classList.add('card');
+
   if (caption) {
-    nameElem.innerText = caption.name;
-    valueElem.innerText = caption.value;
+    cardContainer.append(getCaptionPart(caption));
   }
 
-  const image = fragment.querySelector('.image');
-  image.style.backgroundImage = `url(${imageUrl})`;
-  if (shouldFadeContent) {
-    image.classList.add('fade');
-  }
+  cardContainer.append(getContentPart(image, popup));
 
-  const popupElem = fragment.querySelector('.popup');
-  if (isPopupButton) {
-    popupElem.classList.add('retry-btn');
-    popupElem.append(RetryButton('Play again'));
-  } else {
-    popupElem.append(Desc('Girl with a Pearl Earring', 'Johannes Vermeer, 1665'));
-  }
-
-  if (shouldActivatePopup) {
-    popupElem.classList.add('active');
-  }
-
-  return fragment;
+  return cardContainer;
 };
 
 export default Card;

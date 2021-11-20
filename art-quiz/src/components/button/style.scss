@@ -13,10 +13,17 @@
   outline: none;
   background: transparent;
   cursor: pointer;
+
+  &.black {
+    color: #000;
+    border: 1px solid #000;
+  }
+
   &:hover {
     color: #000000;
     background: #ffffff;
   }
+  
   &:active {
     color: #000000;
     background: #FFBCA2;

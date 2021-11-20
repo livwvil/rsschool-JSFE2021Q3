@@ -11,10 +11,10 @@ const MeshView = () => {
     mesh.append(
       Card(
         { name: 'Portrait', value: '5/10' },
-        true,
-        i > 1,
-        i > 3,
-        Math.random() > 0.3 ? url : '',
+        { url: Math.random() > 0.3 ? url : '', shouldFade: i > 99, highlightAnswerAs: Math.random() > 0.3 },
+        {
+          isActive: i > 1,
+        },
       ),
     );
   }

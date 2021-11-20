@@ -16,13 +16,7 @@ const ArtistQuiz = () => {
   const getMasterpicePart = () => {
     const masterpiceContainer = document.createElement('div');
     masterpiceContainer.classList.add('masterpice');
-    masterpiceContainer.append(Card(
-      null,
-      false,
-      false,
-      false,
-      url,
-    ));
+    masterpiceContainer.append(Card(null, { url, shouldFade: false }, null));
 
     return masterpiceContainer;
   };
