@@ -2,7 +2,21 @@ import '@/components/Modal/style.scss';
 import Card from '@/components/Card/Card';
 import Button from '../Button/Button';
 
-const url = '/assets/img/77.jpg';
+const card = {
+  caption: null,
+  image: {
+    url: '/assets/img/77.jpg',
+    shouldFade: false,
+    highlightAnswerAs: true,
+  },
+  popup: {
+    isActive: true,
+    desc: {
+      truthSign: false,
+    },
+  },
+  href: null,
+};
 
 const Modal = (type = 'cube') => {
   const getImagePart = () => {
@@ -16,16 +30,7 @@ const Modal = (type = 'cube') => {
       imageContainer.classList.add('symbol');
       imageContainer.classList.add('cube');
     } else {
-      imageContainer.append(Card(
-        null,
-        { url, shouldFade: false, highlightAnswerAs: true },
-        {
-          isActive: true,
-          desc: {
-            truthSign: false,
-          },
-        },
-      ));
+      imageContainer.append(Card(card));
     }
 
     return imageContainer;
@@ -81,7 +86,7 @@ const Modal = (type = 'cube') => {
 
   const modalContainer = document.createElement('div');
   modalContainer.classList.add('modal-container');
-  modalContainer.classList.add('active');
+  // modalContainer.classList.add('active');
 
   const modalWindow = document.createElement('div');
   modalWindow.classList.add('modal-window');

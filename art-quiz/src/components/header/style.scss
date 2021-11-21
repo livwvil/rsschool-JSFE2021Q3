@@ -12,14 +12,28 @@ header {
     letter-spacing: -0.5px;
     color: #ffffff;
 
+    .app-logo {
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
     .nav-list {
       margin-left: 120px;
       list-style: none;
       display: flex;
       gap: 90px;
 
-      .nav-item.active {
-        color: #ffbca2;
+      .nav-item {
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+        &.active {
+          color: #ffbca2;
+        }
       }
     }
 
@@ -46,6 +60,7 @@ header {
   }
 
   .app-settings {
+    margin: 0 0 0 auto;
     width: 36px;
     height: 36px;
     border: none;

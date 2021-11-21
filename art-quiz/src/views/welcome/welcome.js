@@ -1,9 +1,9 @@
 import WelcomeComponent from '@/components/Welcome/Welcome';
 
-const WelcomeView = () => {
+const WelcomeView = (urls) => {
   const container = document.createDocumentFragment();
 
-  container.append(WelcomeComponent());
+  container.append(WelcomeComponent(urls));
 
   return container;
 };

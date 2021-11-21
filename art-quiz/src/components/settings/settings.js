@@ -1,10 +1,10 @@
 import '@/components/Settings/style.scss';
 import SettingsHTML from '@/components/Settings/settings.html';
 import Button from '@/components/Button/Button';
-import createFragmentFromString from '@/utils';
+import Utils from '@/utils';
 
 const SettingsComponent = () => {
-  const fragment = createFragmentFromString(SettingsHTML);
+  const fragment = Utils.createFragmentFromString(SettingsHTML);
 
   const buttonsContainer = fragment.querySelector('.buttons-container');
   buttonsContainer.append(Button('Default', '240px', '60px'));

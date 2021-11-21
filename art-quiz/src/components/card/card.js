@@ -1,12 +1,18 @@
 import '@/components/Card/style.scss';
 
-const RetryButton = (text) => {
+const RetryButton = (text, href) => {
   const inner = document.createElement('div');
   inner.classList.add('inner');
   inner.innerText = text;
 
   const button = document.createElement('button');
   button.classList.add('retry-button');
+
+  button.addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.location = href;
+  });
+
   button.append(inner);
   return button;
 };
@@ -53,7 +59,7 @@ const getCaptionPart = (caption) => {
   return captionContainer;
 };
 
-const getContentPart = (image, popup) => {
+const getContentPart = (image, popup, href) => {
   const getImagePart = () => {
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('image');
@@ -75,24 +81,27 @@ const getContentPart = (image, popup) => {
     return imageContainer;
   };
 
-  const getPopupPart = () => {
+  const getPopupPart = (root) => {
     const popupContainer = document.createElement('div');
     popupContainer.classList.add('popup');
+    const toggleActive = () => popupContainer.classList.toggle('active');
 
     if (popup.desc) {
+      if (popup.isActive) {
+        popupContainer.classList.add('active');
+      }
       if ('truthSign' in popup.desc) {
         popupContainer.classList.add('guess-result');
         popupContainer.classList.add(popup.desc.truthSign ? 'right' : 'not-right');
       } else {
+        root.addEventListener('click', toggleActive);
         popupContainer.append(Desc(popup.desc));
       }
     } else {
       popupContainer.classList.add('retry-btn');
-      popupContainer.append(RetryButton('Play again'));
-    }
-
-    if (popup.isActive) {
-      popupContainer.classList.add('active');
+      popupContainer.append(RetryButton('Play again', popup.href));
+      root.addEventListener('mouseenter', toggleActive);
+      root.addEventListener('mouseleave', toggleActive);
     }
 
     return popupContainer;
@@ -104,13 +113,21 @@ const getContentPart = (image, popup) => {
   contentContainer.append(getImagePart());
 
   if (popup) {
-    contentContainer.append(getPopupPart());
+    contentContainer.append(getPopupPart(contentContainer));
+  }
+
+  if (href) {
+    contentContainer.addEventListener('click', () => {
+      window.location = href;
+    });
   }
 
   return contentContainer;
 };
 
-const Card = (caption, image, popup) => {
+const Card = ({
+  caption, image, popup, href,
+}) => {
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('card');
 
@@ -118,7 +135,7 @@ const Card = (caption, image, popup) => {
     cardContainer.append(getCaptionPart(caption));
   }
 
-  cardContainer.append(getContentPart(image, popup));
+  cardContainer.append(getContentPart(image, popup, href));
 
   return cardContainer;
 };

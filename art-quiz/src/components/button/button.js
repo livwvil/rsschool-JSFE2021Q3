@@ -1,6 +1,6 @@
 import '@/components/Button/style.scss';
 
-const Button = (text, width, height) => {
+const Button = (text, width, height, onClick) => {
   const w = width || 'auto';
   const h = height || 'auto';
 
@@ -9,6 +9,9 @@ const Button = (text, width, height) => {
   button.style.height = h;
   button.classList.add('button');
   button.innerText = text;
+  if (onClick && typeof onClick === 'function') {
+    button.addEventListener('click', onClick);
+  }
   return button;
 };
 

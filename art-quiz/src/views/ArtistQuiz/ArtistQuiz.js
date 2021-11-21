@@ -3,9 +3,17 @@ import '@/views/ArtistQuiz/style.scss';
 import Card from '@/components/Card/Card';
 import Button from '@/components/Button/Button';
 
-const url = '/assets/img/77.jpg';
+const card = {
+  caption: null,
+  image: {
+    url: '/assets/img/77.jpg',
+    shouldFade: false,
+  },
+  popup: null,
+  href: null,
+};
 
-const ArtistQuiz = () => {
+const ArtistQuizView = () => {
   const getQuestionPart = (text) => {
     const questionText = document.createElement('span');
     questionText.classList.add('question');
@@ -16,7 +24,7 @@ const ArtistQuiz = () => {
   const getMasterpicePart = () => {
     const masterpiceContainer = document.createElement('div');
     masterpiceContainer.classList.add('masterpice');
-    masterpiceContainer.append(Card(null, { url, shouldFade: false }, null));
+    masterpiceContainer.append(Card(card));
 
     return masterpiceContainer;
   };
@@ -51,4 +59,4 @@ const ArtistQuiz = () => {
   return artistQuizContainer;
 };
 
-export default ArtistQuiz;
+export default ArtistQuizView;

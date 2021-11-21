@@ -2,9 +2,17 @@ import Timer from '@/components/Timer/Timer';
 import '@/views/PictureQuiz/style.scss';
 import Card from '@/components/Card/Card';
 
-const url = '/assets/img/77.jpg';
+const card = {
+  caption: null,
+  image: {
+    url: '/assets/img/77.jpg',
+    shouldFade: false,
+  },
+  popup: null,
+  href: null,
+};
 
-const PictureQuiz = () => {
+const PictureQuizView = () => {
   const getQuestionPart = (text) => {
     const questionText = document.createElement('span');
     questionText.classList.add('question');
@@ -16,7 +24,7 @@ const PictureQuiz = () => {
     const masterpiceContainer = document.createElement('div');
     masterpiceContainer.classList.add('masterpice-container');
     for (let i = 0; i < 4; i += 1) {
-      masterpiceContainer.append(Card(null, { url, shouldFade: false }, null));
+      masterpiceContainer.append(Card(card));
     }
 
     return masterpiceContainer;
@@ -41,4 +49,4 @@ const PictureQuiz = () => {
   return pictureQuizContainer;
 };
 
-export default PictureQuiz;
+export default PictureQuizView;
