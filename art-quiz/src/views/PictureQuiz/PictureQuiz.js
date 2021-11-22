@@ -2,6 +2,7 @@ import Timer from '@/components/Timer/Timer';
 import '@/views/PictureQuiz/style.scss';
 import Card from '@/components/Card/Card';
 import Modal from '@/components/Modal/Modal';
+import { DEFAULT_TIME_TO_ANSWER_INF } from '@/constants';
 
 const PictureQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, settingsManager) => {
   let previousMarkup = { remove: () => {}, before: (markup) => gameRoot.append(markup) };
@@ -61,7 +62,7 @@ const PictureQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, se
       }
     };
 
-    if (settingsManager.getGameTime()) {
+    if (settingsManager.getGameTime() !== DEFAULT_TIME_TO_ANSWER_INF) {
       pictureQuizContainer.append(
         Timer(settingsManager.getGameTime(), secondsCounter, boundOnClose, boundOnTimeEnds),
       );

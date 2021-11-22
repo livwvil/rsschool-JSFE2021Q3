@@ -3,4 +3,4 @@ export const QUIZ_QUESTIONS_AMOUNT = 10; // max 10 with current dataset
 export const ARTIST_QUIZ = 'artist_quiz';
 export const PICTURE_QUIZ = 'picture_quiz';
 export const DEFAULT_VOLUME = 35;
-export const DEFAULT_TIME_TO_ANSWER = 7;
+export const DEFAULT_TIME_TO_ANSWER_INF = 'infinity';

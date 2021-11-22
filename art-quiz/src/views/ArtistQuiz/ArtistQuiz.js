@@ -3,6 +3,7 @@ import '@/views/ArtistQuiz/style.scss';
 import Card from '@/components/Card/Card';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
+import { DEFAULT_TIME_TO_ANSWER_INF } from '@/constants';
 
 const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, settingsManager) => {
   let previousMarkup = { remove: () => {}, before: (markup) => gameRoot.append(markup) };
@@ -73,7 +74,7 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, set
       }
     };
 
-    if (settingsManager.getGameTime()) {
+    if (settingsManager.getGameTime() !== DEFAULT_TIME_TO_ANSWER_INF) {
       artistQuizContainer.append(
         Timer(settingsManager.getGameTime(), secondsCounter, boundOnClose, boundOnTimeEnds),
       );

@@ -4,7 +4,7 @@ import {
   QUIZ_QUESTIONS_AMOUNT,
   ARTIST_QUIZ,
   DEFAULT_VOLUME,
-  DEFAULT_TIME_TO_ANSWER,
+  DEFAULT_TIME_TO_ANSWER_INF,
 } from '@/constants';
 
 const getImagePathById = (id) => `/assets/img/${id}full.jpg`;
@@ -20,11 +20,9 @@ const getAnswerVariants = (answersArray, correctAnswer) => {
 
 const separateData = (rawImagesInfo) => {
   const authorsSet = new Set();
-  const imageHrefs = [];
 
   const _ = rawImagesInfo.map((imgInfo) => {
     const imageHref = getImagePathById(imgInfo.imageNum);
-    imageHrefs.push(imageHref);
     authorsSet.add(imgInfo.author);
     return {
       author: imgInfo.author,
@@ -41,16 +39,13 @@ const separateData = (rawImagesInfo) => {
   return {
     artistQuizImagesInfo,
     picturesQuizImagesInfo,
-    imageHrefs,
     authors,
   };
 };
 
 const getGameManager = async () => {
   const rawImagesInfo = await Utils.getImagesInfo();
-  const {
-    authors, imageHrefs, artistQuizImagesInfo, picturesQuizImagesInfo,
-  } = separateData(rawImagesInfo);
+  const { authors, artistQuizImagesInfo, picturesQuizImagesInfo } = separateData(rawImagesInfo);
 
   const getQuizQuestions = (game, categoryId) => {
     const imagesInfo = game === ARTIST_QUIZ ? artistQuizImagesInfo : picturesQuizImagesInfo;
@@ -62,7 +57,12 @@ const getGameManager = async () => {
       const imgInfo = imagesInfo[i];
       const variants = game === ARTIST_QUIZ
         ? getAnswerVariants(authors, imgInfo.author)
-        : getAnswerVariants(imageHrefs, imgInfo.href);
+        : getAnswerVariants(
+          [...artistQuizImagesInfo, ...picturesQuizImagesInfo]
+            .filter((item) => item.author !== imgInfo.author)
+            .map((item) => item.href),
+          imgInfo.href,
+        );
 
       result.push({
         ...imgInfo,
@@ -159,12 +159,12 @@ const getGameManager = async () => {
         player.play();
       }, 30);
     },
-    changeGameTime: (volume) => {
-      console.log('changeGameTime', volume);
+    setGameTime: (gameTime) => {
+      localStorage.setItem('game_time', gameTime);
     },
     getGameTime: () => {
-      console.log('getGameTime');
-      return 10;
+      const gameTime = parseFloat(localStorage.getItem('game_time'));
+      return Number.isNaN(gameTime) ? DEFAULT_TIME_TO_ANSWER_INF : gameTime;
     },
   };
 
