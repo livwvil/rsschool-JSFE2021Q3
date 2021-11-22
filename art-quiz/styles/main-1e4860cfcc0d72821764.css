@@ -1,0 +1,364 @@
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Regular.eot");src:local("Gilroy Regular"),local("Gilroy-Regular"),url("/assets/fonts/Gilroy-Regular.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Regular.woff2") format("woff2"),url("/assets/fonts/Gilroy-Regular.woff") format("woff"),url("/assets/fonts/Gilroy-Regular.ttf") format("truetype");font-weight:normal;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-ExtraboldItalic.eot");src:local("Gilroy Extrabold Italic"),local("Gilroy-ExtraboldItalic"),url("/assets/fonts/Gilroy-ExtraboldItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-ExtraboldItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-ExtraboldItalic.woff") format("woff"),url("/assets/fonts/Gilroy-ExtraboldItalic.ttf") format("truetype");font-weight:800;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Bold.eot");src:local("Gilroy Bold"),local("Gilroy-Bold"),url("/assets/fonts/Gilroy-Bold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Bold.woff2") format("woff2"),url("/assets/fonts/Gilroy-Bold.woff") format("woff"),url("/assets/fonts/Gilroy-Bold.ttf") format("truetype");font-weight:bold;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Black.eot");src:local("Gilroy Black"),local("Gilroy-Black"),url("/assets/fonts/Gilroy-Black.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Black.woff2") format("woff2"),url("/assets/fonts/Gilroy-Black.woff") format("woff"),url("/assets/fonts/Gilroy-Black.ttf") format("truetype");font-weight:900;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Light.eot");src:local("Gilroy Light"),local("Gilroy-Light"),url("/assets/fonts/Gilroy-Light.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Light.woff2") format("woff2"),url("/assets/fonts/Gilroy-Light.woff") format("woff"),url("/assets/fonts/Gilroy-Light.ttf") format("truetype");font-weight:300;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Semibold.eot");src:local("Gilroy Semibold"),local("Gilroy-Semibold"),url("/assets/fonts/Gilroy-Semibold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Semibold.woff2") format("woff2"),url("/assets/fonts/Gilroy-Semibold.woff") format("woff"),url("/assets/fonts/Gilroy-Semibold.ttf") format("truetype");font-weight:600;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Medium.eot");src:local("Gilroy Medium"),local("Gilroy-Medium"),url("/assets/fonts/Gilroy-Medium.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Medium.woff2") format("woff2"),url("/assets/fonts/Gilroy-Medium.woff") format("woff"),url("/assets/fonts/Gilroy-Medium.ttf") format("truetype");font-weight:500;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-MediumItalic.eot");src:local("Gilroy Medium Italic"),local("Gilroy-MediumItalic"),url("/assets/fonts/Gilroy-MediumItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-MediumItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-MediumItalic.woff") format("woff"),url("/assets/fonts/Gilroy-MediumItalic.ttf") format("truetype");font-weight:500;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-BlackItalic.eot");src:local("Gilroy Black Italic"),local("Gilroy-BlackItalic"),url("/assets/fonts/Gilroy-BlackItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-BlackItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-BlackItalic.woff") format("woff"),url("/assets/fonts/Gilroy-BlackItalic.ttf") format("truetype");font-weight:900;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-UltraLight.eot");src:local("Gilroy UltraLight"),local("Gilroy-UltraLight"),url("/assets/fonts/Gilroy-UltraLight.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-UltraLight.woff2") format("woff2"),url("/assets/fonts/Gilroy-UltraLight.woff") format("woff"),url("/assets/fonts/Gilroy-UltraLight.ttf") format("truetype");font-weight:200;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-RegularItalic.eot");src:local("Gilroy Regular Italic"),local("Gilroy-RegularItalic"),url("/assets/fonts/Gilroy-RegularItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-RegularItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-RegularItalic.woff") format("woff"),url("/assets/fonts/Gilroy-RegularItalic.ttf") format("truetype");font-weight:normal;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-SemiboldItalic.eot");src:local("Gilroy Semibold Italic"),local("Gilroy-SemiboldItalic"),url("/assets/fonts/Gilroy-SemiboldItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-SemiboldItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-SemiboldItalic.woff") format("woff"),url("/assets/fonts/Gilroy-SemiboldItalic.ttf") format("truetype");font-weight:600;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-HeavyItalic.eot");src:local("Gilroy Heavy Italic"),local("Gilroy-HeavyItalic"),url("/assets/fonts/Gilroy-HeavyItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-HeavyItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-HeavyItalic.woff") format("woff"),url("/assets/fonts/Gilroy-HeavyItalic.ttf") format("truetype");font-weight:900;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Extrabold.eot");src:local("Gilroy Extrabold"),local("Gilroy-Extrabold"),url("/assets/fonts/Gilroy-Extrabold.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Extrabold.woff2") format("woff2"),url("/assets/fonts/Gilroy-Extrabold.woff") format("woff"),url("/assets/fonts/Gilroy-Extrabold.ttf") format("truetype");font-weight:800;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-BoldItalic.eot");src:local("Gilroy Bold Italic"),local("Gilroy-BoldItalic"),url("/assets/fonts/Gilroy-BoldItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-BoldItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-BoldItalic.woff") format("woff"),url("/assets/fonts/Gilroy-BoldItalic.ttf") format("truetype");font-weight:bold;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-UltraLightItalic.eot");src:local("Gilroy UltraLight Italic"),local("Gilroy-UltraLightItalic"),url("/assets/fonts/Gilroy-UltraLightItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-UltraLightItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-UltraLightItalic.woff") format("woff"),url("/assets/fonts/Gilroy-UltraLightItalic.ttf") format("truetype");font-weight:200;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-LightItalic.eot");src:local("Gilroy Light Italic"),local("Gilroy-LightItalic"),url("/assets/fonts/Gilroy-LightItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-LightItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-LightItalic.woff") format("woff"),url("/assets/fonts/Gilroy-LightItalic.ttf") format("truetype");font-weight:300;font-style:italic}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Heavy.eot");src:local("Gilroy Heavy"),local("Gilroy-Heavy"),url("/assets/fonts/Gilroy-Heavy.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Heavy.woff2") format("woff2"),url("/assets/fonts/Gilroy-Heavy.woff") format("woff"),url("/assets/fonts/Gilroy-Heavy.ttf") format("truetype");font-weight:900;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-Thin.eot");src:local("Gilroy Thin"),local("Gilroy-Thin"),url("/assets/fonts/Gilroy-Thin.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-Thin.woff2") format("woff2"),url("/assets/fonts/Gilroy-Thin.woff") format("woff"),url("/assets/fonts/Gilroy-Thin.ttf") format("truetype");font-weight:100;font-style:normal}@font-face{font-family:"Gilroy";src:url("/assets/fonts/Gilroy-ThinItalic.eot");src:local("Gilroy Thin Italic"),local("Gilroy-ThinItalic"),url("/assets/fonts/Gilroy-ThinItalic.eot?#iefix") format("embedded-opentype"),url("/assets/fonts/Gilroy-ThinItalic.woff2") format("woff2"),url("/assets/fonts/Gilroy-ThinItalic.woff") format("woff"),url("/assets/fonts/Gilroy-ThinItalic.ttf") format("truetype");font-weight:100;font-style:italic}:root{--app-height: 100vh;--app-width: 100vw}*{box-sizing:border-box}*::-webkit-scrollbar{width:7px}*::-webkit-scrollbar-thumb{background-color:rgba(255,255,255,.5);border-radius:20%}.app-container{background-color:#000;width:var(--app-width);height:var(--app-height);padding:35px;display:grid;grid-template-rows:80px 1fr 80px}.app-container.reduced{grid-template-rows:1fr 80px}@media(max-width: 768px){.app-container{grid-template-rows:60px 1fr 60px;padding:15px}.app-container.reduced{grid-template-rows:1fr 60px}}@media(max-width: 420px){.app-container{grid-template-rows:40px 1fr 40px;padding:10px}.app-container.reduced{grid-template-rows:1fr 60px}}.app-container.welcome{background:url("/assets/img/j-retrato-de-cardenal-rafael 1.jpg") no-repeat center center fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover}
+footer{display:flex;justify-content:space-between;align-items:center}footer *{font-family:Gilroy;font-style:normal;font-weight:500;font-size:16px;line-height:20px;letter-spacing:-0.62766px;color:#fff;color:#fff;text-decoration:none}footer .year{margin-left:60px}
+header{display:flex;justify-content:space-between;align-items:center}header .app-nav{display:flex;font-family:Gilroy;font-style:normal;font-weight:500;font-size:22px;line-height:18px;letter-spacing:-0.5px;color:#fff}header .app-nav .app-logo{cursor:pointer}header .app-nav .app-logo:hover{transform:scale(1.1)}header .app-nav .nav-list{margin-left:120px;list-style:none;display:flex;gap:90px}header .app-nav .nav-list .nav-item{cursor:pointer}header .app-nav .nav-list .nav-item:hover{transform:scale(1.1)}header .app-nav .nav-list .nav-item.active{color:#ffbca2}header .app-nav .back{font-family:Gilroy;font-style:normal;font-weight:500;font-size:22px;line-height:18px;letter-spacing:-0.5px;color:#fff;background:transparent;border:none;outline:none;background:url("/assets/svg/left.svg") no-repeat;padding-left:30px;cursor:pointer;transition:.3s}header .app-nav .back:active{transform:scale(0.9)}header .app-settings{margin:0 0 0 auto;width:36px;height:36px;border:none;outline:none;background:url("/assets/svg/settings.svg");cursor:pointer;transition:.3s}header .app-settings.active{background:url("/assets/svg/close.svg") center no-repeat;background-size:18px}header .app-settings:active{transform:scale(0.9)}
+.settings{display:flex;flex-direction:column;justify-content:space-around;font-family:Gilroy;font-style:normal;font-weight:500;font-size:24px;line-height:28px;letter-spacing:-0.5px;color:#fff}.settings h2{font-family:Gilroy;font-style:normal;font-weight:bold;font-size:34px;line-height:28px;letter-spacing:-0.914286px}.settings .volume-container .volume-picker{height:3px;-webkit-appearance:none;background:linear-gradient(to right, #ffbca2 0%, #ffbca2 50%, #a4a4a4 50%, #a4a4a4 100%)}.settings .volume-container .volume-picker::-webkit-slider-thumb{width:15px;height:15px;border-radius:50%;-webkit-appearance:none;cursor:ew-resize;background:#fff}.settings .volume-container .controls{display:flex;flex-direction:column;width:40%}.settings .volume-container .controls .buttons{display:flex;justify-content:space-between;margin-top:10px}.settings .volume-container .controls .buttons .loud,.settings .volume-container .controls .buttons .quiet{width:36px;height:36px;border:none;outline:none;background:transparent}.settings .volume-container .controls .buttons .loud{background:url("/assets/svg/loud.svg")}.settings .volume-container .controls .buttons .quiet{background:url("/assets/svg/quiet.svg")}.settings .time-container .switch{margin-left:10px;position:relative;display:inline-block;width:48px;height:24px}.settings .time-container .switch input{opacity:0;width:0;height:0}.settings .time-container .switch input:checked+.slider{background-color:#ffbca2}.settings .time-container .switch input:checked+.slider:before{background-color:#fff;-webkit-transform:translateX(20px);-ms-transform:translateX(20px);transform:translateX(20px)}.settings .time-container .switch .slider{position:absolute;border-radius:34px;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#fff;-webkit-transition:.4s;transition:.4s}.settings .time-container .switch .slider:before{border-radius:50%;position:absolute;content:"";height:16px;width:16px;left:6px;bottom:4px;background-color:#000;-webkit-transition:.4s;transition:.4s}.settings .answer-time-container .controls{display:flex;gap:25px}.settings .answer-time-container .controls>input{width:30px;color:#fff;background:transparent;border:none;outline:none}.settings .answer-time-container .controls>input::-webkit-outer-spin-button,.settings .answer-time-container .controls>input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.settings .answer-time-container .controls>button{width:36px;height:36px;border-radius:50%;font-size:24px;color:#fff;border:1px solid #fff;outline:none;background:transparent;cursor:pointer}.settings .answer-time-container .controls>button:hover{color:#000;background:#fff}.settings .answer-time-container .controls>button:active{color:#000;background:#ffbca2;border-color:#ffbca2}.settings .buttons-container{display:flex;justify-content:flex-end;gap:8px}
+.button{padding:5px;border-radius:60px;font-family:Gilroy;font-style:normal;font-weight:500;font-size:22px;line-height:22px;text-align:center;letter-spacing:-1.14766px;color:#fff;border:1px solid #fff;outline:none;background:transparent;cursor:pointer}.button.black{color:#000;border:1px solid #000}.button:hover{color:#000;background:#fff}.button:active{color:#000;background:#ffbca2;border-color:#ffbca2}
+.mesh{padding:30px 0px;display:grid;grid-template-columns:repeat(6, 1fr);gap:15px;overflow:auto}.mesh.five-cells{grid-template-columns:repeat(5, 1fr)}@media(max-width: 768px){.mesh{grid-template-columns:repeat(4, 1fr)}.mesh.five-cells{grid-template-columns:repeat(2, 1fr)}}@media(max-width: 420px){.mesh{grid-template-columns:repeat(2, 1fr)}.mesh.five-cells{grid-template-columns:repeat(2, 1fr)}}.mesh .card{min-height:200px}
+.card{height:100%;display:flex;flex-direction:column}.card .caption{flex:0 1 auto;margin-bottom:10px;display:flex;justify-content:space-between;font-family:Gilroy;font-style:normal;font-weight:500;font-size:20px;line-height:20px;letter-spacing:-0.62766px;color:#fff}@media(max-width: 768px){.card .caption{font-size:16px}}.card .caption .value{color:#ffbca2}.card .content{flex:1 1 auto;border-radius:20px;overflow:hidden;position:relative}.card .content .image{background:gray no-repeat center center;background-size:cover;height:100%;width:100%}.card .content .image.fade{filter:grayscale(100%)}.card .content .image .filter{width:100%;height:100%}.card .content .image .filter.right{background-color:rgba(92,245,92,.3)}.card .content .image .filter.not-right{background-color:rgba(216,81,81,.363)}.card .content .popup{position:absolute;width:100%;background-color:#ffbca2;height:60%;bottom:0;transform:translateY(110%);transition:all .4s;overflow:hidden}.card .content .popup .description{padding:5px;height:100%;display:flex;flex-direction:column;justify-content:center}.card .content .popup .description .title{font-family:Gilroy;font-style:normal;font-weight:600;font-size:20px;line-height:22px;color:#010101;margin-bottom:10px}.card .content .popup .description .text{font-family:Gilroy;font-style:italic;font-weight:normal;font-size:14px;line-height:18px;color:#010101}@media(max-width: 768px){.card .content .popup .description .title,.card .content .popup .description .text{font-size:16px}}.card .content .popup.guess-result{background:transparent}.card .content .popup.guess-result.right{background:url("/assets/svg/right.svg") no-repeat;background-size:min(5.5vh,50px);background-position:bottom 10px left 10px}.card .content .popup.guess-result.not-right{background:url("/assets/svg/not_right.svg") no-repeat;background-size:min(5.5vh,50px);background-position:bottom 10px left 10px}.card .content .popup.retry-btn,.card .content .popup.guess-result{height:25%}.card .content .popup .retry-button{display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;background:transparent;border:none;outline:none;padding:5px}.card .content .popup .retry-button .inner{display:flex;flex-direction:column;justify-content:center;height:27px;background:url("/assets/svg/retry.svg") no-repeat;background-size:26px;padding-left:35px;margin:0 auto;font-family:Gilroy;font-style:normal;font-weight:500;font-size:20.0851px;letter-spacing:-0.62766px;color:#010101}@media(max-width: 768px){.card .content .popup .retry-button .inner{font-size:16px}}.card .content .popup.active{transform:translateY(0%)}
+.welcome{align-self:center;justify-self:center}.welcome h1{margin:0;background:url("/assets/svg/circles.svg") no-repeat;padding-left:35px;margin-bottom:165px;font-family:Gilroy;font-style:normal;font-weight:bold;font-size:111.325px;line-height:165px;text-align:center;letter-spacing:-2.42341px;color:#fff}.welcome .button-group{display:flex;gap:40px}
+.timer-container{display:flex;gap:10px;align-items:center}.timer-container .quit-btn{flex:0 0 auto;padding:0px;width:18px;height:18px;background:transparent;border:none;outline:none;cursor:pointer;background:url("/assets/svg/close.svg") no-repeat}.timer-container .quit-btn:active{transform:scale(0.9)}.timer-container .time-bar{flex:1 1 auto;min-width:30px;height:3px;-webkit-appearance:none;background:linear-gradient(to right, #ffbca2 0%, #ffbca2 0%, #a4a4a4 0%, #a4a4a4 100%)}.timer-container .time-bar::-webkit-slider-thumb{display:none}.timer-container .time-text{flex:0 0 auto;font-family:Gilroy;font-style:normal;font-weight:bold;font-size:28px;line-height:28px;text-align:center;letter-spacing:-0.5px;color:#fff}
+.artist-quiz-container{max-width:805px;width:100%;margin:0 auto;overflow:auto}.artist-quiz-container .game{padding:40px 0px;display:flex;flex-direction:column;gap:45px}.artist-quiz-container .game .question{font-family:Gilroy;font-style:normal;font-weight:bold;font-size:28px;line-height:28px;letter-spacing:-0.5px;color:#fff}.artist-quiz-container .game .masterpice{height:520px}.artist-quiz-container .game .buttons-container{display:grid;grid-template-columns:1fr 1fr;row-gap:15px;column-gap:25px}@media(max-width: 768px){.artist-quiz-container .game .buttons-container{grid-template-columns:1fr}}
+.modal-container{position:absolute;left:0px;top:0px;display:flex;justify-content:center;align-items:center;width:var(--app-width);height:var(--app-height);background-color:rgba(0,0,0,.5);transition:opacity .5s;opacity:0}.modal-container.active{opacity:1}.modal-container .modal-window{min-width:260px;min-height:350px;width:calc(var(--app-width)*.5);height:calc(var(--app-height)*.7);background-color:#fff;border-radius:60px;padding:30px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}.modal-container .modal-window.symbol.stars,.modal-container .modal-window.symbol.cube{width:520px;height:600px}.modal-container .modal-window .image-container{flex:1 1 auto}.modal-container .modal-window .image-container.symbol{flex:1 0 auto}.modal-container .modal-window .image-container.symbol.stars{background:url("/assets/svg/stars.svg") no-repeat center;background-size:325px 125px}.modal-container .modal-window .image-container.symbol.cube{background:url("/assets/svg/cube.svg") no-repeat center;background-size:190px 180px}.modal-container .modal-window .text{color:#010101}.modal-container .modal-window .text span{display:block}.modal-container .modal-window .text .big{font-family:Gilroy;font-style:normal;font-weight:bold;font-size:82px;text-align:center}.modal-container .modal-window .text .middle{font-family:Gilroy;font-style:normal;font-weight:600;font-size:42px;line-height:51px;text-align:center}.modal-container .modal-window .text .small{font-family:Gilroy;font-style:normal;font-weight:500;font-size:32px;line-height:39px;text-align:center}.modal-container .modal-window .text .tiny{font-family:Gilroy;font-style:italic;font-weight:normal;font-size:22px;line-height:26px;text-align:center}.modal-container .modal-window .buttons-container{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}.modal-container .modal-window .buttons-container>*{flex:1 1 auto;min-width:150px}
+.picture-quiz-container{max-width:805px;width:100%;margin:0 auto;overflow:auto}.picture-quiz-container .game{padding:40px 0px;display:flex;flex-direction:column;gap:45px}.picture-quiz-container .game .question{font-family:Gilroy;font-style:normal;font-weight:bold;font-size:28px;line-height:28px;letter-spacing:-0.5px;color:#fff}.picture-quiz-container .game .masterpice-container{display:grid;grid-template-columns:1fr 1fr;gap:25px}.picture-quiz-container .game .masterpice-container>*{height:300px}@media(max-width: 768px){.picture-quiz-container .game .masterpice-container{grid-template-columns:1fr}}
+
+/*# sourceMappingURL=main-1e4860cfcc0d72821764.css.map*/
