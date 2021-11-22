@@ -1,0 +1,38 @@
+.artist-quiz-container {
+  max-width: 805px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: auto;
+  
+  .game {
+    padding: 40px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+
+    .question {
+      font-family: Gilroy;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .masterpice {
+      height: 520px;
+    }
+
+    .buttons-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 15px;
+      column-gap: 25px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

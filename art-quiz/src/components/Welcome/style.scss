@@ -1,0 +1,24 @@
+.welcome {
+  align-self: center;
+  justify-self: center;
+
+  h1 {
+    margin: 0;
+    background: url('/assets/svg/circles.svg') no-repeat;
+    padding-left: 35px;
+    margin-bottom: 165px;
+    font-family: Gilroy;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 111.325px;
+    line-height: 165px;
+    text-align: center;
+    letter-spacing: -2.42341px;
+    color: #ffffff;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 40px;
+  }
+}

@@ -1,0 +1,29 @@
+.mesh {
+  padding: 30px 0px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  overflow: auto;
+  
+  &.five-cells {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    &.five-cells {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 420px) {
+    grid-template-columns: repeat(2, 1fr);
+    &.five-cells {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .card {
+    min-height: 200px;
+  }
+}

@@ -1,0 +1,59 @@
+@import '~normalize.css';
+@import '@/styles/fonts.scss';
+
+:root {
+  --app-height: 100vh;
+  --app-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(255, 255, 255, 0.5);
+    border-radius: 20%;
+  }
+}
+
+.app-container {
+  background-color: #000;
+  width: var(--app-width);
+  height: var(--app-height);
+
+  padding: 35px;
+  display: grid;
+  grid-template-rows: 80px 1fr 80px;
+  
+  &.reduced {
+    grid-template-rows: 1fr 80px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-rows: 60px 1fr 60px;
+    padding: 15px;
+    
+    &.reduced {
+      grid-template-rows: 1fr 60px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    grid-template-rows: 40px 1fr 40px;
+    padding: 10px;
+    
+    &.reduced {
+      grid-template-rows: 1fr 60px;
+    }
+  }
+
+  &.welcome {
+    background: url('/assets/img/j-retrato-de-cardenal-rafael 1.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
