@@ -1,6 +1,6 @@
 import '@/components/Button/style.scss';
 
-const Button = (text, width, height, onClick) => {
+const Button = (text, width, height, onClick, highlightAs) => {
   const w = width || 'auto';
   const h = height || 'auto';
 
@@ -10,7 +10,12 @@ const Button = (text, width, height, onClick) => {
   button.classList.add('button');
   button.innerText = text;
   if (onClick && typeof onClick === 'function') {
-    button.addEventListener('click', onClick);
+    button.addEventListener('click', () => {
+      if (highlightAs !== undefined) {
+        button.classList.add(highlightAs ? 'right' : 'not-right');
+      }
+      onClick();
+    });
   }
   return button;
 };

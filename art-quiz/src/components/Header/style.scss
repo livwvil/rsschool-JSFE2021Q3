@@ -14,20 +14,46 @@ header {
 
     .app-logo {
       cursor: pointer;
+      display: flex;
+      align-items: center;
       &:hover {
         transform: scale(1.1);
+      }
+      img {
+        width: 160px;
+
+        @media (max-width: 768px) {
+          width: 100px;
+        }
+
+        @media (max-width: 420px) {
+          width: 80px;
+        }
       }
     }
 
     .nav-list {
-      margin-left: 120px;
+      padding: 0px;
       list-style: none;
       display: flex;
-      gap: 90px;
-
+      flex-wrap: wrap;
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+  
+      @media (max-width: 420px) {
+        font-size: 16px;
+      }
       .nav-item {
         cursor: pointer;
-
+        margin-left: 50px;
+        @media (max-width: 768px) {
+          margin-left: 10px;
+        }
+    
+        @media (max-width: 420px) {
+          margin-left: 15px;
+        }
         &:hover {
           transform: scale(1.1);
         }
@@ -42,7 +68,6 @@ header {
       font-style: normal;
       font-weight: 500;
       font-size: 22px;
-      line-height: 18px;
       letter-spacing: -0.5px;
       color: #ffffff;
       background: transparent;
@@ -52,7 +77,13 @@ header {
       padding-left: 30px;
       cursor: pointer;
       transition: 0.3s;
-
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+  
+      @media (max-width: 420px) {
+        font-size: 18px;
+      }
       &:active {
         transform: scale(0.9);
       }
@@ -66,11 +97,24 @@ header {
     border: none;
     outline: none;
     background: url('/assets/svg/settings.svg');
+    background-size: 100%;
+
     cursor: pointer;
     transition: 0.3s;
+
+    @media (max-width: 768px) {
+      width: 28px;
+      height: 28px;
+    }
+
+    @media (max-width: 420px) {
+      width: 20px;
+      height: 20px;
+    }
+
     &.active {
       background: url('/assets/svg/close.svg') center no-repeat;
-      background-size: 18px;
+      background-size: 60%;
     }
     &:active {
       transform: scale(0.9);

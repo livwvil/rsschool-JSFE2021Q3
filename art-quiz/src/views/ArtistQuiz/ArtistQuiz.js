@@ -49,8 +49,10 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, set
           buttonsContainer.append(
             Button(variant, 'auto', '60px', () => {
               answerClicked = true;
-              onAnswer(artistQuizContainer, variant);
-            }),
+              setTimeout(() => {
+                onAnswer(artistQuizContainer, variant);
+              }, 200);
+            }, variant === question.author),
           );
         });
 
@@ -114,7 +116,6 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, set
             image: {
               url: currentQuestion.href,
               shouldFade: false,
-              highlightAnswerAs: gamerAnswer === currentQuestion.author,
             },
             popup: {
               isActive: true,

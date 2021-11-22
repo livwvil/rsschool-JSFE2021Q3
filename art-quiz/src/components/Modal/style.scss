@@ -69,6 +69,13 @@
         font-weight: bold;
         font-size: 82px;
         text-align: center;
+        @media (max-width: 768px) {
+          font-size: 60px;
+        }
+    
+        @media (max-width: 420px) {
+          font-size: 40px;
+        }
       }
 
       .middle {
@@ -76,8 +83,14 @@
         font-style: normal;
         font-weight: 600;
         font-size: 42px;
-        line-height: 51px;
         text-align: center;
+        @media (max-width: 768px) {
+          font-size: 31px;
+        }
+    
+        @media (max-width: 420px) {
+          font-size: 20px;
+        }
       }
 
       .small {
@@ -85,8 +98,14 @@
         font-style: normal;
         font-weight: 500;
         font-size: 32px;
-        line-height: 39px;
         text-align: center;
+        @media (max-width: 768px) {
+          font-size: 26px;
+        }
+    
+        @media (max-width: 420px) {
+          font-size: 20px;
+        }
       }
 
       .tiny {
@@ -94,8 +113,14 @@
         font-style: italic;
         font-weight: normal;
         font-size: 22px;
-        line-height: 26px;
         text-align: center;
+        @media (max-width: 768px) {
+          font-size: 18px;
+        }
+    
+        @media (max-width: 420px) {
+          font-size: 14px;
+        }
       }
     }
 

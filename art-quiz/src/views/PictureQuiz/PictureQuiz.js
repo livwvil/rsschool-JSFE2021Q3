@@ -32,13 +32,16 @@ const PictureQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, se
             image: {
               url: variant,
               shouldFade: false,
+              highlightAnswerAs: variant === question.href,
             },
             popup: null,
             href: null,
           });
           masterpice.addEventListener('click', () => {
             answerClicked = true;
-            onAnswer(pictureQuizContainer, variant);
+            setTimeout(() => {
+              onAnswer(pictureQuizContainer, variant);
+            }, 200);
           });
           masterpiceContainer.append(masterpice);
         });
@@ -103,7 +106,6 @@ const PictureQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, se
             image: {
               url: currentQuestion.href,
               shouldFade: false,
-              highlightAnswerAs: gamerAnswer === currentQuestion.href,
             },
             popup: {
               isActive: true,
