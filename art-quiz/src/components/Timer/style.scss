@@ -12,7 +12,11 @@
     background: transparent;
     border: none;
     outline: none;
+    cursor: pointer;
     background: url('/assets/svg/close.svg') no-repeat;
+    &:active {
+      transform: scale(0.9);
+    }
   }
 
   .time-bar {
@@ -28,9 +32,9 @@
       #a4a4a4 100%
     );
 
-    &::-webkit-slider-thumb {
-      display: none;
-    }
+    // &::-webkit-slider-thumb {
+    //   display: none;
+    // }
   }
 
   .time-text {

@@ -10,13 +10,14 @@ import ArtistQuizView from '@/views/ArtistQuiz/ArtistQuiz';
 import PictureQuizView from '@/views/PictureQuiz/PictureQuiz';
 
 import Utils from '@/utils';
+import Game from '@/game';
 
 const Routes = {
   Welcome: '#/',
   Settings: '#/settings',
 
-  ArtistQuiz: '#/artist_quiz',
-  PictureQuiz: '#/picture_quiz',
+  ArtistQuizCategories: '#/artist_quiz',
+  PictureQuizCategories: '#/picture_quiz',
 
   ArtistQuizGame: '#/artist_quiz/:id',
   PictureQuizGame: '#/picture_quiz/:id',
@@ -25,117 +26,13 @@ const Routes = {
   PictureQuizScore: '#/picture_quiz/:id/score',
 };
 
-const getCardsForStats = () => {
-  const cards = [
-    {
-      caption: null,
-      image: {
-        url: '/assets/img/77.jpg',
-        shouldFade: false,
-      },
-      popup: {
-        desc: {
-          title: 'Girl with a Pearl Earring',
-          text: 'Johannes Vermeer, 1665',
-        },
-      },
-      href: null,
-    },
-    {
-      caption: null,
-      image: {
-        url: '/assets/img/4.jpg',
-        shouldFade: true,
-      },
-      popup: {
-        desc: {
-          title: 'Girl with a Pearl Earring',
-          text: 'Johannes Vermeer, 1665',
-        },
-      },
-      href: null,
-    },
-  ];
-  const result = [];
-  for (let i = 0; i < 10; i += 1) {
-    result.push(cards[Math.round(Math.random())]);
-  }
-  return result;
-};
+const gameManagerPromise = Game.getGameManager();
+const secondsCounter = Utils.getSecondsCounter();
 
-const getCardsForArtistQuiz = () => {
-  const cards = [
-    {
-      caption: {
-        name: 'Portrait',
-        value: '2/10',
-      },
-      image: {
-        url: '/assets/img/77.jpg',
-        shouldFade: false,
-      },
-      popup: {
-        href: '/#/artist_quiz/1',
-      },
-      href: '#/artist_quiz/1/score',
-    },
-    {
-      caption: {
-        name: 'Landscape',
-        value: '0/10',
-      },
-      image: {
-        url: '/assets/img/4.jpg',
-        shouldFade: true,
-      },
-      popup: false,
-      href: '#/artist_quiz/2',
-    },
-  ];
-  const result = [];
-  for (let i = 0; i < 12; i += 1) {
-    result.push(cards[Math.round(Math.random())]);
-  }
-  return result;
-};
+const router = async () => {
+  const gameManager = await gameManagerPromise;
+  secondsCounter.clear();
 
-const getCardsForPictureQuiz = () => {
-  const cards = [
-    {
-      caption: {
-        name: 'Portrait',
-        value: '2/10',
-      },
-      image: {
-        url: '/assets/img/77.jpg',
-        shouldFade: false,
-      },
-      popup: {
-        href: '/#/picture_quiz/1',
-      },
-      href: '#/picture_quiz/1/score',
-    },
-    {
-      caption: {
-        name: 'Landscape',
-        value: '0/10',
-      },
-      image: {
-        url: '/assets/img/4.jpg',
-        shouldFade: true,
-      },
-      popup: false,
-      href: '#/picture_quiz/2',
-    },
-  ];
-  const result = [];
-  for (let i = 0; i < 12; i += 1) {
-    result.push(cards[Math.round(Math.random())]);
-  }
-  return result;
-};
-
-const router = () => {
   const route = Utils.getRoute();
   const { resource: game, id: categoryId } = Utils.parseRequestURL();
 
@@ -157,13 +54,13 @@ const router = () => {
       },
       {
         title: 'Artist quiz',
-        href: Routes.ArtistQuiz,
-        active: route === Routes.ArtistQuiz,
+        href: Routes.ArtistQuizCategories,
+        active: route === Routes.ArtistQuizCategories,
       },
       {
         title: 'Picture quiz',
-        href: Routes.PictureQuiz,
-        active: route === Routes.PictureQuiz,
+        href: Routes.PictureQuizCategories,
+        active: route === Routes.PictureQuizCategories,
       },
     ],
     settingsHref: Routes.Settings,
@@ -179,13 +76,16 @@ const router = () => {
     settingsHref: Routes.Settings,
   };
 
+  const artistQuizQuestions = gameManager.getArtistQuizQuestions(categoryId);
+  const picturesQuizQuestions = gameManager.getPicturesQuizQuestions(categoryId);
+
   switch (route) {
     case Routes.Welcome: {
       appContainer.classList.add('welcome');
       appContainer.append(HeaderComponent(welcomeNavbar));
       appContainer.append(WelcomeView({
-        artistQuiz: Routes.ArtistQuiz,
-        pictureQuiz: Routes.PictureQuiz,
+        artistQuiz: Routes.ArtistQuizCategories,
+        pictureQuiz: Routes.PictureQuizCategories,
       }));
       break;
     }
@@ -194,34 +94,34 @@ const router = () => {
       appContainer.append(SettingsView());
       break;
     }
-    case Routes.ArtistQuiz: {
+    case Routes.ArtistQuizCategories: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(getCardsForArtistQuiz()));
+      appContainer.append(MeshView(Game.getCategories(game)));
       break;
     }
-    case Routes.PictureQuiz: {
+    case Routes.PictureQuizCategories: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(getCardsForPictureQuiz()));
+      appContainer.append(MeshView(Game.getCategories(game)));
       break;
     }
     case Routes.ArtistQuizGame: {
       appContainer.classList.add('reduced');
-      appContainer.append(ArtistQuizView());
+      appContainer.append(ArtistQuizView(artistQuizQuestions, secondsCounter));
       break;
     }
     case Routes.PictureQuizGame: {
       appContainer.classList.add('reduced');
-      appContainer.append(PictureQuizView());
+      appContainer.append(PictureQuizView(picturesQuizQuestions, secondsCounter));
       break;
     }
     case Routes.ArtistQuizScore: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(getCardsForStats()));
+      appContainer.append(MeshView(artistQuizQuestions, true));
       break;
     }
     case Routes.PictureQuizScore: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(getCardsForStats()));
+      appContainer.append(MeshView(picturesQuizQuestions, true));
       break;
     }
     default: {

@@ -3,43 +3,43 @@ import '@/views/ArtistQuiz/style.scss';
 import Card from '@/components/Card/Card';
 import Button from '@/components/Button/Button';
 
-const card = {
-  caption: null,
-  image: {
-    url: '/assets/img/77.jpg',
-    shouldFade: false,
-  },
-  popup: null,
-  href: null,
-};
-
-const ArtistQuizView = () => {
-  const getQuestionPart = (text) => {
-    const questionText = document.createElement('span');
-    questionText.classList.add('question');
-    questionText.innerText = text;
-    return questionText;
-  };
-
-  const getMasterpicePart = () => {
-    const masterpiceContainer = document.createElement('div');
-    masterpiceContainer.classList.add('masterpice');
-    masterpiceContainer.append(Card(card));
-
-    return masterpiceContainer;
-  };
-
-  const getButtonsPart = () => {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.classList.add('buttons-container');
-    for (let i = 0; i < 4; i += 1) {
-      buttonsContainer.append(Button('Rembrandt van Rijn', 'auto', '60px'));
-    }
-
-    return buttonsContainer;
-  };
+const ArtistQuizView = (questions, secondsCounter) => {
+  const question = questions[3];
 
   const getGamePart = () => {
+    const getQuestionPart = (text) => {
+      const questionText = document.createElement('span');
+      questionText.classList.add('question');
+      questionText.innerText = text;
+      return questionText;
+    };
+
+    const getMasterpicePart = () => {
+      const masterpiceContainer = document.createElement('div');
+      masterpiceContainer.classList.add('masterpice');
+      masterpiceContainer.append(Card({
+        caption: null,
+        image: {
+          url: question.href,
+          shouldFade: false,
+        },
+        popup: null,
+        href: null,
+      }));
+
+      return masterpiceContainer;
+    };
+
+    const getButtonsPart = () => {
+      const buttonsContainer = document.createElement('div');
+      buttonsContainer.classList.add('buttons-container');
+      question.variants.forEach((variant) => {
+        buttonsContainer.append(Button(variant, 'auto', '60px'));
+      });
+
+      return buttonsContainer;
+    };
+
     const gameContainer = document.createElement('div');
     gameContainer.classList.add('game');
 
@@ -50,10 +50,18 @@ const ArtistQuizView = () => {
     return gameContainer;
   };
 
+  const onClose = () => {
+    console.log('close');
+  };
+  const onTimeEnds = () => {
+    console.log('time ends');
+  };
+
   const artistQuizContainer = document.createElement('div');
   artistQuizContainer.classList.add('artist-quiz-container');
 
-  artistQuizContainer.append(Timer('0:20'));
+  artistQuizContainer.append(Timer(5, secondsCounter, onClose, onTimeEnds));
+  // artistQuizContainer.append(Timer('∞'));
   artistQuizContainer.append(getGamePart());
 
   return artistQuizContainer;
