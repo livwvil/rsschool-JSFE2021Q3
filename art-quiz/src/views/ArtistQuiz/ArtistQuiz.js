@@ -4,8 +4,12 @@ import Card from '@/components/Card/Card';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 
-const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => {
-  const getMarkup = (question, time, onClose, onAnswer) => {
+const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, timeToAnswer) => {
+  let previousMarkup = { remove: () => {}, before: (markup) => gameRoot.append(markup) };
+  const questionsQueue = [...questions].reverse();
+  const guessedQuestionHrefs = [];
+
+  const getMarkup = (question, onClose, onAnswer) => {
     let answerClicked = false;
 
     const artistQuizContainer = document.createElement('div');
@@ -41,10 +45,12 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
         const buttonsContainer = document.createElement('div');
         buttonsContainer.classList.add('buttons-container');
         question.variants.forEach((variant) => {
-          buttonsContainer.append(Button(variant, 'auto', '60px', () => {
-            answerClicked = true;
-            onAnswer(artistQuizContainer, variant);
-          }));
+          buttonsContainer.append(
+            Button(variant, 'auto', '60px', () => {
+              answerClicked = true;
+              onAnswer(artistQuizContainer, variant);
+            }),
+          );
         });
 
         return buttonsContainer;
@@ -67,8 +73,10 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
       }
     };
 
-    if (time) {
-      artistQuizContainer.append(Timer(time, secondsCounter, boundOnClose, boundOnTimeEnds));
+    if (timeToAnswer) {
+      artistQuizContainer.append(
+        Timer(timeToAnswer, secondsCounter, boundOnClose, boundOnTimeEnds),
+      );
     } else {
       artistQuizContainer.append(Timer('∞', null, boundOnClose, boundOnTimeEnds));
     }
@@ -77,16 +85,13 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
     return artistQuizContainer;
   };
 
-  let previousMarkup = { remove: () => {}, before: (markup) => gameRoot.append(markup) };
-  const fake = [questions[0], questions[1]];
-  const guessedHrefs = [];
-
   const displayNextQuestion = () => {
-    const question = fake.pop();
-    if (question) {
-      const displayCorrectAnswer = (root, gamerAnswer) => {
-        if (gamerAnswer === question.author) {
-          guessedHrefs.push(question.href);
+    const currentQuestion = questionsQueue.pop();
+
+    if (currentQuestion) {
+      const onAnswer = (root, gamerAnswer) => {
+        if (gamerAnswer === currentQuestion.author) {
+          guessedQuestionHrefs.push(currentQuestion.href);
         }
         const modal = Modal(
           [
@@ -102,21 +107,21 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
             type: null,
             caption: null,
             image: {
-              url: question.href,
+              url: currentQuestion.href,
               shouldFade: false,
-              highlightAnswerAs: gamerAnswer === question.author,
+              highlightAnswerAs: gamerAnswer === currentQuestion.author,
             },
             popup: {
               isActive: true,
               desc: {
-                truthSign: gamerAnswer === question.author,
+                truthSign: gamerAnswer === currentQuestion.author,
               },
             },
             href: null,
           },
           {
-            middle: question.name,
-            tiny: `${question.author}, ${question.year}`,
+            middle: currentQuestion.name,
+            tiny: `${currentQuestion.author}, ${currentQuestion.year}`,
           },
         );
         root.append(modal);
@@ -152,12 +157,7 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
         root.append(modal);
       };
 
-      const markup = getMarkup(
-        question,
-        5,
-        onClose,
-        displayCorrectAnswer,
-      );
+      const markup = getMarkup(currentQuestion, onClose, onAnswer);
       previousMarkup.before(markup);
       previousMarkup.remove();
       previousMarkup = markup;
@@ -172,7 +172,7 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
             },
           },
           {
-            title: 'Next Quiz',
+            title: 'Categories',
             callback: () => {
               modal.remove();
               window.history.back();
@@ -188,11 +188,11 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished) => 
         },
         {
           middle: 'Congratulations!',
-          big: `${10}/${10}`,
+          big: `${guessedQuestionHrefs.length}/${questions.length}`,
         },
       );
       gameRoot.append(modal);
-      onQuizFinished(guessedHrefs);
+      onQuizFinished(guessedQuestionHrefs);
     }
   };
 

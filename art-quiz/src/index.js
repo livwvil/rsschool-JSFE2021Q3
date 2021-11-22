@@ -11,19 +11,20 @@ import PictureQuizView from '@/views/PictureQuiz/PictureQuiz';
 
 import Utils from '@/utils';
 import Game from '@/game';
+import { ARTIST_QUIZ, PICTURE_QUIZ } from '@/constants';
 
 const Routes = {
   Welcome: '#/',
   Settings: '#/settings',
 
-  ArtistQuizCategories: '#/artist_quiz',
-  PictureQuizCategories: '#/picture_quiz',
+  ArtistQuizCategories: `#/${ARTIST_QUIZ}`,
+  PictureQuizCategories: `#/${PICTURE_QUIZ}`,
 
-  ArtistQuizGame: '#/artist_quiz/:id',
-  PictureQuizGame: '#/picture_quiz/:id',
+  ArtistQuizGame: `#/${ARTIST_QUIZ}/:id`,
+  PictureQuizGame: `#/${PICTURE_QUIZ}/:id`,
 
-  ArtistQuizScore: '#/artist_quiz/:id/score',
-  PictureQuizScore: '#/picture_quiz/:id/score',
+  ArtistQuizScore: `#/${ARTIST_QUIZ}/:id/score`,
+  PictureQuizScore: `#/${PICTURE_QUIZ}/:id/score`,
 };
 
 const gameManagerPromise = Game.getGameManager();
@@ -92,7 +93,7 @@ const router = async () => {
     }
     case Routes.Settings: {
       appContainer.append(HeaderComponent(settingsNavbar));
-      appContainer.append(SettingsView());
+      appContainer.append(SettingsView(gameManager.settingsManager));
       break;
     }
     case Routes.ArtistQuizCategories: {
@@ -107,12 +108,24 @@ const router = async () => {
     }
     case Routes.ArtistQuizGame: {
       appContainer.classList.add('reduced');
-      ArtistQuizView(appContainer, quizQuestions, secondsCounter, onQuizFinished);
+      ArtistQuizView(
+        appContainer,
+        quizQuestions,
+        secondsCounter,
+        onQuizFinished,
+        gameManager.settingsManager.getGameTime(),
+      );
       break;
     }
     case Routes.PictureQuizGame: {
       appContainer.classList.add('reduced');
-      PictureQuizView(appContainer, quizQuestions, secondsCounter, onQuizFinished);
+      PictureQuizView(
+        appContainer,
+        quizQuestions,
+        secondsCounter,
+        onQuizFinished,
+        gameManager.settingsManager.getGameTime(),
+      );
       break;
     }
     case Routes.ArtistQuizScore: {
@@ -130,7 +143,8 @@ const router = async () => {
       break;
     }
   }
-  appContainer.append(FooterComponent());
+
+  appContainer.append(FooterComponent(gameManager.settingsManager));
 };
 
 const container = document.createElement('div');

@@ -1,12 +1,19 @@
 import Utils from '@/utils';
+import {
+  QUIZ_CATEGORIES_AMOUNT,
+  QUIZ_QUESTIONS_AMOUNT,
+  ARTIST_QUIZ,
+  DEFAULT_VOLUME,
+  DEFAULT_TIME_TO_ANSWER,
+} from '@/constants';
 
-const getImageRefById = (id) => `/assets/img/${id}full.jpg`;
+const getImagePathById = (id) => `/assets/img/${id}full.jpg`;
 
-const getAnswerVariants = (arr, correctAnswer) => {
+const getAnswerVariants = (answersArray, correctAnswer) => {
   const values = new Set([correctAnswer]);
   do {
-    const rnd = Math.floor(Math.random() * arr.length);
-    values.add(arr[rnd]);
+    const rnd = Math.floor(Math.random() * answersArray.length);
+    values.add(answersArray[rnd]);
   } while (values.size !== 4);
   return Utils.shuffleArray(Array.from(values));
 };
@@ -16,7 +23,7 @@ const separateData = (rawImagesInfo) => {
   const imageHrefs = [];
 
   const _ = rawImagesInfo.map((imgInfo) => {
-    const imageHref = getImageRefById(imgInfo.imageNum);
+    const imageHref = getImagePathById(imgInfo.imageNum);
     imageHrefs.push(imageHref);
     authorsSet.add(imgInfo.author);
     return {
@@ -46,22 +53,22 @@ const getGameManager = async () => {
   } = separateData(rawImagesInfo);
 
   const getQuizQuestions = (game, categoryId) => {
-    const imagesInfo = game === 'artist_quiz'
-      ? artistQuizImagesInfo
-      : picturesQuizImagesInfo;
+    const imagesInfo = game === ARTIST_QUIZ ? artistQuizImagesInfo : picturesQuizImagesInfo;
 
-    const amountOfQuestions = 10;
-    const begin = categoryId * amountOfQuestions;
+    const begin = categoryId * QUIZ_QUESTIONS_AMOUNT;
     const result = [];
 
-    for (let i = begin; i < begin + amountOfQuestions; i += 1) {
+    for (let i = begin; i < begin + QUIZ_QUESTIONS_AMOUNT; i += 1) {
       const imgInfo = imagesInfo[i];
-      const variants = game === 'artist_quiz'
+      const variants = game === ARTIST_QUIZ
         ? getAnswerVariants(authors, imgInfo.author)
         : getAnswerVariants(imageHrefs, imgInfo.href);
 
       result.push({
-        ...imgInfo, variants, game, categoryId,
+        ...imgInfo,
+        variants,
+        game,
+        categoryId,
       });
     }
     return result;
@@ -69,13 +76,16 @@ const getGameManager = async () => {
 
   const scoreManager = {
     getScore: () => JSON.parse(localStorage.getItem('score')),
+    getCategoryScore: (game, categoryId) => {
+      const score = scoreManager.getScore();
+      const gameScore = score ? score[game] : null;
+      const categoryScore = gameScore ? gameScore[categoryId] : null;
+      return categoryScore;
+    },
     saveScore: (game, category, guessedHrefs) => {
       const score = scoreManager.getScore() || {};
       if (!score[game]) {
         score[game] = {};
-      }
-      if (!score[game][category]) {
-        score[game][category] = [];
       }
       score[game][category] = guessedHrefs;
       localStorage.setItem('score', JSON.stringify(score));
@@ -84,12 +94,10 @@ const getGameManager = async () => {
 
   const getCategories = (game) => {
     const result = [];
-    const imgOffset = game === 'artist_quiz' ? 0 : 12;
+    const imgOffset = game === ARTIST_QUIZ ? 0 : QUIZ_CATEGORIES_AMOUNT;
 
-    for (let categoryId = 0; categoryId < 12; categoryId += 1) {
-      const score = scoreManager.getScore();
-      const gameScore = score ? score[game] : null;
-      const categoryScore = gameScore ? gameScore[categoryId] : null;
+    for (let categoryId = 0; categoryId < QUIZ_CATEGORIES_AMOUNT; categoryId += 1) {
+      const categoryScore = scoreManager.getCategoryScore(game, categoryId);
 
       const guessedPicturesAmount = categoryScore ? categoryScore.length : null;
       const alreadyPlayed = guessedPicturesAmount !== null;
@@ -97,31 +105,17 @@ const getGameManager = async () => {
       const playCategoryHref = `#/${game}/${categoryId}`;
       const scoreCategoryHref = `#/${game}/${categoryId}/score`;
 
-      const caption = {
-        name: `Category ${categoryId}`,
-      };
-      if (alreadyPlayed) {
-        caption.value = `${guessedPicturesAmount}/10`;
-      }
-
-      const image = {
-        url: `/assets/img/${categoryId + imgOffset}full.jpg`,
-        shouldFade: !alreadyPlayed,
-      };
-
-      const popup = alreadyPlayed
-        ? {
-          href: playCategoryHref,
-        }
-        : false;
-
-      const href = alreadyPlayed ? scoreCategoryHref : playCategoryHref;
-
       result.push({
-        caption,
-        image,
-        popup,
-        href,
+        caption: {
+          name: `Category ${categoryId}`,
+          ...(alreadyPlayed ? { value: `${guessedPicturesAmount}/${QUIZ_QUESTIONS_AMOUNT}` } : {}),
+        },
+        image: {
+          url: getImagePathById(categoryId + imgOffset),
+          shouldFade: !alreadyPlayed,
+        },
+        popup: alreadyPlayed ? { href: playCategoryHref } : false,
+        href: alreadyPlayed ? scoreCategoryHref : playCategoryHref,
       });
     }
 
@@ -129,9 +123,7 @@ const getGameManager = async () => {
   };
 
   const getQuizScore = (questions) => {
-    const score = scoreManager.getScore();
-    const gameScore = score ? score[questions[0].game] : null;
-    const categoryScore = gameScore ? gameScore[questions[0].categoryId] : null;
+    const categoryScore = scoreManager.getCategoryScore(questions[0].game, questions[0].categoryId);
 
     return questions.map((question) => ({
       caption: null,
@@ -149,11 +141,37 @@ const getGameManager = async () => {
     }));
   };
 
+  const settingsManager = {
+    setVolume: (volumePercentage) => {
+      const player = document.querySelector('#player');
+      const maximumPercentage = 100;
+      player.volume = volumePercentage / maximumPercentage;
+      localStorage.setItem('volume', volumePercentage);
+    },
+    getVolume: () => {
+      const volume = parseFloat(localStorage.getItem('volume'));
+      return Number.isNaN(volume) ? DEFAULT_VOLUME : volume;
+    },
+    playSound: (soundHref) => {
+      const player = document.querySelector('#player');
+      player.src = soundHref;
+      player.play();
+    },
+    changeGameTime: (volume) => {
+      console.log('changeGameTime', volume);
+    },
+    getGameTime: () => {
+      console.log('getGameTime');
+      return 10;
+    },
+  };
+
   return {
     getQuizQuestions,
     getCategories,
     getQuizScore,
     scoreManager,
+    settingsManager,
   };
 };
 
