@@ -36,10 +36,6 @@ const router = async () => {
   const route = Utils.getRoute();
   const { resource: game, id: categoryId } = Utils.parseRequestURL();
 
-  console.log(route);
-  console.log(game);
-  console.log(categoryId);
-
   const appContainer = document.querySelector('.app-container');
   appContainer.classList.remove('welcome');
   appContainer.classList.remove('reduced');
@@ -76,17 +72,22 @@ const router = async () => {
     settingsHref: Routes.Settings,
   };
 
-  const artistQuizQuestions = gameManager.getArtistQuizQuestions(categoryId);
-  const picturesQuizQuestions = gameManager.getPicturesQuizQuestions(categoryId);
+  const quizQuestions = gameManager.getQuizQuestions(game, categoryId);
+
+  const onQuizFinished = (guessedHrefs) => {
+    gameManager.scoreManager.saveScore(game, categoryId, guessedHrefs);
+  };
 
   switch (route) {
     case Routes.Welcome: {
       appContainer.classList.add('welcome');
       appContainer.append(HeaderComponent(welcomeNavbar));
-      appContainer.append(WelcomeView({
-        artistQuiz: Routes.ArtistQuizCategories,
-        pictureQuiz: Routes.PictureQuizCategories,
-      }));
+      appContainer.append(
+        WelcomeView({
+          artistQuiz: Routes.ArtistQuizCategories,
+          pictureQuiz: Routes.PictureQuizCategories,
+        }),
+      );
       break;
     }
     case Routes.Settings: {
@@ -96,32 +97,32 @@ const router = async () => {
     }
     case Routes.ArtistQuizCategories: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(Game.getCategories(game)));
+      appContainer.append(MeshView(gameManager.getCategories(game)));
       break;
     }
     case Routes.PictureQuizCategories: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(Game.getCategories(game)));
+      appContainer.append(MeshView(gameManager.getCategories(game)));
       break;
     }
     case Routes.ArtistQuizGame: {
       appContainer.classList.add('reduced');
-      appContainer.append(ArtistQuizView(artistQuizQuestions, secondsCounter));
+      ArtistQuizView(appContainer, quizQuestions, secondsCounter, onQuizFinished);
       break;
     }
     case Routes.PictureQuizGame: {
       appContainer.classList.add('reduced');
-      appContainer.append(PictureQuizView(picturesQuizQuestions, secondsCounter));
+      PictureQuizView(appContainer, quizQuestions, secondsCounter, onQuizFinished);
       break;
     }
     case Routes.ArtistQuizScore: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(artistQuizQuestions, true));
+      appContainer.append(MeshView(gameManager.getQuizScore(quizQuestions), true));
       break;
     }
     case Routes.PictureQuizScore: {
       appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(picturesQuizQuestions, true));
+      appContainer.append(MeshView(gameManager.getQuizScore(quizQuestions), true));
       break;
     }
     default: {

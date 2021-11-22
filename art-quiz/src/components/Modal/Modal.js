@@ -2,35 +2,19 @@ import '@/components/Modal/style.scss';
 import Card from '@/components/Card/Card';
 import Button from '../Button/Button';
 
-const card = {
-  caption: null,
-  image: {
-    url: '/assets/img/77.jpg',
-    shouldFade: false,
-    highlightAnswerAs: true,
-  },
-  popup: {
-    isActive: true,
-    desc: {
-      truthSign: false,
-    },
-  },
-  href: null,
-};
-
-const Modal = (type = 'cube') => {
+const Modal = (buttons, imgInfo, caption) => {
   const getImagePart = () => {
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('image-container');
 
-    if (type === 'stars') {
+    if (imgInfo.type === 'stars') {
       imageContainer.classList.add('symbol');
       imageContainer.classList.add('stars');
-    } else if (type === 'cube') {
+    } else if (imgInfo.type === 'cube') {
       imageContainer.classList.add('symbol');
       imageContainer.classList.add('cube');
     } else {
-      imageContainer.append(Card(card));
+      imageContainer.append(Card(imgInfo));
     }
 
     return imageContainer;
@@ -71,13 +55,14 @@ const Modal = (type = 'cube') => {
     return textContainer;
   };
 
-  const getButtonsPart = (buttons) => {
+  const getButtonsPart = () => {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('buttons-container');
 
     buttons.forEach((button) => {
       const btn = Button(button.title, 'auto', '60px');
       btn.classList.add('black');
+      btn.addEventListener('click', button.callback);
       buttonsContainer.append(btn);
     });
 
@@ -86,21 +71,29 @@ const Modal = (type = 'cube') => {
 
   const modalContainer = document.createElement('div');
   modalContainer.classList.add('modal-container');
-  // modalContainer.classList.add('active');
+  modalContainer.classList.add('active');
 
   const modalWindow = document.createElement('div');
   modalWindow.classList.add('modal-window');
-  if (type === 'stars') {
-    modalWindow.classList.add('symbol');
-    modalWindow.classList.add('stars');
-  } else if (type === 'cube') {
-    modalWindow.classList.add('symbol');
-    modalWindow.classList.add('cube');
-  }
 
-  modalWindow.append(getImagePart());
-  modalWindow.append(getTextPart({ big: 'Grand result', middle: 'Congratulations!' }));
-  modalWindow.append(getButtonsPart([{ title: 'Next' }]));
+  if (imgInfo) {
+    if (imgInfo.type === 'stars') {
+      modalWindow.classList.add('symbol');
+      modalWindow.classList.add('stars');
+    } else if (imgInfo.type === 'cube') {
+      modalWindow.classList.add('symbol');
+      modalWindow.classList.add('cube');
+    }
+    modalWindow.append(getImagePart());
+  }
+  if (caption) {
+    modalWindow.append(
+      getTextPart({
+        tiny: caption.tiny, small: caption.small, middle: caption.middle, big: caption.big,
+      }),
+    );
+  }
+  modalWindow.append(getButtonsPart());
 
   modalContainer.append(modalWindow);
   return modalContainer;
