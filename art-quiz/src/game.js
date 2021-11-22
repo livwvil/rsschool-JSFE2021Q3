@@ -153,9 +153,11 @@ const getGameManager = async () => {
       return Number.isNaN(volume) ? DEFAULT_VOLUME : volume;
     },
     playSound: (soundHref) => {
-      const player = document.querySelector('#player');
-      player.src = soundHref;
-      player.play();
+      setTimeout(() => {
+        const player = document.querySelector('#player');
+        player.src = soundHref;
+        player.play();
+      }, 30);
     },
     changeGameTime: (volume) => {
       console.log('changeGameTime', volume);

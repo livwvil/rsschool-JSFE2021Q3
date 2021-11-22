@@ -1,7 +1,7 @@
 import '@/views/Mesh/style.scss';
 import Card from '@/components/Card/Card';
 
-const MeshView = (cardsData, isScore = false) => {
+const MeshView = (cardsData, settingsManager, isScore = false) => {
   const mesh = document.createElement('div');
   mesh.classList.add('mesh');
 
@@ -10,7 +10,9 @@ const MeshView = (cardsData, isScore = false) => {
   }
 
   cardsData.forEach((card) => {
-    mesh.append(Card(card));
+    const cardElem = Card(card);
+    cardElem.addEventListener('mouseup', () => settingsManager.playSound('/assets/audio/click.wav'));
+    mesh.append(cardElem);
   });
 
   return mesh;

@@ -82,28 +82,31 @@ const router = async () => {
   switch (route) {
     case Routes.Welcome: {
       appContainer.classList.add('welcome');
-      appContainer.append(HeaderComponent(welcomeNavbar));
+      appContainer.append(HeaderComponent(welcomeNavbar, gameManager.settingsManager));
       appContainer.append(
-        WelcomeView({
-          artistQuiz: Routes.ArtistQuizCategories,
-          pictureQuiz: Routes.PictureQuizCategories,
-        }),
+        WelcomeView(
+          {
+            artistQuiz: Routes.ArtistQuizCategories,
+            pictureQuiz: Routes.PictureQuizCategories,
+          },
+          gameManager.settingsManager,
+        ),
       );
       break;
     }
     case Routes.Settings: {
-      appContainer.append(HeaderComponent(settingsNavbar));
+      appContainer.append(HeaderComponent(settingsNavbar, gameManager.settingsManager));
       appContainer.append(SettingsView(gameManager.settingsManager));
       break;
     }
     case Routes.ArtistQuizCategories: {
-      appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(gameManager.getCategories(game)));
+      appContainer.append(HeaderComponent(defaultNavbar, gameManager.settingsManager));
+      appContainer.append(MeshView(gameManager.getCategories(game), gameManager.settingsManager));
       break;
     }
     case Routes.PictureQuizCategories: {
-      appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(gameManager.getCategories(game)));
+      appContainer.append(HeaderComponent(defaultNavbar, gameManager.settingsManager));
+      appContainer.append(MeshView(gameManager.getCategories(game), gameManager.settingsManager));
       break;
     }
     case Routes.ArtistQuizGame: {
@@ -113,7 +116,7 @@ const router = async () => {
         quizQuestions,
         secondsCounter,
         onQuizFinished,
-        gameManager.settingsManager.getGameTime(),
+        gameManager.settingsManager,
       );
       break;
     }
@@ -124,18 +127,22 @@ const router = async () => {
         quizQuestions,
         secondsCounter,
         onQuizFinished,
-        gameManager.settingsManager.getGameTime(),
+        gameManager.settingsManager,
       );
       break;
     }
     case Routes.ArtistQuizScore: {
-      appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(gameManager.getQuizScore(quizQuestions), true));
+      appContainer.append(HeaderComponent(defaultNavbar, gameManager.settingsManager));
+      appContainer.append(
+        MeshView(gameManager.getQuizScore(quizQuestions), gameManager.settingsManager, true),
+      );
       break;
     }
     case Routes.PictureQuizScore: {
-      appContainer.append(HeaderComponent(defaultNavbar));
-      appContainer.append(MeshView(gameManager.getQuizScore(quizQuestions), true));
+      appContainer.append(HeaderComponent(defaultNavbar, gameManager.settingsManager));
+      appContainer.append(
+        MeshView(gameManager.getQuizScore(quizQuestions), gameManager.settingsManager, true),
+      );
       break;
     }
     default: {

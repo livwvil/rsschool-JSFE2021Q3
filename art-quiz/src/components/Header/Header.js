@@ -1,6 +1,6 @@
 import '@/components/Header/style.scss';
 
-const HeaderComponent = (props) => {
+const HeaderComponent = (props, settingsManager) => {
   const getNavPart = (navig, isAlternative) => {
     const nav = document.createElement('nav');
     nav.classList.add('app-nav');
@@ -10,6 +10,7 @@ const HeaderComponent = (props) => {
       button.innerText = navig.title;
       button.classList.add('back');
       button.addEventListener('click', () => {
+        settingsManager.playSound('/assets/audio/click.wav');
         window.history.back();
       });
       nav.append(button);
@@ -21,6 +22,9 @@ const HeaderComponent = (props) => {
       const img = document.createElement('img');
       img.src = './assets/svg/app-logo.svg';
       img.alt = '';
+      img.addEventListener('click', () => {
+        settingsManager.playSound('/assets/audio/click.wav');
+      });
 
       a.append(img);
 
@@ -35,6 +39,7 @@ const HeaderComponent = (props) => {
           li.classList.add('active');
         }
         li.addEventListener('click', () => {
+          settingsManager.playSound('/assets/audio/click.wav');
           window.location = navPage.href;
         });
         ul.append(li);
@@ -53,6 +58,7 @@ const HeaderComponent = (props) => {
       button.classList.add('active');
     }
     button.addEventListener('click', () => {
+      settingsManager.playSound('/assets/audio/click.wav');
       if (isAlternative) {
         window.history.back();
       } else {

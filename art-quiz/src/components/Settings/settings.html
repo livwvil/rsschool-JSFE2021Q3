@@ -26,9 +26,9 @@
   <div class="answer-time-container">
     <h2>Time to answer</h2>
     <div class="controls">
-      <button onclick="this.nextElementSibling.stepDown()">-</button>
-      <input disabled type="number" id="answ-time" min="0" max="50" onkeydown="return false" value="20" />
-      <button onclick="this.previousElementSibling.stepUp()">+</button>
+      <button onclick="this.nextElementSibling.stepDown(5)">-</button>
+      <input disabled type="number" id="answ-time" min="5" max="30" onkeydown="return false" value="20" />
+      <button onclick="this.previousElementSibling.stepUp(5)">+</button>
     </div>
   </div>
 

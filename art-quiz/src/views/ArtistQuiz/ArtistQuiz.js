@@ -4,7 +4,7 @@ import Card from '@/components/Card/Card';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 
-const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, timeToAnswer) => {
+const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, settingsManager) => {
   let previousMarkup = { remove: () => {}, before: (markup) => gameRoot.append(markup) };
   const questionsQueue = [...questions].reverse();
   const guessedQuestionHrefs = [];
@@ -73,9 +73,9 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
       }
     };
 
-    if (timeToAnswer) {
+    if (settingsManager.getGameTime()) {
       artistQuizContainer.append(
-        Timer(timeToAnswer, secondsCounter, boundOnClose, boundOnTimeEnds),
+        Timer(settingsManager.getGameTime(), secondsCounter, boundOnClose, boundOnTimeEnds),
       );
     } else {
       artistQuizContainer.append(Timer('∞', null, boundOnClose, boundOnTimeEnds));
@@ -92,12 +92,16 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
       const onAnswer = (root, gamerAnswer) => {
         if (gamerAnswer === currentQuestion.author) {
           guessedQuestionHrefs.push(currentQuestion.href);
+          settingsManager.playSound('/assets/audio/correctanswer.mp3');
+        } else {
+          settingsManager.playSound('/assets/audio/wronganswer.mp3');
         }
         const modal = Modal(
           [
             {
               title: 'Next',
               callback: () => {
+                settingsManager.playSound('/assets/audio/click.wav');
                 modal.remove();
                 displayNextQuestion();
               },
@@ -132,11 +136,13 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
       };
 
       const onClose = (root, promptResult) => {
+        settingsManager.playSound('/assets/audio/click.wav');
         const modal = Modal(
           [
             {
               title: 'Cancel',
               callback: () => {
+                settingsManager.playSound('/assets/audio/click.wav');
                 modal.remove();
                 promptResult(false);
               },
@@ -144,6 +150,7 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
             {
               title: 'Yes',
               callback: () => {
+                settingsManager.playSound('/assets/audio/click.wav');
                 promptResult(true);
                 closeGame();
               },
@@ -162,11 +169,13 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
       previousMarkup.remove();
       previousMarkup = markup;
     } else {
+      settingsManager.playSound('/assets/audio/endround.mp3');
       const modal = Modal(
         [
           {
             title: 'Home',
             callback: () => {
+              settingsManager.playSound('/assets/audio/click.wav');
               modal.remove();
               window.location = '/#';
             },
@@ -174,6 +183,7 @@ const ArtistQuizView = (gameRoot, questions, secondsCounter, onQuizFinished, tim
           {
             title: 'Categories',
             callback: () => {
+              settingsManager.playSound('/assets/audio/click.wav');
               modal.remove();
               window.history.back();
             },
