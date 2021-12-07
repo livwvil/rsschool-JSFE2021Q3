@@ -1,23 +1,19 @@
 import AppLoader from './appLoader';
+import { ResponseCallback } from './loader';
 
 class AppController extends AppLoader {
-    getSources(callback) {
-        super.getResp(
-            {
-                endpoint: 'sources',
-            },
-            callback
-        );
+    public getSources(callback: ResponseCallback): void {
+        super.getResp({ endpoint: 'sources' }, callback);
     }
 
-    getNews(e, callback) {
-        let target = e.target;
-        const newsContainer = e.currentTarget;
+    public getNews(e: MouseEvent, callback: ResponseCallback): void {
+        let target = e.target as HTMLElement;
+        const newsContainer = e.currentTarget as HTMLElement;
 
-        while (target !== newsContainer) {
+        while (target !== newsContainer && target !== null && newsContainer !== null) {
             if (target.classList.contains('source__item')) {
                 const sourceId = target.getAttribute('data-source-id');
-                if (newsContainer.getAttribute('data-source') !== sourceId) {
+                if (newsContainer.getAttribute('data-source') !== sourceId && sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
                     super.getResp(
                         {
@@ -31,7 +27,7 @@ class AppController extends AppLoader {
                 }
                 return;
             }
-            target = target.parentNode;
+            target = target.parentNode as HTMLElement;
         }
     }
 }
