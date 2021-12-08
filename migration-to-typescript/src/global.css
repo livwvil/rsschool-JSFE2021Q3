@@ -1,24 +1,69 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+*::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+*::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #666;
+    border: 1px solid #aaa;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+*::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22add4, #1e98ba);
+}
+
 body {
     color: #fff;
     background: #17181c;
     font-family: sans-serif;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    padding: 10px;
 }
-
 header {
-    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
 header h1 {
-    font-size: 40px;
     font-weight: 800;
 }
 
+main {
+    position: relative;
+    overflow: hidden;
+    margin: 10px 0px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
 footer {
-    height: 100px;
+    height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
+footer > * {
+    background: #30c5ff no-repeat center;
+    background-color: #30c5ff;
+    padding: 3px;
+    border-radius: 5px;
+}
+
 footer .copyright {
     font-size: 14px;
     color: #333;
@@ -32,4 +77,65 @@ footer .copyright a:hover {
 }
 footer .copyright:before {
     content: '©';
+}
+footer .rs-logo {
+    width: 65px;
+    height: 25px;
+    background-image: url('https://rs.school/images/rs_school_js.svg');
+    background-size: 60px 20px;
+}
+footer .github-logo {
+    width: 37px;
+    height: 37px;
+    background-image: url('https://github.githubassets.com/favicons/favicon.png');
+    background-size: 32px;
+}
+
+.burger {
+    display: none;
+    position: relative;
+    width: 32px;
+    height: 17px;
+}
+.burger span,
+.burger:before,
+.burger:after {
+    position: absolute;
+    content: '';
+    background-color: white;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    transition: all 0.2s ease-in;
+}
+.burger:before {
+    top: 0;
+}
+.burger:after {
+    bottom: 0;
+}
+span {
+    top: 8px;
+}
+.burger.active:before {
+    transition: all 0.2s ease-out;
+    transform: rotate(45deg);
+    top: 8px;
+}
+.burger.active:after {
+    transition: all 0.2s ease-out;
+    transform: rotate(-45deg);
+    bottom: 8px;
+}
+.burger.active span {
+    transform: scale(0);
+}
+
+@media (max-width: 768px) {
+    main {
+        display: block;
+    }
+    .burger {
+        display: block;
+    }
 }

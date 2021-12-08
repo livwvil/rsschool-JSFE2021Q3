@@ -1,10 +1,7 @@
 .sources {
     display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    height: 120px;
+    flex-direction: column;
     overflow: auto;
-    align-items: center;
     font: 300 1em 'Fira Sans', sans-serif;
 }
 
@@ -31,4 +28,29 @@
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .sources {
+        position: absolute;
+        left: -100vw;
+        height: 100%;
+        box-sizing: border-box;
+        transition: all 0.5s ease-out;
+        background: #17181c;
+        opacity: 0;
+        z-index: 100;
+    }
+    .sources.active {
+        z-index: 100;
+        left: 0;
+        opacity: 1;
+        transition: all 0.5s ease-in;
+    }
+}
+
+@media (max-width: 420px) {
+    .sources.active {
+        width: 100%;
+    }
 }
