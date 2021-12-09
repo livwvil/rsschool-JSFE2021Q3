@@ -1,12 +1,27 @@
-import AppLoader from './appLoader';
-import { ResponseCallback } from './loader';
+import type { IArticle } from 'components/view/news/news';
+import type { ISource } from 'components/view/sources/sources';
+import AppLoader, { Endpoint, INewsResponse, ISourcesResponse } from './appLoader';
 
-class AppController extends AppLoader {
-    public getSources(callback: ResponseCallback): void {
-        super.getResp({ endpoint: 'sources' }, callback);
+class AppController {
+    private newsLoader: AppLoader<INewsResponse>;
+    private sourcesLoader: AppLoader<ISourcesResponse>;
+
+    public constructor() {
+        this.newsLoader = new AppLoader<INewsResponse>();
+        this.sourcesLoader = new AppLoader<ISourcesResponse>();
     }
 
-    public getNews(e: MouseEvent, callback: ResponseCallback): void {
+    public getSources(callback: (data?: ISource[]) => void): void {
+        this.sourcesLoader.getResp({ endpoint: Endpoint.Sources }, (data) => {
+            const srcs: ISource[] | undefined = data?.sources.map((src) => ({
+                id: src.id,
+                name: src.name,
+            }));
+            callback(srcs);
+        });
+    }
+
+    public getNews(e: MouseEvent, callback: (data?: IArticle[]) => void): void {
         let target = e.target as HTMLElement;
         const newsContainer = e.currentTarget as HTMLElement;
 
@@ -15,14 +30,25 @@ class AppController extends AppLoader {
                 const sourceId = target.getAttribute('data-source-id');
                 if (newsContainer.getAttribute('data-source') !== sourceId && sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
-                    super.getResp(
+                    this.newsLoader.getResp(
                         {
-                            endpoint: 'everything',
+                            endpoint: Endpoint.Everything,
                             options: {
                                 sources: sourceId,
                             },
                         },
-                        callback
+                        (data) => {
+                            const articles: IArticle[] | undefined = data?.articles.map((article) => ({
+                                url: article.url,
+                                description: article.description,
+                                title: article.title,
+                                publishedAt: article.publishedAt,
+                                author: article.author,
+                                sourceName: article.source.name,
+                                urlToImage: article.urlToImage,
+                            }));
+                            callback(articles);
+                        }
                     );
                 }
                 return;

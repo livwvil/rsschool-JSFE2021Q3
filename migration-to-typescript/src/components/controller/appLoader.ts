@@ -1,11 +1,52 @@
 import { Loader } from './loader';
 
-class AppLoader extends Loader {
+const NEWS_HOST = 'https://nodenews.herokuapp.com/';
+const API_KEY = 'f4ef15da807845a4af2d94f84ed69045';
+
+interface IAPIArticleSrc {
+    id: string;
+    name: string;
+}
+
+interface IAPIArticle {
+    author: string;
+    content: string;
+    description: string;
+    publishedAt: string;
+    source: IAPIArticleSrc;
+    title: string;
+    url: string;
+    urlToImage: string;
+}
+
+interface IAPISource {
+    id: string;
+    name: string;
+    description: string;
+    url: string;
+    category: string;
+    language: string;
+    country: string;
+}
+
+export interface INewsResponse {
+    articles: IAPIArticle[];
+    status: string;
+    totalResults: number;
+}
+export interface ISourcesResponse {
+    sources: IAPISource[];
+    status: string;
+}
+
+export enum Endpoint {
+    Everything = 'everything',
+    Sources = 'sources',
+}
+
+class AppLoader<T> extends Loader<T> {
     public constructor() {
-        super('https://nodenews.herokuapp.com/', {
-            apiKey: '88c9d73f48d8415585b882260bc26516',
-            // apiKey: '734b317b7e464451b55540a26ac62b65',
-        });
+        super(NEWS_HOST, { apiKey: API_KEY });
     }
 }
 

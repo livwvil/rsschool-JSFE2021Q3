@@ -1,63 +1,27 @@
-type LoaderOptions = {
+import type { Endpoint } from './appLoader';
+
+interface LoaderOptions {
     apiKey: string;
-};
+}
 
-type RequestOptions = {
+interface RequestOptions {
     sources?: string;
-};
+}
 
-type OptionsMerged = LoaderOptions & RequestOptions;
+type UrlOptions = LoaderOptions & RequestOptions;
 
-type RequestSource = {
-    endpoint: string;
+type HttpMethod = 'GET' | 'POST';
+
+interface RequestDestination {
+    endpoint: Endpoint;
     options?: RequestOptions;
-};
+}
 
-type NewsSource = {
-    id: string;
-    name: string;
-};
-
-export type Article = {
-    author: string;
-    content: string;
-    description: string;
-    publishedAt: string;
-    source: NewsSource;
-    title: string;
-    url: string;
-    urlToImage: string;
-};
-
-export type NewsResponse = {
-    articles: Article[];
-    status: string;
-    totalResults: number;
-};
-
-export type SourceDesc = {
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-};
-
-export type SourcesResponse = {
-    sources: SourceDesc[];
-    status: string;
-};
-
-type HttpMathod = 'GET' | 'POST';
-
-export type ResponseCallback = (data?: NewsResponse | SourcesResponse) => string | void;
-
-export class Loader {
+export class Loader<IResponseShape> {
     private baseLink: string;
     private options: LoaderOptions;
-    private static defRespCallback = () => {
+
+    private static readonly defRespCallback = () => {
         console.error('No callback for GET response');
     };
 
@@ -66,7 +30,7 @@ export class Loader {
         this.options = options;
     }
 
-    public getResp(src: RequestSource, callback: ResponseCallback = Loader.defRespCallback): void {
+    public getResp(src: RequestDestination, callback: (data?: IResponseShape) => void): void {
         this.load('GET', src.endpoint, callback, src.options);
     }
 
@@ -80,22 +44,27 @@ export class Loader {
         return res;
     }
 
-    private makeUrl(options: RequestOptions, endpoint: string): string {
-        const urlOptions: OptionsMerged = { ...this.options, ...options };
+    private makeUrl(options: RequestOptions, endpoint: Endpoint): string {
+        const urlOptions: UrlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
-            url += `${key}=${urlOptions[key as keyof OptionsMerged]}&`;
+            url += `${key}=${urlOptions[key as keyof UrlOptions]}&`;
         });
 
         return url.slice(0, -1);
     }
 
-    private load(method: HttpMathod, endpoint: string, callback: ResponseCallback, options: RequestOptions = {}): void {
+    private load(
+        method: HttpMethod,
+        endpoint: Endpoint,
+        callback: (data?: IResponseShape) => void = Loader.defRespCallback,
+        options: RequestOptions = {}
+    ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res: Response) => res.json())
-            .then((data) => callback(data))
-            .catch((err) => console.error(err));
+            .then((data: IResponseShape) => callback(data))
+            .catch((err: Error) => console.error(err));
     }
 }

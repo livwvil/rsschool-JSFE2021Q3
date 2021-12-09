@@ -1,23 +1,23 @@
 import AppController from '../controller/controller';
-import { NewsResponse, SourcesResponse } from '../controller/loader';
 import { AppView } from '../view/appView';
 
 class App {
     private controller: AppController;
     private view: AppView;
 
-    constructor() {
+    public constructor() {
         this.controller = new AppController();
         this.view = new AppView();
     }
 
-    start() {
-        const srcsContainer = document.querySelector('.sources') as HTMLElement;
+    public start() {
+        const srcsContainer: HTMLElement | null = document.querySelector('.sources');
         if (srcsContainer) {
-            srcsContainer.addEventListener('click', (e) =>
-                this.controller.getNews(e, (data) => this.view.drawNews(data as NewsResponse))
+            srcsContainer.addEventListener('click', (e: MouseEvent) =>
+                this.controller.getNews(e, (data) => this.view.drawNews(data))
             );
-            this.controller.getSources((data) => this.view.drawSources(data as SourcesResponse));
+            this.controller.getSources((data) => this.view.drawSources(data));
+            this.view.configureUI();
         }
     }
 }
