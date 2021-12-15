@@ -1,0 +1,1 @@
+export { ToysManager } from './ToysManager';

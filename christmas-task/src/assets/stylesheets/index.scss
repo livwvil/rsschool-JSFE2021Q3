@@ -1,0 +1,32 @@
+@charset 'UTF-8';
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+
+  &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #666;
+      border: 1px solid #aaa;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+      background: #fff;
+  }
+  
+  &::-webkit-scrollbar-thumb:active {
+      background: linear-gradient(left, #22add4, #1e98ba);
+  }
+}
