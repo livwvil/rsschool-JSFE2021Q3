@@ -1,16 +1,26 @@
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
+
 import React from 'react';
+
+import styles from './Welcome.scss';
 
 import globalStyles from '../../assets/stylesheets/index.scss';
 
-import { Header } from '@/components/Header';
+import { AppRoutes } from '@/enumerations';
 
-// import styles from './Welcome.scss';
-
-export const Welcome = (): JSX.Element => (
-  <React.Fragment>
-    <Header  favToysNumber={0}/>
-    <main className={globalStyles['main']}>
-      Welcome
+export const Welcome = (): JSX.Element => {
+  const navigate = useNavigate();
+  return (
+    <main className={classNames(globalStyles['main'], styles['main'])}>
+      <div className={classNames(styles['ball'], styles['ball1'])}>
+j
+      </div>
+      <div className={classNames(styles['ball'], styles['ball2'])}>
+j
+      </div>
+      <h1 className={styles['title']}>Новогодняя игра<br/>«Наряди ёлку»</h1>
+      <button className={styles['start-btn']} type='button' onClick={() => navigate(AppRoutes.ToysManager)}>Начать</button>
     </main>
-  </React.Fragment>
-);
+  );
+};
