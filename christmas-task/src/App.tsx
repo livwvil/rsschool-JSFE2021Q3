@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { lazy, Suspense } from 'react';
 
+import { Footer } from './components/Footer';
 import { AppRoutes } from './enumerations';
 
 import { LazyImagesExample } from '@/components/LazyImagesExample';
@@ -18,13 +19,15 @@ const Welcome = lazy(() => import('./views/Welcome')
 
 export const App = (): JSX.Element => (
   <Suspense fallback="loading">
-    <Routes>
 
+    <Routes>
       <Route path={AppRoutes.Welcome} element={<Welcome />}/>
       <Route path="img" element={<LazyImagesExample />}/>
       <Route path={AppRoutes.TreeManager} element={<TreeManager />}/>
       <Route path={AppRoutes.ToysManager} element={<ToysManager />}/>    
-
     </Routes>
+
+    <Footer/>
+    
   </Suspense>
 );

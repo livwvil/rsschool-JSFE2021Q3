@@ -39,5 +39,21 @@ body {
     max-width: 100vw;
     font-family: 'Open Sans', sans-serif;
     line-height: 1.5;
-    // color: #fff;
+    color: #fff;
+}
+
+.main {
+    min-width: 100%;
+    min-height: calc(100vh - 140px);
+    background-image: url(../../static/bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+  
+    .blur-container {
+      background: rgba(22, 41, 41, 0.5);
+      backdrop-filter: blur(3px);
+      height: 100%;
+      width: 100%;
+      min-height: calc(100vh - 140px);
+    }
 }

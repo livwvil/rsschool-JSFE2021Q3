@@ -1,0 +1,19 @@
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1600px;
+  font-size: 20px;
+  line-height: 40px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding-bottom: 40px;
+}

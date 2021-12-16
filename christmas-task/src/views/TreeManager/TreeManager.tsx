@@ -1,14 +1,18 @@
 import React from 'react';
 
-import { Footer } from '@/components/Footer';
-import { Header } from '@/components/Header';
-
 // import styles from './TreeManager.scss';
+
+import globalStyles from '../../assets/stylesheets/index.scss';
+
+import { Header } from '@/components/Header';
 
 export const TreeManager = (): JSX.Element => (
   <React.Fragment>
-    <Header/>
-    TreeManager
-    <Footer/>
+    <Header favToysNumber={0}/>
+    <main className={globalStyles['main']}>
+      <div className={globalStyles['blur-container']}>
+        TreeManager
+      </div>
+    </main>
   </React.Fragment>
 );
