@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { StrictMode } from 'react';
 
+import selfcheck from './selfcheck';
+
 import { App } from '@/App';
 
 render(
@@ -18,3 +20,5 @@ render(
   </StrictMode>,
   document.getElementById('app'),
 );
+
+selfcheck();

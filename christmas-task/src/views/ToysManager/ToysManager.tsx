@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { FC , useState } from 'react';
+
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
 
 // import styles from './ToysManager.scss';
 
-export const ToysManager = (): JSX.Element => (
-  <React.Fragment>
-    <header>
-      <h1>Header</h1>
-    </header>
-    <main>
-      <h1>Main</h1>
-    </main>
-    <footer>
-      <h1>Footer</h1>
-    </footer>
-  </React.Fragment>
-);
+export const ToysManager: FC = () => {
+  const [q, setQ] = useState('');
+  const some = (s: string) => {
+    setQ(s);
+  };
+
+  return (
+    <React.Fragment>
+      <Header onSearch={some} favToysNumber={0}/>
+      ToysManager
+      {q}
+      <Footer/>
+    </React.Fragment>
+  );
+};

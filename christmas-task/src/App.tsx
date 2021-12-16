@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import { lazy, Suspense } from 'react';
 
+import { AppRoutes } from './enumerations';
+
 import { LazyImagesExample } from '@/components/LazyImagesExample';
 
 const TreeManager = lazy(() => import('./views/TreeManager')
@@ -18,10 +20,10 @@ export const App = (): JSX.Element => (
   <Suspense fallback="loading">
     <Routes>
 
-      <Route path="/" element={<Welcome />}/>
-      <Route path="/img" element={<LazyImagesExample />}/>
-      <Route path="/tree" element={<TreeManager />}/>
-      <Route path="/toys" element={<ToysManager />}/>    
+      <Route path={AppRoutes.Welcome} element={<Welcome />}/>
+      <Route path="img" element={<LazyImagesExample />}/>
+      <Route path={AppRoutes.TreeManager} element={<TreeManager />}/>
+      <Route path={AppRoutes.ToysManager} element={<ToysManager />}/>    
 
     </Routes>
   </Suspense>

@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-// import styles from './Welcome.scss';
+import styles from './Footer.scss';
 
-export const Footer = (): JSX.Element => (
-  <React.Fragment>
-    <header>
-      <h1>Header</h1>
-    </header>
-    <main>
-      <h1>Main</h1>
-    </main>
-    <footer>
-      <h1>Footer</h1>
-    </footer>
-  </React.Fragment>
+export const Footer: FC = () => (
+  <footer className={styles['footer']}>
+    <div className={styles['footer-container']}>
+      <div className={styles['footer-data']}>
+        <p className={styles['copyright']}>©</p>
+        <p className={styles['year']}>2021</p>
+        <a className={styles['github']} href="https://github.com/livwvil">github</a>
+      </div>
+      <a className={styles['rs-logo']} href="https://rs.school/js/"> </a>
+    </div>
+  </footer>
 );
