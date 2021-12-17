@@ -1,0 +1,1 @@
+export { CustomRangeSlider } from './CustomRangeSlider';

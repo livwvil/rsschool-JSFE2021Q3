@@ -10,6 +10,7 @@ import globalStyles from '../../assets/stylesheets/index.scss';
 
 import { CustomCheckbox } from '@/components/CustomCheckbox';
 import { ShapeStyle, Color } from '@/components/CustomCheckbox/CustomCheckbox';
+import { CustomRangeSlider } from '@/components/CustomRangeSlider';
 import { Header } from '@/components/Header';
 
 export const ToysManager: FC = () => {
@@ -57,8 +58,9 @@ export const ToysManager: FC = () => {
       <main className={globalStyles['main']}>
         <div className={globalStyles['blur-container']}>
 
-          <div className={styles['controls']}>
-            <div className={classNames(styles['control-bar'], styles['value-filter'])}>
+          <section className={styles['controls']}>
+
+            <section className={classNames(styles['control-bar'], styles['value-filter'])}>
               <h2 className={styles['control-bar__title']}>Фильтры по значению</h2>
               <div className={classNames(styles['value-filter__choice'], styles['value-filter__shapes'])}>
                 Форма:
@@ -86,21 +88,32 @@ export const ToysManager: FC = () => {
                 Только любимые:
                 <CustomCheckbox/>
               </div>
-            </div>
-            <div className={classNames(styles['control-bar'], styles['range-filter'])}>
-              <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
-            </div>
-            <div className={classNames(styles['control-bar'], styles['sort'])}>
-              <h2 className={styles['control-bar__title']}>Сортировка</h2>
-            </div>
-          </div>
+            </section>
 
-          <div className={styles['cards-container']}>
+            <section className={classNames(styles['control-bar'], styles['range-filter'])}>
+              <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
+              <div className={styles['range-filter__amount']}>
+                Количество экземпляров:
+                <CustomRangeSlider from={1} to={12} onChange={v => console.log(v)}/>
+              </div>
+              <div className={styles['range-filter__year']}>
+                Год приобретения:
+                <CustomRangeSlider from={1940} to={2020} onChange={v => console.log(v)}/>
+              </div>
+            </section>
+
+            <section className={classNames(styles['control-bar'], styles['sort'])}>
+              <h2 className={styles['control-bar__title']}>Сортировка</h2>
+            </section>
+
+          </section>
+
+          <section className={styles['cards-grid']}>
             {
               // eslint-disable-next-line react/no-array-index-key
               toys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>)
             }
-          </div>
+          </section>
 
         </div>
       </main>

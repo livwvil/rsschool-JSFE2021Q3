@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -57,7 +56,10 @@ export const Header: FC<IHeader> = ({
         </nav>
         <div className={styles['header-controls']}>
           <div className={styles['search-container']}>
-            <input type="search" className={styles['input']} placeholder={searchPlaceholder} value={searchQuery} autoComplete='false' onChange={onSearchInputChanged} autoFocus/>
+            {
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+              <input type="search" className={styles['input']} placeholder={searchPlaceholder} value={searchQuery} autoComplete='false' onChange={onSearchInputChanged} autoFocus/>
+            }
             <span className={styles['submit']}/>
           </div>
           <div className={styles['counter']}>

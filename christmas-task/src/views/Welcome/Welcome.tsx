@@ -13,12 +13,8 @@ export const Welcome = (): JSX.Element => {
   const navigate = useNavigate();
   return (
     <main className={classNames(globalStyles['main'], styles['main'])}>
-      <div className={classNames(styles['ball'], styles['ball1'])}>
-j
-      </div>
-      <div className={classNames(styles['ball'], styles['ball2'])}>
-j
-      </div>
+      <div className={classNames(styles['ball'], styles['ball1'])} />
+      <div className={classNames(styles['ball'], styles['ball2'])} />
       <h1 className={styles['title']}>Новогодняя игра<br/>«Наряди ёлку»</h1>
       <button className={styles['start-btn']} type='button' onClick={() => navigate(AppRoutes.ToysManager)}>Начать</button>
     </main>
