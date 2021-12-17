@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import React, { FC , useState } from 'react';
+import React, { FC , useCallback, useState } from 'react';
 
 import styles from './ToysManager.scss';
 import { ToyCard } from './components/ToyCard';
@@ -11,6 +11,8 @@ import globalStyles from '../../assets/stylesheets/index.scss';
 import { CustomCheckbox } from '@/components/CustomCheckbox';
 import { ShapeStyle, Color } from '@/components/CustomCheckbox/CustomCheckbox';
 import { CustomRangeSlider } from '@/components/CustomRangeSlider';
+import { CustomSelect } from '@/components/CustomSelect';
+import { IOption } from '@/components/CustomSelect/CustomSelect';
 import { Header } from '@/components/Header';
 
 export const ToysManager: FC = () => {
@@ -38,18 +40,45 @@ export const ToysManager: FC = () => {
     },
   ]);
 
-  const onSearchQueryChanged = (query: string) => {
-    setSearchQuery(query);
-  };
+  const options: IOption[] = [
+    {
+      name: 'По названию от «А» до «Я»',
+    },
+    {
+      name: 'По названию от «Я» до «А»',
+    },
+    {
+      name: 'По количеству по возрастанию',
+    },
+    {
+      name: 'По количеству по убыванию',
+    },
+  ];
 
-  const onToyFavoriteStatusChanged = (changedToy: IToy) => {
-    setToys(prevToys => [...prevToys.map(prevToy => {
-      if(prevToy === changedToy) {
-        return {...prevToy, favorite: !prevToy.favorite};
-      }
-      return {...prevToy};
-    })]);
-  };
+  const onSearchQueryChanged = useCallback(
+    (query: string) => {
+      setSearchQuery(query);
+    },
+    []
+  );
+
+  const onToyFavoriteStatusChanged = useCallback(
+    (changedToy: IToy) => {
+      setToys(prevToys => [...prevToys.map(prevToy => {
+        if(prevToy === changedToy) {
+          return {...prevToy, favorite: !prevToy.favorite};
+        }
+        return {...prevToy};
+      })]);
+    },
+    []
+  );
+
+  const onSomething = useCallback(
+    // eslint-disable-next-line no-console
+    some => console.log(some),
+    []
+  );
 
   return (
     <React.Fragment>
@@ -94,17 +123,25 @@ export const ToysManager: FC = () => {
               <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
               <div className={styles['range-filter__amount']}>
                 Количество экземпляров:
-                <CustomRangeSlider from={1} to={12} onChange={v => console.log(v)}/>
+                <CustomRangeSlider from={1} to={12} onChange={onSomething}/>
               </div>
               <div className={styles['range-filter__year']}>
                 Год приобретения:
-                <CustomRangeSlider from={1940} to={2020} onChange={v => console.log(v)}/>
+                <CustomRangeSlider from={1940} to={2020} onChange={onSomething}/>
               </div>
             </section>
 
-            <section className={classNames(styles['control-bar'], styles['sort'])}>
-              <h2 className={styles['control-bar__title']}>Сортировка</h2>
-            </section>
+            <div className={styles['vstack']}>
+              <section className={classNames(styles['control-bar'], styles['sort'])}>
+                <h2 className={styles['control-bar__title']}>Сортировка</h2>
+                <CustomSelect options={options} onChange={onSomething}/>
+              </section>
+
+              <section className={classNames(styles['control-bar'], styles['buttons'])}>
+                <button className={styles['button']} type='button'>Сброс фильтров</button>
+                <button className={styles['button']} type='button'>Сохранение настроек</button>
+              </section>
+            </div>
 
           </section>
 

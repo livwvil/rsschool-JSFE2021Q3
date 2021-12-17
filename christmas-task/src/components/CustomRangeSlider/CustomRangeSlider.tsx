@@ -20,7 +20,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
 
   useEffect(() => {
     if(!sliderDiv.current) {
-      return;
+      return  () => {};
     }
 
     const slider = noUiSlider.create(sliderDiv.current, {
@@ -39,7 +39,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
         target: styles['noUi-custom-target'].replace('noUi-', ''),
       },
     });
-
+    
     slider.on('update', (values, handle) => {
       const val = parseFloat(values[handle].toString());
       
@@ -65,6 +65,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
       }
     });
 
+    return () => slider.destroy();
   }, [sliderDiv, onChange, from, to]);
 
   return (
