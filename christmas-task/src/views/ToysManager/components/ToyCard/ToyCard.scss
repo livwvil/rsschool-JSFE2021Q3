@@ -42,7 +42,6 @@
         padding-left: 7px;
       }
     }
-
   }
 
   .card__ribbon {
@@ -74,4 +73,11 @@
       width: 0;
     }
   }
+
+  &.active .card__ribbon {
+    background: #cbb77a;
+  }
+  &.active .card__ribbon:after {
+    border-left: 15px solid #CBB77A;
+}
 }

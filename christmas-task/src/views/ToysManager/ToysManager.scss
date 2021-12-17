@@ -8,6 +8,41 @@
   margin: 0 auto;
   padding-bottom: 40px;
   padding-top: 20px;
+
+  .control-bar {
+    width: 480px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgba(31, 112, 127, 0.3);
+    backdrop-filter: blur(6px);
+
+    .control-bar__title {
+      font-size: 20px;
+      font-weight: 400;
+      display: block;
+      height: 60px;
+      line-height: 60px;
+      text-transform: uppercase;
+    }
+
+    &.value-filter {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      
+      .value-filter__choice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    &.range-filter {
+    }
+
+    &.sort {
+    }
+  }
 }
 
 .cards-container {

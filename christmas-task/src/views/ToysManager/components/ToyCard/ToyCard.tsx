@@ -1,8 +1,12 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import classNames from 'classnames';
+
 import React, { FC } from 'react';
 
 import styles from './ToyCard.scss';
 
-interface IToyCard {
+export interface IToy {
   img: string;
   name: string;
   amount: number;
@@ -12,20 +16,22 @@ interface IToyCard {
   size: string;
   favorite: boolean;
 }
+interface IToyCard {
+  onClick: (card?: IToy) => void;
+  toy: IToy;
+}
 
-export const ToyCard: FC<IToyCard> = ({
-  img,
-  name,
-  amount,
-  year,
-  shape,
-  color,
-  size,
-  favorite,
-}) => {
-  const a = 0;
+export const ToyCard: FC<IToyCard> = ({ onClick, toy }) => {
+  const { img, name, amount, year, shape, color, size, favorite } = toy;
+
+  const classes = favorite ? classNames(styles['card'], styles['active']) : styles['card'];
+
+  const isFavoriteChanged = () => {
+    onClick(toy);
+  };
+
   return (
-    <div className={styles['card']}>
+    <div className={classes} onClick={isFavoriteChanged}>
       <h2 className={styles['card__title']}>{name}</h2>
       <img className={styles['card__img']} src={img} alt="Christmas tree toy" />
       <div className={styles['card__desc']}>

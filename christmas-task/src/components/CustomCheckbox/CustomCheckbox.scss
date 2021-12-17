@@ -1,0 +1,111 @@
+.checkbox {
+  .checkbox__input {
+    display: none;
+  }
+
+  .checkbox__label {
+    display: block;
+    width: 30px;
+    height: 30px;
+    backdrop-filter: blur(6px);
+    border: 1px solid #278d9f;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+      background-color: #278d9f;
+      border-color: #ccc;
+    }
+
+    &.checkbox__label_white {
+      background-color: #fff;
+    }
+
+    &.checkbox__label_yellow {
+      background-color: #fdd700;
+    }
+
+    &.checkbox__label_red {
+      background-color: #fd0000;
+    }
+
+    &.checkbox__label_blue {
+      background-color: #2199eb;
+    }
+
+    &.checkbox__label_green {
+      background-color: #08aa05;
+    }
+  }
+
+  .checkbox__input:checked + .checkbox__label::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 9px;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox__input:checked + .checkbox__label.checkbox__label_white::after {
+    border-color: #666;
+  }
+
+  .checkbox__shape {
+    display: block;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      filter: invert(20%);
+    }
+
+    &.checkbox__shape_big-ball {
+      background-image: url(../../static/svg/ball.svg);
+      background-size: 50px 50px;
+    }
+
+    &.checkbox__shape_mid-ball {
+      background-image: url(../../static/svg/ball.svg);
+    }
+
+    &.checkbox__shape_small-ball {
+      background-image: url(../../static/svg/ball.svg);
+      background-size: 32px 32px;
+    }
+
+    &.checkbox__shape_bell {
+      background-image: url(../../static/svg/bell.svg);
+    }
+
+    &.checkbox__shape_cone {
+      background-image: url(../../static/svg/cone.svg);
+    }
+
+    &.checkbox__shape_snowflake {
+      background-image: url(../../static/svg/snowflake.svg);
+    }
+
+    &.checkbox__shape_toy {
+      background-image: url(../../static/svg/toy.svg);
+    }
+  }
+
+  .checkbox__input:checked + .checkbox__shape {
+    filter: invert(9%) sepia(63%) saturate(461%) hue-rotate(322deg) brightness(83%) contrast(88%);
+  }
+}
