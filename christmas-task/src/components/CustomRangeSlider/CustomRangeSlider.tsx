@@ -5,8 +5,13 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import styles from './CustomRangeSlider.scss';
 
+export interface IRangeChange {
+  from?: number;
+  to?: number;
+}
+
 interface ICustomRangeSlider {
-  onChange: (value: {from?: number; to?: number}) => void;
+  onChange: (value: IRangeChange) => void;
   from: number;
   to: number;
 }

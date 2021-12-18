@@ -11,6 +11,7 @@ import globalStyles from '../../assets/stylesheets/index.scss';
 import { CustomCheckbox } from '@/components/CustomCheckbox';
 import { ShapeStyle, Color } from '@/components/CustomCheckbox/CustomCheckbox';
 import { CustomRangeSlider } from '@/components/CustomRangeSlider';
+import { IRangeChange } from '@/components/CustomRangeSlider/CustomRangeSlider';
 import { CustomSelect } from '@/components/CustomSelect';
 import { IOption } from '@/components/CustomSelect/CustomSelect';
 import { Header } from '@/components/Header';
@@ -26,52 +27,74 @@ interface IFetchedToy {
   favorite?: string;
 }
 
+interface IFilters{
+  yearRange: Required<IRangeChange>;
+  amountRange: Required<IRangeChange>;
+}
+
+interface SortType<T> {
+  field: keyof T;
+  isASC: boolean;
+}
+
+const sortOptions: { name: string; value: SortType<IToy> }[] = [
+  {
+    name: 'По названию от «А» до «Я»',
+    value: { field: 'name', isASC: true },
+  },
+  {
+    name: 'По названию от «Я» до «А»',
+    value: { field: 'name', isASC: false },
+  },
+  {
+    name: 'По году покупки по возрастанию',
+    value: { field: 'year', isASC: true },
+  },
+  {
+    name: 'По году покупки по убыванию',
+    value: { field: 'year', isASC: false },
+  },
+];
+
 export const ToysManager: FC = () => {
-  const [, setSearchQuery] = useState('');
-  const [toys, setToys] = useState([
-    {
-      img: '../../static/toys/1.png',
-      name: 'Зелёный шар с цветами',
-      amount: 5,
-      year: 2007,
-      shape: 'куб',
-      color: 'зеленый',
-      size: 'большой',
-      favorite: false,
+  const [toys, setToys] = useState<IToy[]>([]);
+  const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
+  
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortType, setSortType] = useState<SortType<IToy>>(sortOptions[0].value);
+  const [rangeFilters, setRangeFilters] = useState<IFilters>({
+    amountRange: {
+      from: 0,
+      to: 100,
     },
-    {
-      img: '../../static/toys/1.png',
-      name: 'Зелёный шар с цветами',
-      amount: 5,
-      year: 2007,
-      shape: 'куб',
-      color: 'зеленый',
-      size: 'большой',
-      favorite: false,
+    yearRange: {
+      from: 0,
+      to: 100,      
     },
-  ]);
+  });
 
-  const options: IOption[] = [
-    {
-      name: 'По названию от «А» до «Я»',
-    },
-    {
-      name: 'По названию от «Я» до «А»',
-    },
-    {
-      name: 'По количеству по возрастанию',
-    },
-    {
-      name: 'По количеству по убыванию',
-    },
-  ];
+  useEffect(() => {
+    function isBetween<T, K extends keyof T>(obj: T, key: K, range: { from: T[K]; to: T[K] }): boolean {
+      return range.from <= obj[key] && obj[key] <= range.to;
+    }
 
-  const onSearchQueryChanged = useCallback(
-    (query: string) => {
-      setSearchQuery(query);
-    },
-    []
-  );
+    function comparatorBy<T>(key: keyof T, asc = true) {
+      return (left: T, right: T) => {
+        const l = asc ? left : right;
+        const r = asc ? right : left;
+        return l[key] < r[key] ? -1 : 1;
+      };
+    }
+
+    const newFilteredToys = toys
+      .filter(toy => toy.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      .filter(toy => isBetween(toy, 'amount', rangeFilters.amountRange))
+      .filter(toy => isBetween(toy, 'year', rangeFilters.yearRange))
+      .sort(comparatorBy<IToy>(sortType.field, sortType.isASC));
+
+    setFilteredToys(newFilteredToys);
+  },
+  [toys, searchQuery, rangeFilters, sortType]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -100,10 +123,69 @@ export const ToysManager: FC = () => {
             favorite: jsonToy.favorite === 'true',
           };
         };
-        setToys(toysJson.map(transformJson).filter(toy => toy !== null) as IToy[]);
+        const result = toysJson.map(transformJson).filter(toy => toy !== null) as IToy[];
+        setToys(result);
+        setFilteredToys(result);
       });
   },
   []);
+
+  const onAmountFilterChanged = useCallback(
+    (value: IRangeChange) => {
+      if(value.from !== undefined) {
+        setRangeFilters(prev => ({
+          ...prev,
+          amountRange: { 
+            ...prev.amountRange,
+            from: value.from!,
+          },
+        })
+        );
+      }
+      if(value.to !== undefined) {
+        setRangeFilters(prev => ({
+          ...prev,
+          amountRange: { 
+            ...prev.amountRange,
+            to: value.to!,
+          },
+        })
+        );
+      }
+    },
+    []
+  );
+
+  const onYearFilterChanged = useCallback(
+    (value: IRangeChange) => {
+      if(value.from !== undefined) {
+        setRangeFilters(prev => ({
+          ...prev,
+          yearRange: { 
+            ...prev.yearRange,
+            from: value.from!,
+          },
+        })
+        );
+      }
+      if(value.to !== undefined) {
+        setRangeFilters(prev => ({
+          ...prev,
+          yearRange: { 
+            ...prev.yearRange,
+            to: value.to!,
+          },
+        })
+        );
+      }
+    },
+    []
+  );
+
+  const onSearchQueryChanged = useCallback(
+    (query: string) => setSearchQuery(query),
+    []
+  );
 
   const onToyFavoriteStatusChanged = useCallback(
     (changedToy: IToy) => {
@@ -117,11 +199,13 @@ export const ToysManager: FC = () => {
     []
   );
 
-  const onSomething = useCallback(
-    // eslint-disable-next-line no-console
-    some => console.log(some),
+  const onSortTypeChanged = useCallback(
+    (option: IOption) => setSortType(option.value as SortType<IToy>),
     []
   );
+
+  // eslint-disable-next-line react/no-array-index-key
+  const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>);
 
   return (
     <React.Fragment>
@@ -166,18 +250,18 @@ export const ToysManager: FC = () => {
               <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
               <div className={styles['range-filter__amount']}>
                 Количество экземпляров:
-                <CustomRangeSlider from={1} to={12} onChange={onSomething}/>
+                <CustomRangeSlider from={1} to={12} onChange={onAmountFilterChanged}/>
               </div>
               <div className={styles['range-filter__year']}>
                 Год приобретения:
-                <CustomRangeSlider from={1940} to={2020} onChange={onSomething}/>
+                <CustomRangeSlider from={1940} to={2020} onChange={onYearFilterChanged}/>
               </div>
             </section>
 
             <div className={styles['vstack']}>
               <section className={classNames(styles['control-bar'], styles['sort'])}>
                 <h2 className={styles['control-bar__title']}>Сортировка</h2>
-                <CustomSelect options={options} onChange={onSomething}/>
+                <CustomSelect options={sortOptions} selected={sortOptions.find(option => option.value === sortType) as IOption} onChange={onSortTypeChanged}/>
               </section>
 
               <section className={classNames(styles['control-bar'], styles['buttons'])}>
@@ -190,8 +274,9 @@ export const ToysManager: FC = () => {
 
           <section className={styles['cards-grid']}>
             {
-              // eslint-disable-next-line react/no-array-index-key
-              toys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>)
+              toyCardsToDisplay.length !== 0
+                ? toyCardsToDisplay
+                :'Совпадений не найдено...'
             }
           </section>
 
