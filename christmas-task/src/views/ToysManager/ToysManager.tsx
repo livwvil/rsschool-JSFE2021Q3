@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import React, { FC , useCallback, useState } from 'react';
+import React, { FC , useCallback, useEffect, useState } from 'react';
 
 import styles from './ToysManager.scss';
 import { ToyCard } from './components/ToyCard';
@@ -14,6 +14,17 @@ import { CustomRangeSlider } from '@/components/CustomRangeSlider';
 import { CustomSelect } from '@/components/CustomSelect';
 import { IOption } from '@/components/CustomSelect/CustomSelect';
 import { Header } from '@/components/Header';
+
+interface IFetchedToy {
+  num?: string;
+  name?: string;
+  count?: string;
+  year?: string;
+  shape?: string;
+  color?: string;
+  size?: string;
+  favorite?: string;
+}
 
 export const ToysManager: FC = () => {
   const [, setSearchQuery] = useState('');
@@ -61,6 +72,38 @@ export const ToysManager: FC = () => {
     },
     []
   );
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetch('../../static/toys.json')
+      .then((resp: Response) => resp.json())
+      .then((toysJson: IFetchedToy[]) => {
+        const transformJson = (jsonToy: IFetchedToy):IToy | null => {
+          if(jsonToy.num === undefined || 
+            jsonToy.name === undefined || 
+            jsonToy.count === undefined || 
+            jsonToy.year === undefined || 
+            jsonToy.shape === undefined || 
+            jsonToy.color === undefined || 
+            jsonToy.size === undefined || 
+            jsonToy.favorite === undefined) {
+            return null;
+          }
+          return {
+            img: `../../static/toys/${jsonToy.num}.png`,
+            name: jsonToy.name,
+            amount: Math.round(parseFloat(jsonToy.count)),
+            year: Math.round(parseFloat(jsonToy.year)),
+            shape: jsonToy.shape,
+            color: jsonToy.color,
+            size: jsonToy.size,
+            favorite: jsonToy.favorite === 'true',
+          };
+        };
+        setToys(toysJson.map(transformJson).filter(toy => toy !== null) as IToy[]);
+      });
+  },
+  []);
 
   const onToyFavoriteStatusChanged = useCallback(
     (changedToy: IToy) => {
