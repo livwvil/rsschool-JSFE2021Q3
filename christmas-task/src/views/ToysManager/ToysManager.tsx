@@ -37,7 +37,12 @@ interface SortType<T> {
   isASC: boolean;
 }
 
-const sortOptions: { name: string; value: SortType<IToy> }[] = [
+interface IToySortOption {
+  name: string;
+  value: SortType<IToy>;
+}
+
+const sortOptions: IToySortOption[] = [
   {
     name: 'По названию от «А» до «Я»',
     value: { field: 'name', isASC: true },
@@ -61,7 +66,7 @@ export const ToysManager: FC = () => {
   const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
   
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortType, setSortType] = useState<SortType<IToy>>(sortOptions[0].value);
+  const [sortOption, setSortOption] = useState<IToySortOption>(sortOptions[0]);
   const [rangeFilters, setRangeFilters] = useState<IFilters>({
     amountRange: {
       from: 0,
@@ -78,10 +83,10 @@ export const ToysManager: FC = () => {
       return range.from <= obj[key] && obj[key] <= range.to;
     }
 
-    function comparatorBy<T>(key: keyof T, asc = true) {
+    function comparatorBy<T>(key: keyof T, isASC: boolean) {
       return (left: T, right: T) => {
-        const l = asc ? left : right;
-        const r = asc ? right : left;
+        const l = isASC ? left : right;
+        const r = isASC ? right : left;
         return l[key] < r[key] ? -1 : 1;
       };
     }
@@ -90,11 +95,11 @@ export const ToysManager: FC = () => {
       .filter(toy => toy.name.toLowerCase().includes(searchQuery.toLowerCase()))
       .filter(toy => isBetween(toy, 'amount', rangeFilters.amountRange))
       .filter(toy => isBetween(toy, 'year', rangeFilters.yearRange))
-      .sort(comparatorBy<IToy>(sortType.field, sortType.isASC));
+      .sort(comparatorBy<IToy>(sortOption.value.field, sortOption.value.isASC));
 
     setFilteredToys(newFilteredToys);
   },
-  [toys, searchQuery, rangeFilters, sortType]);
+  [toys, searchQuery, rangeFilters, sortOption]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -200,7 +205,7 @@ export const ToysManager: FC = () => {
   );
 
   const onSortTypeChanged = useCallback(
-    (option: IOption) => setSortType(option.value as SortType<IToy>),
+    (option: IOption) => setSortOption(option as IToySortOption),
     []
   );
 
@@ -261,7 +266,7 @@ export const ToysManager: FC = () => {
             <div className={styles['vstack']}>
               <section className={classNames(styles['control-bar'], styles['sort'])}>
                 <h2 className={styles['control-bar__title']}>Сортировка</h2>
-                <CustomSelect options={sortOptions} selected={sortOptions.find(option => option.value === sortType) as IOption} onChange={onSortTypeChanged}/>
+                <CustomSelect options={sortOptions} selected={sortOption} onChange={onSortTypeChanged}/>
               </section>
 
               <section className={classNames(styles['control-bar'], styles['buttons'])}>
