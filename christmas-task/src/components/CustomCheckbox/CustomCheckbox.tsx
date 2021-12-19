@@ -26,17 +26,22 @@ export enum Color {
 }
 
 interface ICustomCheckbox {
-  onCheckedChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onCheckedChange?: (value: unknown) => void;
   shapeStyle?: ShapeStyle;
   color?: Color;
+  checked?: boolean;
+  value?: unknown;
 }
 
 export const CustomCheckbox: FC<ICustomCheckbox> = ({
   onCheckedChange,
   shapeStyle,
   color,
+  checked,
+  value,
 }) => {
   const id = nextId('custom-checkbox');
+
   const classes = shapeStyle
     ? classNames(styles['checkbox__shape'], styles[shapeStyle.toString()])
     : color 
@@ -45,7 +50,7 @@ export const CustomCheckbox: FC<ICustomCheckbox> = ({
 
   return (
     <div className={styles['checkbox']}>
-      <input className={styles['checkbox__input']} type="checkbox" id={id} onChange={onCheckedChange} />
+      <input className={styles['checkbox__input']} type="checkbox" id={id} onChange={() => onCheckedChange && onCheckedChange(value)} checked={checked}/>      
       <label className={classes} htmlFor={id} />
     </div>
   );

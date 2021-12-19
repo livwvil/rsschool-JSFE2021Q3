@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import classNames from 'classnames';
 
 import React, { FC , useCallback, useEffect, useState } from 'react';
@@ -27,7 +28,30 @@ interface IFetchedToy {
   favorite?: string;
 }
 
-interface IFilters{
+const transformFetchedToys = (jsonToy: IFetchedToy): IToy | null => {
+  if(jsonToy.num === undefined || 
+    jsonToy.name === undefined || 
+    jsonToy.count === undefined || 
+    jsonToy.year === undefined || 
+    jsonToy.shape === undefined || 
+    jsonToy.color === undefined || 
+    jsonToy.size === undefined || 
+    jsonToy.favorite === undefined) {
+    return null;
+  }
+  return {
+    img: `../../static/toys/${jsonToy.num}.png`,
+    name: jsonToy.name,
+    amount: Math.round(parseFloat(jsonToy.count)),
+    year: Math.round(parseFloat(jsonToy.year)),
+    shape: jsonToy.shape,
+    color: jsonToy.color,
+    size: jsonToy.size,
+    favorite: jsonToy.favorite === 'true',
+  };
+};
+
+interface IRangeFilters {
   yearRange: Required<IRangeChange>;
   amountRange: Required<IRangeChange>;
 }
@@ -61,23 +85,63 @@ const sortOptions: IToySortOption[] = [
   },
 ];
 
+interface IToysParams {
+  amountMin: number;
+  amountMax: number;
+  yearMin: number;
+  yearMax: number;
+  shapes: {
+    val: IToy['shape'];
+    code: number;
+  }[];
+  colors: {
+    val: IToy['color'];
+    code: number;
+  }[];
+  sizes: {
+    val: IToy['size'];
+    code: number;
+  }[];
+};
+
 export const ToysManager: FC = () => {
   const [toys, setToys] = useState<IToy[]>([]);
+  const [toysParams, setToysParams] = useState<IToysParams>({
+    amountMin: 0,
+    amountMax: 10,
+    yearMin: 1900,
+    yearMax: new Date().getFullYear(),
+    shapes: [],
+    colors: [],
+    sizes: [],
+  });
+
   const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
   
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortOption, setSortOption] = useState<IToySortOption>(sortOptions[0]);
-  const [rangeFilters, setRangeFilters] = useState<IFilters>({
+  const [rangeFilters, setRangeFilters] = useState<IRangeFilters>({
     amountRange: {
-      from: 0,
-      to: 100,
+      from: toysParams.amountMin,
+      to: toysParams.amountMax,
     },
     yearRange: {
-      from: 0,
-      to: 100,      
+      from: toysParams.yearMin,
+      to: toysParams.yearMax,      
     },
   });
-
+  const [valueFilters, setValueFilters] = useState<{
+    shapes: number;
+    colors: number;
+    sizes: number;
+    favorite: boolean;
+  }>({
+    shapes: 0,
+    colors: 0,
+    sizes: 0,
+    favorite: false,
+  });
+  
   useEffect(() => {
     function isBetween<T, K extends keyof T>(obj: T, key: K, range: { from: T[K]; to: T[K] }): boolean {
       return range.from <= obj[key] && obj[key] <= range.to;
@@ -91,46 +155,107 @@ export const ToysManager: FC = () => {
       };
     }
 
+    const searchFiltered = (toy: IToy): boolean => 
+      toy.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const rangeFiltered = (toy: IToy): boolean => 
+      isBetween(toy, 'amount', rangeFilters.amountRange) &&
+      isBetween(toy, 'year', rangeFilters.yearRange);
+
+    const valueFiltered = (toy: IToy): boolean => {
+      const someShapesSelected = valueFilters.shapes !== 0;
+      const someColorsSelected = valueFilters.colors !== 0;
+      const someSizesSelected = valueFilters.sizes !== 0;
+
+      const fav = valueFilters.favorite ? toy.favorite : true;
+
+      const shape = !someShapesSelected
+        ? true
+        : toysParams.shapes.reduce((acc, sh) => ((valueFilters.shapes & sh.code) !== 0)
+          ? acc || toy.shape === sh.val
+          : acc
+        , false);
+
+      const color = !someColorsSelected
+        ? true
+        : toysParams.colors.reduce((acc, col) => ((valueFilters.colors & col.code) !== 0)
+          ? acc || toy.color === col.val
+          : acc
+        , false);
+
+      const size = !someSizesSelected
+        ? true
+        : toysParams.sizes.reduce((acc, sz) => ((valueFilters.sizes & sz.code) !== 0)
+          ? acc || toy.size === sz.val
+          : acc
+        , false);
+            
+      return fav && shape && color && size;
+    };
+
     const newFilteredToys = toys
-      .filter(toy => toy.name.toLowerCase().includes(searchQuery.toLowerCase()))
-      .filter(toy => isBetween(toy, 'amount', rangeFilters.amountRange))
-      .filter(toy => isBetween(toy, 'year', rangeFilters.yearRange))
+      .filter(toy =>
+        searchFiltered(toy) &&
+        rangeFiltered(toy) &&
+        valueFiltered(toy)
+      )
       .sort(comparatorBy<IToy>(sortOption.value.field, sortOption.value.isASC));
 
     setFilteredToys(newFilteredToys);
   },
-  [toys, searchQuery, rangeFilters, sortOption]);
+  [toys, toysParams, searchQuery, valueFilters, rangeFilters, sortOption]);
+
+  const determineFetchedNewToysParams = (newToys: IToy[]) => {
+    setToysParams(newToys.reduce((acc, toy) => {
+      if(acc.shapes.find(shape => shape.val === toy.shape) === undefined) {
+        acc.shapes.push({
+          val: toy.shape,
+          code: 2**acc.shapes.length,
+        });
+      }
+      if(acc.colors.find(color => color.val === toy.color) === undefined) {
+        acc.colors.push({
+          val: toy.color,
+          code: 2**acc.colors.length,
+        });
+      }
+      if(acc.sizes.find(size => size.val === toy.size) === undefined) {
+        acc.sizes.push({
+          val: toy.size,
+          code: 2**acc.sizes.length,
+        });
+      }
+      acc.amountMin = Math.min(toy.amount, acc.amountMin);
+      acc.amountMax = Math.max(toy.amount, acc.amountMax);
+      acc.yearMin = Math.min(toy.year, acc.yearMin);
+      acc.yearMax = Math.max(toy.year, acc.yearMax);
+      return acc;
+    }, {
+      shapes: [] as IToysParams['shapes'],
+      colors: [] as IToysParams['colors'],
+      sizes: [] as IToysParams['sizes'],
+      amountMin: newToys[0].amount,
+      amountMax: newToys[0].amount,
+      yearMin: newToys[0].year,
+      yearMax: newToys[0].year,
+    }));
+  };
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetch('../../static/toys.json')
       .then((resp: Response) => resp.json())
       .then((toysJson: IFetchedToy[]) => {
-        const transformJson = (jsonToy: IFetchedToy):IToy | null => {
-          if(jsonToy.num === undefined || 
-            jsonToy.name === undefined || 
-            jsonToy.count === undefined || 
-            jsonToy.year === undefined || 
-            jsonToy.shape === undefined || 
-            jsonToy.color === undefined || 
-            jsonToy.size === undefined || 
-            jsonToy.favorite === undefined) {
-            return null;
-          }
-          return {
-            img: `../../static/toys/${jsonToy.num}.png`,
-            name: jsonToy.name,
-            amount: Math.round(parseFloat(jsonToy.count)),
-            year: Math.round(parseFloat(jsonToy.year)),
-            shape: jsonToy.shape,
-            color: jsonToy.color,
-            size: jsonToy.size,
-            favorite: jsonToy.favorite === 'true',
-          };
-        };
-        const result = toysJson.map(transformJson).filter(toy => toy !== null) as IToy[];
-        setToys(result);
-        setFilteredToys(result);
+
+        const newToys = toysJson
+          .map(transformFetchedToys)
+          .filter(toy => toy !== null) as IToy[];
+          
+        determineFetchedNewToysParams(newToys);
+
+        setToys(newToys);
+        setFilteredToys(newToys);
+
       });
   },
   []);
@@ -187,6 +312,26 @@ export const ToysManager: FC = () => {
     []
   );
 
+  const onShapeFiltersChanged = useCallback(
+    (value: number) => setValueFilters(prev => ({ ...prev, shapes: prev.shapes ^ value })),
+    []
+  );
+
+  const onFavoriteFilterChanged = useCallback(
+    () => setValueFilters(prev => ({ ...prev, favorite: !prev.favorite })),
+    []
+  );
+
+  const onColorFiltersChanged = useCallback(
+    (value: number) => setValueFilters(prev => ({ ...prev, colors: prev.colors ^ value })),
+    []
+  );
+
+  const onSizeFiltersChanged = useCallback(
+    (value: number) => setValueFilters(prev => ({ ...prev, sizes: prev.sizes ^ value })),
+    []
+  );
+
   const onSearchQueryChanged = useCallback(
     (query: string) => setSearchQuery(query),
     []
@@ -211,6 +356,128 @@ export const ToysManager: FC = () => {
 
   // eslint-disable-next-line react/no-array-index-key
   const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>);
+  
+  const sizeCheckboxes = () => {
+    const sizeBig = toysParams.sizes.find(size => size.val === 'большой');
+    const sizeMid = toysParams.sizes.find(size => size.val === 'средний');
+    const sizeSmall = toysParams.sizes.find(size => size.val === 'малый');
+
+    return [
+      <CustomCheckbox
+        key={0}
+        value={sizeBig ? sizeBig.code : 0} 
+        checked={sizeBig ? ((valueFilters.sizes & sizeBig.code) !== 0) : false}
+        onCheckedChange={sizeBig ? onSizeFiltersChanged : undefined} 
+        shapeStyle={ShapeStyle.BigBall}
+      />,
+      <CustomCheckbox 
+        key={1}
+        value={sizeMid ? sizeMid.code : 0}
+        checked={sizeMid ? ((valueFilters.sizes & sizeMid.code) !== 0) : false}
+        onCheckedChange={sizeMid ? onSizeFiltersChanged : undefined} 
+        shapeStyle={ShapeStyle.MidBall} 
+      />,
+      <CustomCheckbox 
+        key={2}
+        value={sizeSmall ? sizeSmall.code : 0}
+        checked={sizeSmall ? ((valueFilters.sizes & sizeSmall.code) !== 0) : false}
+        onCheckedChange={sizeSmall ? onSizeFiltersChanged : undefined} 
+        shapeStyle={ShapeStyle.SmallBall} 
+      />,
+    ];
+  };
+  
+  const shapeCheckboxes = () => {
+    const shapeBall = toysParams.shapes.find(shape => shape.val === 'шар');
+    const shapeBell = toysParams.shapes.find(shape => shape.val === 'колокольчик');
+    const shapeCone = toysParams.shapes.find(shape => shape.val === 'шишка');
+    const shapeSnowflake = toysParams.shapes.find(shape => shape.val === 'снежинка');
+    const shapeToy = toysParams.shapes.find(shape => shape.val === 'фигурка');
+
+    return [
+      <CustomCheckbox 
+        key={0}
+        value={shapeBall ? shapeBall.code : 0}
+        checked={shapeBall ? ((valueFilters.shapes & shapeBall.code) !== 0) : false}
+        onCheckedChange={shapeBall ? onShapeFiltersChanged : undefined}
+        shapeStyle={ShapeStyle.MidBall} 
+      />,
+      <CustomCheckbox 
+        key={1}
+        value={shapeBell ? shapeBell.code : 0} 
+        checked={shapeBell ? ((valueFilters.shapes & shapeBell.code) !== 0) : false}
+        onCheckedChange={shapeBell ? onShapeFiltersChanged : undefined} 
+        shapeStyle={ShapeStyle.Bell} 
+      />,
+      <CustomCheckbox 
+        key={2}
+        value={shapeCone ? shapeCone.code : 0} 
+        checked={shapeCone ? ((valueFilters.shapes & shapeCone.code) !== 0) : false}
+        onCheckedChange={shapeCone ? onShapeFiltersChanged : undefined}
+        shapeStyle={ShapeStyle.Cone} 
+      />,
+      <CustomCheckbox 
+        key={3}
+        value={shapeSnowflake ? shapeSnowflake.code : 0} 
+        checked={shapeSnowflake ? ((valueFilters.shapes & shapeSnowflake.code) !== 0) : false}
+        onCheckedChange={shapeSnowflake ? onShapeFiltersChanged : undefined}
+        shapeStyle={ShapeStyle.Snowflake} 
+      />,
+      <CustomCheckbox 
+        key={4}
+        value={shapeToy ? shapeToy.code : 0}
+        checked={shapeToy ? ((valueFilters.shapes & shapeToy.code) !== 0) : false}
+        onCheckedChange={shapeToy ? onShapeFiltersChanged : undefined}
+        shapeStyle={ShapeStyle.Toy} 
+      />,
+    ];
+  };
+  
+  const colorCheckboxes = () => {
+    const colorWhite = toysParams.colors.find(color=> color.val === 'белый');
+    const colorYellow = toysParams.colors.find(color=> color.val === 'желтый');
+    const colorRed = toysParams.colors.find(color=> color.val === 'красный');
+    const colorBlue = toysParams.colors.find(color=> color.val === 'синий');
+    const colorGreen = toysParams.colors.find(color=> color.val === 'зелёный');
+
+    return [
+      <CustomCheckbox 
+        key={0}
+        value={colorWhite ? colorWhite.code : 0} 
+        checked={colorWhite ? ((valueFilters.colors & colorWhite.code) !== 0) : false}
+        onCheckedChange={colorWhite ? onColorFiltersChanged : undefined}
+        color={Color.White} 
+      />,
+      <CustomCheckbox 
+        key={1}
+        value={colorYellow ? colorYellow.code : 0}
+        checked={colorYellow ? ((valueFilters.colors & colorYellow.code) !== 0) : false}
+        onCheckedChange={colorYellow ? onColorFiltersChanged : undefined} 
+        color={Color.Yellow}
+      />,
+      <CustomCheckbox 
+        key={2}
+        value={colorRed ? colorRed.code : 0}
+        checked={colorRed ? ((valueFilters.colors & colorRed.code) !== 0) : false}
+        onCheckedChange={colorRed ? onColorFiltersChanged : undefined}
+        color={Color.Red}
+      />,
+      <CustomCheckbox 
+        key={3}
+        value={colorBlue ? colorBlue.code : 0}
+        checked={colorBlue ? ((valueFilters.colors & colorBlue.code) !== 0) : false}
+        onCheckedChange={colorBlue ? onColorFiltersChanged : undefined}
+        color={Color.Blue} 
+      />,
+      <CustomCheckbox 
+        key={4}
+        value={colorGreen ? colorGreen.code : 0}
+        checked={colorGreen ? ((valueFilters.colors & colorGreen.code) !== 0) : false}
+        onCheckedChange={colorGreen ? onColorFiltersChanged : undefined}
+        color={Color.Green} 
+      />,
+    ];
+  };
 
   return (
     <React.Fragment>
@@ -225,29 +492,23 @@ export const ToysManager: FC = () => {
               <h2 className={styles['control-bar__title']}>Фильтры по значению</h2>
               <div className={classNames(styles['value-filter__choice'], styles['value-filter__shapes'])}>
                 Форма:
-                <CustomCheckbox shapeStyle={ShapeStyle.MidBall}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.Bell}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.Cone}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.Snowflake}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.Toy}/>
+                { shapeCheckboxes() }
               </div>
               <div className={classNames(styles['value-filter__choice'], styles['value-filter__colors'])}>
                 Цвет:
-                <CustomCheckbox color={Color.White}/>
-                <CustomCheckbox color={Color.Yellow}/>
-                <CustomCheckbox color={Color.Red}/>
-                <CustomCheckbox color={Color.Blue}/>
-                <CustomCheckbox color={Color.Green}/>
+                { colorCheckboxes() }
               </div>
               <div className={classNames(styles['value-filter__choice'], styles['value-filter__sizes'])}>
                 Размер:
-                <CustomCheckbox shapeStyle={ShapeStyle.BigBall}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.MidBall}/>
-                <CustomCheckbox shapeStyle={ShapeStyle.SmallBall}/>
+                { sizeCheckboxes() }
               </div>
               <div className={classNames(styles['value-filter__choice'], styles['value-filter__is-favorite'])}>
                 Только любимые:
-                <CustomCheckbox/>
+                <CustomCheckbox 
+                  value={valueFilters.favorite}
+                  checked={valueFilters.favorite}
+                  onCheckedChange={onFavoriteFilterChanged} 
+                />
               </div>
             </section>
 
@@ -255,11 +516,11 @@ export const ToysManager: FC = () => {
               <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
               <div className={styles['range-filter__amount']}>
                 Количество экземпляров:
-                <CustomRangeSlider from={1} to={12} onChange={onAmountFilterChanged}/>
+                <CustomRangeSlider from={toysParams.amountMin} to={toysParams.amountMax} onChange={onAmountFilterChanged}/>
               </div>
               <div className={styles['range-filter__year']}>
                 Год приобретения:
-                <CustomRangeSlider from={1940} to={2020} onChange={onYearFilterChanged}/>
+                <CustomRangeSlider from={toysParams.yearMin} to={toysParams.yearMax} onChange={onYearFilterChanged}/>
               </div>
             </section>
 
