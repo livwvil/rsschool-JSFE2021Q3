@@ -12,12 +12,17 @@ export interface IRangeChange {
 
 interface ICustomRangeSlider {
   onChange: (value: IRangeChange) => void;
+  value: {
+    from: number;
+    to: number;
+  };
   from: number;
   to: number;
 }
 
 export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
   onChange,
+  value,
   from,
   to,
 }) => {
@@ -29,7 +34,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
     }
 
     const slider = noUiSlider.create(sliderDiv.current, {
-      start: [from, to],
+      start: [value.from, value.to],
       connect: true,
       step: 1,
       range: {
@@ -46,6 +51,13 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
     });
     
     slider.on('update', (values, handle) => {
+      const newFrom = Math.ceil(parseFloat(values[0].toString()));
+      const newTo = Math.ceil(parseFloat(values[1].toString()));
+      
+      if(newFrom === value.from && newTo === value.to) {
+        return;
+      }
+      
       const val = parseFloat(values[handle].toString());
       
       if(!sliderDiv.current) {
@@ -71,7 +83,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
     });
 
     return () => slider.destroy();
-  }, [sliderDiv, onChange, from, to]);
+  }, [sliderDiv, onChange, from, to, value]);
 
   return (
     <div className={styles['range-slider']}>

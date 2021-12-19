@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import classNames from 'classnames';
 
-import React, { FC , useCallback, useEffect, useState } from 'react';
+import React, { FC , useCallback, useEffect, useMemo, useState } from 'react';
 
 import styles from './ToysManager.scss';
 import { ToyCard } from './components/ToyCard';
@@ -56,6 +56,13 @@ interface IRangeFilters {
   amountRange: Required<IRangeChange>;
 }
 
+interface IValueFilters {
+  shapes: number;
+  colors: number;
+  sizes: number;
+  favorite: boolean;
+}
+
 interface SortType<T> {
   field: keyof T;
   isASC: boolean;
@@ -105,6 +112,7 @@ interface IToysParams {
 };
 
 export const ToysManager: FC = () => {
+  const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
   const [toys, setToys] = useState<IToy[]>([]);
   const [toysParams, setToysParams] = useState<IToysParams>({
     amountMin: 0,
@@ -116,11 +124,7 @@ export const ToysManager: FC = () => {
     sizes: [],
   });
 
-  const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
-  
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortOption, setSortOption] = useState<IToySortOption>(sortOptions[0]);
-  const [rangeFilters, setRangeFilters] = useState<IRangeFilters>({
+  const defaultRangeFiltersState: IRangeFilters = useMemo(() => ({
     amountRange: {
       from: toysParams.amountMin,
       to: toysParams.amountMax,
@@ -129,18 +133,19 @@ export const ToysManager: FC = () => {
       from: toysParams.yearMin,
       to: toysParams.yearMax,      
     },
-  });
-  const [valueFilters, setValueFilters] = useState<{
-    shapes: number;
-    colors: number;
-    sizes: number;
-    favorite: boolean;
-  }>({
+  }), [toysParams]);
+
+  const defaultValueFiltersState: IValueFilters = useMemo(() => ({
     shapes: 0,
     colors: 0,
     sizes: 0,
     favorite: false,
-  });
+  }), []);
+
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortOption, setSortOption] = useState<IToySortOption>(sortOptions[0]);
+  const [rangeFilters, setRangeFilters] = useState<IRangeFilters>(defaultRangeFiltersState);
+  const [valueFilters, setValueFilters] = useState<IValueFilters>(defaultValueFiltersState);
   
   useEffect(() => {
     function isBetween<T, K extends keyof T>(obj: T, key: K, range: { from: T[K]; to: T[K] }): boolean {
@@ -354,6 +359,20 @@ export const ToysManager: FC = () => {
     []
   );
 
+  const resetFilters = useCallback(
+    () => {
+      setRangeFilters(defaultRangeFiltersState);
+      setValueFilters(defaultValueFiltersState);
+    },
+    [defaultRangeFiltersState, defaultValueFiltersState]
+  );
+
+  const saveFilters = useCallback(
+    () => {
+      console.log('saveFilters');
+    },
+    []
+  );
   // eslint-disable-next-line react/no-array-index-key
   const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>);
   
@@ -516,11 +535,11 @@ export const ToysManager: FC = () => {
               <h2 className={styles['control-bar__title']}>Фильтры по диапазону</h2>
               <div className={styles['range-filter__amount']}>
                 Количество экземпляров:
-                <CustomRangeSlider from={toysParams.amountMin} to={toysParams.amountMax} onChange={onAmountFilterChanged}/>
+                <CustomRangeSlider value={rangeFilters.amountRange} from={toysParams.amountMin} to={toysParams.amountMax} onChange={onAmountFilterChanged}/>
               </div>
               <div className={styles['range-filter__year']}>
                 Год приобретения:
-                <CustomRangeSlider from={toysParams.yearMin} to={toysParams.yearMax} onChange={onYearFilterChanged}/>
+                <CustomRangeSlider value={rangeFilters.yearRange} from={toysParams.yearMin} to={toysParams.yearMax} onChange={onYearFilterChanged}/>
               </div>
             </section>
 
@@ -531,8 +550,8 @@ export const ToysManager: FC = () => {
               </section>
 
               <section className={classNames(styles['control-bar'], styles['buttons'])}>
-                <button className={styles['button']} type='button'>Сброс фильтров</button>
-                <button className={styles['button']} type='button'>Сохранение настроек</button>
+                <button className={styles['button']} onClick={resetFilters} type='button'>Сброс фильтров</button>
+                <button className={styles['button']} onClick={saveFilters} type='button'>Сохранение настроек</button>
               </section>
             </div>
 
