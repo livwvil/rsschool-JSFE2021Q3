@@ -50,14 +50,7 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
       },
     });
     
-    slider.on('update', (values, handle) => {
-      const newFrom = Math.ceil(parseFloat(values[0].toString()));
-      const newTo = Math.ceil(parseFloat(values[1].toString()));
-      
-      if(newFrom === value.from && newTo === value.to) {
-        return;
-      }
-      
+    slider.on('slide', (values, handle) => {     
       const val = parseFloat(values[handle].toString());
       
       if(!sliderDiv.current) {
@@ -87,9 +80,9 @@ export const CustomRangeSlider: FC<ICustomRangeSlider> = ({
 
   return (
     <div className={styles['range-slider']}>
-      <output className={styles['range-slider__output']}>q</output>
+      <output className={styles['range-slider__output']}>{value.from}</output>
       <div className={styles['range-slider__container']} ref={sliderDiv} />
-      <output className={styles['range-slider__output']}>q</output>
+      <output className={styles['range-slider__output']}>{value.to}</output>
     </div>
   );
 };

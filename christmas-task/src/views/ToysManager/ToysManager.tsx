@@ -16,6 +16,7 @@ import { IRangeChange } from '@/components/CustomRangeSlider/CustomRangeSlider';
 import { CustomSelect } from '@/components/CustomSelect';
 import { IOption } from '@/components/CustomSelect/CustomSelect';
 import { Header } from '@/components/Header';
+import { useToast } from '@/hooks/Toast';
 
 interface IFetchedToy {
   num?: string;
@@ -40,6 +41,7 @@ const transformFetchedToys = (jsonToy: IFetchedToy): IToy | null => {
     return null;
   }
   return {
+    num: Math.round(parseFloat(jsonToy.num)),
     img: `../../static/toys/${jsonToy.num}.png`,
     name: jsonToy.name,
     amount: Math.round(parseFloat(jsonToy.count)),
@@ -111,29 +113,34 @@ interface IToysParams {
   }[];
 };
 
+function getSaved() {
+  const rangeFilters = localStorage.getItem('rangeFilters');
+  const valueFilters = localStorage.getItem('valueFilters');
+  const sortOption = localStorage.getItem('sortOption');
+  const favToyNums = localStorage.getItem('favToyNums');
+  return {
+    savedRangeFilters: rangeFilters !== null ? JSON.parse(rangeFilters) as IRangeFilters : null,
+    savedValueFilters: valueFilters !== null ? JSON.parse(valueFilters) as IValueFilters : null,
+    savedSortOption: sortOption !== null ? Math.round(parseFloat(sortOption)) : null,
+    savedFavToyNums: favToyNums !== null ? JSON.parse(favToyNums) as number[] : null,
+  };
+}
+
 export const ToysManager: FC = () => {
   const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
   const [toys, setToys] = useState<IToy[]>([]);
-  const [toysParams, setToysParams] = useState<IToysParams>({
-    amountMin: 0,
-    amountMax: 10,
-    yearMin: 1900,
-    yearMax: new Date().getFullYear(),
-    shapes: [],
-    colors: [],
-    sizes: [],
-  });
+  const saved = getSaved();
 
-  const defaultRangeFiltersState: IRangeFilters = useMemo(() => ({
+  const [defaultRangeFiltersState, setDefaultRangeFiltersState] = useState<IRangeFilters>({
     amountRange: {
-      from: toysParams.amountMin,
-      to: toysParams.amountMax,
+      from: 0,
+      to: 10,
     },
     yearRange: {
-      from: toysParams.yearMin,
-      to: toysParams.yearMax,      
+      from: 1900,
+      to: new Date().getFullYear(),
     },
-  }), [toysParams]);
+  });
 
   const defaultValueFiltersState: IValueFilters = useMemo(() => ({
     shapes: 0,
@@ -142,10 +149,22 @@ export const ToysManager: FC = () => {
     favorite: false,
   }), []);
 
+  const [toysParams, setToysParams] = useState<IToysParams>({
+    amountMin: defaultRangeFiltersState.amountRange.from,
+    amountMax: defaultRangeFiltersState.amountRange.to,
+    yearMin: defaultRangeFiltersState.yearRange.from,
+    yearMax: defaultRangeFiltersState.yearRange.to,
+    shapes: [],
+    colors: [],
+    sizes: [],
+  });
+
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortOption, setSortOption] = useState<IToySortOption>(sortOptions[0]);
-  const [rangeFilters, setRangeFilters] = useState<IRangeFilters>(defaultRangeFiltersState);
-  const [valueFilters, setValueFilters] = useState<IValueFilters>(defaultValueFiltersState);
+  const [sortOption, setSortOption] = useState<IToySortOption>(saved.savedSortOption ? sortOptions[saved.savedSortOption] : sortOptions[0]);
+  const [rangeFilters, setRangeFilters] = useState<IRangeFilters>(saved.savedRangeFilters ? saved.savedRangeFilters : defaultRangeFiltersState);
+  const [valueFilters, setValueFilters] = useState<IValueFilters>(saved.savedValueFilters ? saved.savedValueFilters : defaultValueFiltersState);
+
+  const [Toast, invokeToast] = useToast();
   
   useEffect(() => {
     function isBetween<T, K extends keyof T>(obj: T, key: K, range: { from: T[K]; to: T[K] }): boolean {
@@ -210,43 +229,48 @@ export const ToysManager: FC = () => {
   },
   [toys, toysParams, searchQuery, valueFilters, rangeFilters, sortOption]);
 
-  const determineFetchedNewToysParams = (newToys: IToy[]) => {
-    setToysParams(newToys.reduce((acc, toy) => {
-      if(acc.shapes.find(shape => shape.val === toy.shape) === undefined) {
-        acc.shapes.push({
-          val: toy.shape,
-          code: 2**acc.shapes.length,
-        });
-      }
-      if(acc.colors.find(color => color.val === toy.color) === undefined) {
-        acc.colors.push({
-          val: toy.color,
-          code: 2**acc.colors.length,
-        });
-      }
-      if(acc.sizes.find(size => size.val === toy.size) === undefined) {
-        acc.sizes.push({
-          val: toy.size,
-          code: 2**acc.sizes.length,
-        });
-      }
-      acc.amountMin = Math.min(toy.amount, acc.amountMin);
-      acc.amountMax = Math.max(toy.amount, acc.amountMax);
-      acc.yearMin = Math.min(toy.year, acc.yearMin);
-      acc.yearMax = Math.max(toy.year, acc.yearMax);
-      return acc;
-    }, {
-      shapes: [] as IToysParams['shapes'],
-      colors: [] as IToysParams['colors'],
-      sizes: [] as IToysParams['sizes'],
-      amountMin: newToys[0].amount,
-      amountMax: newToys[0].amount,
-      yearMin: newToys[0].year,
-      yearMax: newToys[0].year,
-    }));
-  };
-
+  const determineFetchedNewToysParams = (newToys: IToy[]) => newToys.reduce((acc, toy) => {
+    if(acc.shapes.find(shape => shape.val === toy.shape) === undefined) {
+      acc.shapes.push({
+        val: toy.shape,
+        code: 2**acc.shapes.length,
+      });
+    }
+    if(acc.colors.find(color => color.val === toy.color) === undefined) {
+      acc.colors.push({
+        val: toy.color,
+        code: 2**acc.colors.length,
+      });
+    }
+    if(acc.sizes.find(size => size.val === toy.size) === undefined) {
+      acc.sizes.push({
+        val: toy.size,
+        code: 2**acc.sizes.length,
+      });
+    }
+    acc.amountMin = Math.min(toy.amount, acc.amountMin);
+    acc.amountMax = Math.max(toy.amount, acc.amountMax);
+    acc.yearMin = Math.min(toy.year, acc.yearMin);
+    acc.yearMax = Math.max(toy.year, acc.yearMax);
+    return acc;
+  }, {
+    shapes: [] as IToysParams['shapes'],
+    colors: [] as IToysParams['colors'],
+    sizes: [] as IToysParams['sizes'],
+    amountMin: newToys[0].amount,
+    amountMax: newToys[0].amount,
+    yearMin: newToys[0].year,
+    yearMax: newToys[0].year,
+  });
+  
   useEffect(() => {
+    const restoreSavedFavs = (toy: IToy): IToy => {
+      if(saved.savedFavToyNums?.includes(toy.num)) {
+        return { ...toy, favorite: true };
+      } 
+      return toy;
+    };
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetch('../../static/toys.json')
       .then((resp: Response) => resp.json())
@@ -254,13 +278,31 @@ export const ToysManager: FC = () => {
 
         const newToys = toysJson
           .map(transformFetchedToys)
-          .filter(toy => toy !== null) as IToy[];
-          
-        determineFetchedNewToysParams(newToys);
+          .filter(toy => toy !== null)
+          .map(restoreSavedFavs);
 
         setToys(newToys);
         setFilteredToys(newToys);
+          
+        const params = determineFetchedNewToysParams(newToys);
 
+        const newRangeFilters: IRangeFilters = {
+          amountRange: {
+            from: params.amountMin,
+            to: params.amountMax,
+          },
+          yearRange: {
+            from: params.yearMin,
+            to: params.yearMax,      
+          },
+        };
+        
+        setToysParams(params);
+        setDefaultRangeFiltersState(newRangeFilters);
+
+        if(!saved.savedRangeFilters) {
+          setRangeFilters(newRangeFilters);
+        }
       });
   },
   []);
@@ -342,8 +384,14 @@ export const ToysManager: FC = () => {
     []
   );
 
+  const favToysAmount = toys.filter(toy => toy.favorite).length;
+
   const onToyFavoriteStatusChanged = useCallback(
     (changedToy: IToy) => {
+      if(!changedToy.favorite && favToysAmount >= 20) {
+        invokeToast('Извините, все слоты заполнены');
+        return;
+      }
       setToys(prevToys => [...prevToys.map(prevToy => {
         if(prevToy === changedToy) {
           return {...prevToy, favorite: !prevToy.favorite};
@@ -351,7 +399,7 @@ export const ToysManager: FC = () => {
         return {...prevToy};
       })]);
     },
-    []
+    [favToysAmount, invokeToast]
   );
 
   const onSortTypeChanged = useCallback(
@@ -363,15 +411,35 @@ export const ToysManager: FC = () => {
     () => {
       setRangeFilters(defaultRangeFiltersState);
       setValueFilters(defaultValueFiltersState);
+      invokeToast('Фильтры сброшены!');
     },
-    [defaultRangeFiltersState, defaultValueFiltersState]
+    [defaultRangeFiltersState, defaultValueFiltersState, invokeToast]
   );
 
   const saveFilters = useCallback(
     () => {
-      console.log('saveFilters');
+      localStorage.setItem('rangeFilters', JSON.stringify(rangeFilters));
+      localStorage.setItem('valueFilters', JSON.stringify(valueFilters));
+      localStorage.setItem('sortOption', sortOptions.indexOf(sortOption).toString());
+      const favToyNums = toys.filter(toy => toy.favorite).map(toy => toy.num);
+      localStorage.setItem('favToyNums', JSON.stringify(favToyNums));
+      invokeToast('Настройки сохранены!');
     },
-    []
+    [rangeFilters, valueFilters, sortOption, toys, invokeToast]
+  );
+    
+  const resetSave = useCallback(
+    () => {
+      localStorage.removeItem('rangeFilters');
+      localStorage.removeItem('valueFilters');
+      localStorage.removeItem('sortOption');
+      localStorage.removeItem('favToyNums');
+      setToys(prevToys => prevToys.map(prevToy => saved.savedFavToyNums?.includes(prevToy.num)
+        ? ({ ...prevToy, favorite: false})
+        : ({ ...prevToy })));
+      invokeToast('Сохранение сброшено!');
+    },
+    [invokeToast]
   );
   // eslint-disable-next-line react/no-array-index-key
   const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>);
@@ -500,7 +568,7 @@ export const ToysManager: FC = () => {
 
   return (
     <React.Fragment>
-      <Header onSearch={onSearchQueryChanged} favToysNumber={toys.filter(toy => toy.favorite).length}/>
+      <Header onSearch={onSearchQueryChanged} favToysNumber={favToysAmount}/>
 
       <main className={globalStyles['main']}>
         <div className={globalStyles['blur-container']}>
@@ -551,7 +619,10 @@ export const ToysManager: FC = () => {
 
               <section className={classNames(styles['control-bar'], styles['buttons'])}>
                 <button className={styles['button']} onClick={resetFilters} type='button'>Сброс фильтров</button>
-                <button className={styles['button']} onClick={saveFilters} type='button'>Сохранение настроек</button>
+                <div className={styles['hstack']}>
+                  <button className={styles['button']} onClick={saveFilters} type='button'>Сохранение настроек</button>
+                  <button className={styles['button']} onClick={resetSave} type='button'>Сброс сохранения</button>
+                </div>
               </section>
             </div>
 
@@ -567,6 +638,7 @@ export const ToysManager: FC = () => {
 
         </div>
       </main>
+      <Toast/>
     </React.Fragment>
   );
 };

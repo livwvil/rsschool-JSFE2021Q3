@@ -7,6 +7,7 @@ import React, { FC } from 'react';
 import styles from './ToyCard.scss';
 
 export interface IToy {
+  num: number;
   img: string;
   name: string;
   amount: number;

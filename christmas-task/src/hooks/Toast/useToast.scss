@@ -1,0 +1,17 @@
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 85px;
+  border-radius: 20px;
+  border: 1px solid #278d9f;
+  background-color: rgba(18, 28, 30, 0.9);
+  max-width: 300px;
+  color: #fff;
+  padding: 50px;
+  opacity: 0;
+  transition: all 0.3s;
+  
+  &.active {
+    opacity: 1;
+  }
+}
