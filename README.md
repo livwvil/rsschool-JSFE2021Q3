@@ -1,1 +1,1 @@
-# rsschool-JS2021Q3
+# Christmas Task Part 2
