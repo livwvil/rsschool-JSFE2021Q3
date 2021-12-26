@@ -1,0 +1,12 @@
+.stack {
+  display: flex;
+  overflow: auto;
+
+  &.v {
+    flex-direction: column;
+  }
+  
+  &.h {
+    flex-direction: row;
+  }
+}
