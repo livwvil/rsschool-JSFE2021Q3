@@ -6,17 +6,8 @@ import React, { FC } from 'react';
 
 import styles from './ToyCard.scss';
 
-export interface IToy {
-  num: number;
-  img: string;
-  name: string;
-  amount: number;
-  year: number;
-  shape: string;
-  color: string;
-  size: string;
-  favorite: boolean;
-}
+import { IToy } from '@/hooks/useToysLoader';
+
 interface IToyCard {
   onClick: (card?: IToy) => void;
   toy: IToy;

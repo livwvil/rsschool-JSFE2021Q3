@@ -5,7 +5,6 @@ import React, { FC , useCallback, useEffect, useMemo, useState } from 'react';
 
 import styles from './ToysManager.scss';
 import { ToyCard } from './components/ToyCard';
-import { IToy } from './components/ToyCard/ToyCard';
 
 import globalStyles from '../../assets/stylesheets/index.scss';
 
@@ -17,41 +16,7 @@ import { CustomSelect } from '@/components/CustomSelect';
 import { IOption } from '@/components/CustomSelect/CustomSelect';
 import { Header } from '@/components/Header';
 import { useToast } from '@/hooks/Toast';
-
-interface IFetchedToy {
-  num?: string;
-  name?: string;
-  count?: string;
-  year?: string;
-  shape?: string;
-  color?: string;
-  size?: string;
-  favorite?: boolean;
-}
-
-const transformFetchedToys = (jsonToy: IFetchedToy): IToy | null => {
-  if(jsonToy.num === undefined || 
-    jsonToy.name === undefined || 
-    jsonToy.count === undefined || 
-    jsonToy.year === undefined || 
-    jsonToy.shape === undefined || 
-    jsonToy.color === undefined || 
-    jsonToy.size === undefined || 
-    jsonToy.favorite === undefined) {
-    return null;
-  }
-  return {
-    num: Math.round(parseFloat(jsonToy.num)),
-    img: `../../static/toys/${jsonToy.num}.png`,
-    name: jsonToy.name,
-    amount: Math.round(parseFloat(jsonToy.count)),
-    year: Math.round(parseFloat(jsonToy.year)),
-    shape: jsonToy.shape,
-    color: jsonToy.color,
-    size: jsonToy.size,
-    favorite: jsonToy.favorite,
-  };
-};
+import { IToy, useToysLoader } from '@/hooks/useToysLoader';
 
 interface IRangeFilters {
   yearRange: Required<IRangeChange>;
@@ -145,6 +110,7 @@ export const ToysManager: FC = () => {
   const [toys, setToys] = useState<IToy[]>([]);
   const [pickedToys, setPickedToys] = useState<IToy[]>([]);
   const saved = getSaved();
+  const [toysLoader] = useToysLoader();
 
   const [defaultRangeFiltersState, setDefaultRangeFiltersState] = useState<IRangeFilters>({
     amountRange: {
@@ -279,39 +245,31 @@ export const ToysManager: FC = () => {
   });
   
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetch('../../static/toys.json')
-      .then((resp: Response) => resp.json())
-      .then((toysJson: IFetchedToy[]) => {
+    toysLoader((newToys: IToy[]) => {
+      setToys(newToys);
+      setFilteredToys(newToys);
+      setPickedToys(mapSavedPickedToysToReal(newToys));
 
-        const newToys = toysJson
-          .map(transformFetchedToys)
-          .filter(toy => toy !== null) as IToy[];
+      const params = determineFetchedNewToysParams(newToys);
 
-        setToys(newToys);
-        setFilteredToys(newToys);
-        setPickedToys(mapSavedPickedToysToReal(newToys));
+      const newRangeFilters: IRangeFilters = {
+        amountRange: {
+          from: params.amountMin,
+          to: params.amountMax,
+        },
+        yearRange: {
+          from: params.yearMin,
+          to: params.yearMax,      
+        },
+      };
+      
+      setToysParams(params);
+      setDefaultRangeFiltersState(newRangeFilters);
 
-        const params = determineFetchedNewToysParams(newToys);
-
-        const newRangeFilters: IRangeFilters = {
-          amountRange: {
-            from: params.amountMin,
-            to: params.amountMax,
-          },
-          yearRange: {
-            from: params.yearMin,
-            to: params.yearMax,      
-          },
-        };
-        
-        setToysParams(params);
-        setDefaultRangeFiltersState(newRangeFilters);
-
-        if(!getSaved().savedRangeFilters) {
-          setRangeFilters(newRangeFilters);
-        }
-      });
+      if(!getSaved().savedRangeFilters) {
+        setRangeFilters(newRangeFilters);
+      }
+    });
   },
   []);
 
