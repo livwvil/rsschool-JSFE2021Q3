@@ -9,13 +9,15 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import styles from './TreeManager.scss';
 import { FavCard } from './components/FavCard/FavCard';
+import { Garland } from './components/Garland';
+import { GarlandColor } from './components/Garland/Garland';
 import { Section } from './components/Section/Section';
 import { Snow } from './components/Snow';
 
 import globalStyles from '../../assets/stylesheets/index.scss';
 
 import { CustomCheckbox } from '@/components/CustomCheckbox';
-import { ShapeStyle } from '@/components/CustomCheckbox/CustomCheckbox';
+import { Color, ShapeStyle } from '@/components/CustomCheckbox/CustomCheckbox';
 import { Header } from '@/components/Header';
 import { Stack } from '@/components/Stack';
 import { IToy, useToysLoader } from '@/hooks/useToysLoader';
@@ -45,6 +47,7 @@ enum ITreeBgStyle {
 interface ISettings {
   audio: boolean;
   snow: boolean;
+  lightropes: GarlandColor | null;
   treeStyle: ITreeStyle;
   treeBgStyle: ITreeBgStyle;
 }
@@ -54,6 +57,7 @@ const defaultSettings: ISettings = {
   snow: false,
   treeStyle: ITreeStyle.Style1,
   treeBgStyle: ITreeBgStyle.Style1,
+  lightropes: null,
 };
 
 export const TreeManager = (): JSX.Element => {
@@ -116,6 +120,16 @@ export const TreeManager = (): JSX.Element => {
     }
   };
 
+  const onLightropesChanged = (value: GarlandColor) => {
+    setSettings(prev => {
+      if(prev.lightropes === value) {
+        return { ...prev, lightropes:  null };
+      } 
+      return { ...prev, lightropes:  value };
+      
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem('toyManagerSettings', JSON.stringify(settings));
   }, [settings]);
@@ -163,13 +177,23 @@ export const TreeManager = (): JSX.Element => {
               </Section>
 
               <Section header="Выберите гирлянду">
-                Not implemented
+                <CustomCheckbox checked={settings.lightropes === GarlandColor.Red} color={Color.Red} value={GarlandColor.Red} onCheckedChange={onLightropesChanged}/>
+                <CustomCheckbox checked={settings.lightropes === GarlandColor.Green} color={Color.Green} value={GarlandColor.Green} onCheckedChange={onLightropesChanged}/>
+                <CustomCheckbox checked={settings.lightropes === GarlandColor.Blue} color={Color.Blue} value={GarlandColor.Blue} onCheckedChange={onLightropesChanged}/>
+                <CustomCheckbox checked={settings.lightropes === GarlandColor.Yellow} color={Color.Yellow} value={GarlandColor.Yellow} onCheckedChange={onLightropesChanged}/>
+                <CustomCheckbox checked={settings.lightropes === GarlandColor.Rainbow} color={Color.Rainbow} value={GarlandColor.Rainbow} onCheckedChange={onLightropesChanged}/>
               </Section>
             </Stack>
 
             <div className={classNames(styles['christmas-tree-container'], styles[settings.treeBgStyle])}>
               { settings.snow && <Snow/> }
-              <div className={classNames(styles['christmas-tree'], styles[settings.treeStyle])}/>
+              <map name="tree-map">
+                <area coords="250, 7, 124, 296, 30, 606, 221, 686, 460, 623, 400, 362, 288, 79" shape="poly" alt='dropArea'/>
+              </map>
+              <div className={classNames(styles['christmas-tree'], styles[settings.treeStyle])}>
+                <img useMap='#tree-map' width="100%" height="100%" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" />
+                { settings.lightropes && <Garland color={settings.lightropes}/> }
+              </div>
             </div>
 
             <Stack isVertical>

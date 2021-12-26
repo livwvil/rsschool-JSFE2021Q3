@@ -24,6 +24,7 @@ export enum Color {
   Red = 'checkbox__label_red',
   Blue = 'checkbox__label_blue',
   Green = 'checkbox__label_green',
+  Rainbow = 'checkbox__label_rainbow',
 }
 
 interface ICustomCheckbox {

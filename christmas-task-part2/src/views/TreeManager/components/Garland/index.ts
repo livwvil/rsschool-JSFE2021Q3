@@ -1,0 +1,1 @@
+export { Garland } from './Garland';
