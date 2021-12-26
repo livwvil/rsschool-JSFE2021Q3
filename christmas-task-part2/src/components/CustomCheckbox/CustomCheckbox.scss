@@ -103,6 +103,10 @@
     &.checkbox__shape_toy {
       background-image: url(../../static/svg/toy.svg);
     }
+
+    &.checkbox__shape_audio {
+      background-image: url(../../static/svg/audio.svg);
+    }
   }
 
   .checkbox__input:checked + .checkbox__shape {

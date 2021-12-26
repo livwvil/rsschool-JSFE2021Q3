@@ -20,12 +20,13 @@ export interface IToy {
 interface IToyCard {
   onClick: (card?: IToy) => void;
   toy: IToy;
+  picked: boolean;
 }
 
-export const ToyCard: FC<IToyCard> = ({ onClick, toy }) => {
+export const ToyCard: FC<IToyCard> = ({ onClick, toy, picked }) => {
   const { img, name, amount, year, shape, color, size, favorite } = toy;
 
-  const classes = favorite ? classNames(styles['card'], styles['active']) : styles['card'];
+  const classes = picked ? classNames(styles['card'], styles['active']) : styles['card'];
 
   const isFavoriteChanged = () => {
     onClick(toy);

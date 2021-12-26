@@ -26,7 +26,7 @@ interface IFetchedToy {
   shape?: string;
   color?: string;
   size?: string;
-  favorite?: string;
+  favorite?: boolean;
 }
 
 const transformFetchedToys = (jsonToy: IFetchedToy): IToy | null => {
@@ -49,7 +49,7 @@ const transformFetchedToys = (jsonToy: IFetchedToy): IToy | null => {
     shape: jsonToy.shape,
     color: jsonToy.color,
     size: jsonToy.size,
-    favorite: jsonToy.favorite === 'true',
+    favorite: jsonToy.favorite,
   };
 };
 
@@ -117,18 +117,33 @@ function getSaved() {
   const rangeFilters = localStorage.getItem('rangeFilters');
   const valueFilters = localStorage.getItem('valueFilters');
   const sortOption = localStorage.getItem('sortOption');
-  const favToyNums = localStorage.getItem('favToyNums');
+  const pickedToys = localStorage.getItem('pickedToys');
   return {
     savedRangeFilters: rangeFilters !== null ? JSON.parse(rangeFilters) as IRangeFilters : null,
     savedValueFilters: valueFilters !== null ? JSON.parse(valueFilters) as IValueFilters : null,
     savedSortOption: sortOption !== null ? Math.round(parseFloat(sortOption)) : null,
-    savedFavToyNums: favToyNums !== null ? JSON.parse(favToyNums) as number[] : null,
+    savedPickedToys: pickedToys !== null ? JSON.parse(pickedToys) as IToy[] : null,
   };
+}
+
+function mapSavedPickedToysToReal(realToys: IToy[]) {
+  const pickedToys = localStorage.getItem('pickedToys');
+  const parsedPickedToys = pickedToys !== null ? JSON.parse(pickedToys) as IToy[] : null;
+  const contains = (toy: IToy, toys: IToy[]) => toys.find(t => t.num === toy.num) !== undefined;
+
+  if(parsedPickedToys) {
+    return realToys
+      .map(toy => contains(toy, parsedPickedToys) ? toy : null)
+      .filter(toy => toy !== null) as IToy[];
+  }
+
+  return [];
 }
 
 export const ToysManager: FC = () => {
   const [filteredToys, setFilteredToys] = useState<IToy[]>([]);
   const [toys, setToys] = useState<IToy[]>([]);
+  const [pickedToys, setPickedToys] = useState<IToy[]>([]);
   const saved = getSaved();
 
   const [defaultRangeFiltersState, setDefaultRangeFiltersState] = useState<IRangeFilters>({
@@ -264,13 +279,6 @@ export const ToysManager: FC = () => {
   });
   
   useEffect(() => {
-    const restoreSavedFavs = (toy: IToy): IToy => {
-      if(saved.savedFavToyNums?.includes(toy.num)) {
-        return { ...toy, favorite: true };
-      } 
-      return toy;
-    };
-
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetch('../../static/toys.json')
       .then((resp: Response) => resp.json())
@@ -278,12 +286,12 @@ export const ToysManager: FC = () => {
 
         const newToys = toysJson
           .map(transformFetchedToys)
-          .filter(toy => toy !== null)
-          .map(restoreSavedFavs);
+          .filter(toy => toy !== null) as IToy[];
 
         setToys(newToys);
         setFilteredToys(newToys);
-          
+        setPickedToys(mapSavedPickedToysToReal(newToys));
+
         const params = determineFetchedNewToysParams(newToys);
 
         const newRangeFilters: IRangeFilters = {
@@ -300,7 +308,7 @@ export const ToysManager: FC = () => {
         setToysParams(params);
         setDefaultRangeFiltersState(newRangeFilters);
 
-        if(!saved.savedRangeFilters) {
+        if(!getSaved().savedRangeFilters) {
           setRangeFilters(newRangeFilters);
         }
       });
@@ -384,22 +392,22 @@ export const ToysManager: FC = () => {
     []
   );
 
-  const favToysAmount = toys.filter(toy => toy.favorite).length;
+  const onToyPickedStatusChanged = useCallback(
+    (pickChangedToy: IToy) => {
+      const alreadyPicked = pickedToys.includes(pickChangedToy);
 
-  const onToyFavoriteStatusChanged = useCallback(
-    (changedToy: IToy) => {
-      if(!changedToy.favorite && favToysAmount >= 20) {
+      if(!alreadyPicked && pickedToys.length >= 20) {
         invokeToast('Извините, все слоты заполнены');
         return;
       }
-      setToys(prevToys => [...prevToys.map(prevToy => {
-        if(prevToy === changedToy) {
-          return {...prevToy, favorite: !prevToy.favorite};
-        }
-        return {...prevToy};
-      })]);
+      
+      if(alreadyPicked) {
+        setPickedToys(prev => prev.filter(toy => toy !== pickChangedToy));
+      } else {
+        setPickedToys(prev => [...prev, pickChangedToy]);
+      }
     },
-    [favToysAmount, invokeToast]
+    [pickedToys, invokeToast]
   );
 
   const onSortTypeChanged = useCallback(
@@ -421,11 +429,10 @@ export const ToysManager: FC = () => {
       localStorage.setItem('rangeFilters', JSON.stringify(rangeFilters));
       localStorage.setItem('valueFilters', JSON.stringify(valueFilters));
       localStorage.setItem('sortOption', sortOptions.indexOf(sortOption).toString());
-      const favToyNums = toys.filter(toy => toy.favorite).map(toy => toy.num);
-      localStorage.setItem('favToyNums', JSON.stringify(favToyNums));
+      localStorage.setItem('pickedToys', JSON.stringify(pickedToys));
       invokeToast('Настройки сохранены!');
     },
-    [rangeFilters, valueFilters, sortOption, toys, invokeToast]
+    [rangeFilters, valueFilters, sortOption, pickedToys, invokeToast]
   );
     
   const resetSave = useCallback(
@@ -433,16 +440,15 @@ export const ToysManager: FC = () => {
       localStorage.removeItem('rangeFilters');
       localStorage.removeItem('valueFilters');
       localStorage.removeItem('sortOption');
-      localStorage.removeItem('favToyNums');
-      setToys(prevToys => prevToys.map(prevToy => saved.savedFavToyNums?.includes(prevToy.num)
-        ? ({ ...prevToy, favorite: false})
-        : ({ ...prevToy })));
+      localStorage.removeItem('pickedToys');
+      setPickedToys(mapSavedPickedToysToReal(toys));
       invokeToast('Сохранение сброшено!');
     },
-    [invokeToast]
+    [invokeToast, toys]
   );
+
   // eslint-disable-next-line react/no-array-index-key
-  const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} onClick={onToyFavoriteStatusChanged}/>);
+  const toyCardsToDisplay = filteredToys.map((toy, idx) =><ToyCard key={idx} toy={toy} picked={pickedToys.includes(toy)} onClick={onToyPickedStatusChanged}/>);
   
   const sizeCheckboxes = () => {
     const sizeBig = toysParams.sizes.find(size => size.val === 'большой');
@@ -568,7 +574,7 @@ export const ToysManager: FC = () => {
 
   return (
     <React.Fragment>
-      <Header onSearch={onSearchQueryChanged} favToysNumber={favToysAmount}/>
+      <Header onSearch={onSearchQueryChanged} pickedToysNumber={pickedToys.length}/>
 
       <main className={globalStyles['main']}>
         <div className={globalStyles['blur-container']}>

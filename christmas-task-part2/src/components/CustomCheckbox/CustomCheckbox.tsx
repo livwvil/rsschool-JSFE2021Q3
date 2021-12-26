@@ -15,6 +15,7 @@ export enum ShapeStyle {
   Cone = 'checkbox__shape_cone',
   Snowflake = 'checkbox__shape_snowflake',
   Toy = 'checkbox__shape_toy',
+  Audio = 'checkbox__shape_audio',
 }
 
 export enum Color {

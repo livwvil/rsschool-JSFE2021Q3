@@ -1,0 +1,169 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: auto minmax(300px, 850px) auto;
+  max-width: 1600px;
+  margin: 0 auto;
+  column-gap: 10px;
+  height: calc(100vh - 140px);
+  padding: 25px 0px;
+  
+  .panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: 100%;
+    overflow: auto;
+
+    .panel__section {
+
+      .panel__section-title {
+        width: 100%;
+        font-size: 20px;
+        font-weight: 400;
+        padding: 10px;
+        padding-left: 0;
+        text-transform: uppercase;
+      }
+
+      .panel__section-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        margin-bottom: 20px;
+
+        .tree-style {
+          width: 115px;
+          height: 115px;
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.5);
+          background-size: auto 110px;
+          background-repeat: no-repeat;
+          background-position: center;
+          cursor: pointer;
+        }
+
+        .tree-bg {
+          width: 65px;
+          height: 65px;
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.5);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          cursor: pointer;
+        }
+
+        .fav-card {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          height: 100px;
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, .5);
+
+          .fav-card__amount {
+            position: absolute;
+            z-index: 10;
+            right: 0px;
+            bottom: 0px;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+            border-radius: 10px;
+            background-color: #24C5DB;
+            font-size: 14px;
+            font-weight: 900;
+          }
+
+          .fav-card__toy {
+            width: 80%;
+            height: 80%;
+            cursor: move;
+          }
+        }
+      }
+    }
+  }
+
+  .christmas-tree {
+    display: flex;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.selected {
+  border: 3px solid red;
+}
+
+.tree-bg-1 {
+  background-image: url(../../static/bg/1.jpg);
+}
+
+.tree-bg-2 {
+  background-image: url(../../static/bg/2.jpg);
+}
+
+.tree-bg-3 {
+  background-image: url(../../static/bg/3.jpg);
+}
+
+.tree-bg-4 {
+  background-image: url(../../static/bg/4.jpg);
+}
+
+.tree-bg-5 {
+  background-image: url(../../static/bg/5.jpg);
+}
+
+.tree-bg-6 {
+  background-image: url(../../static/bg/6.jpg);
+}
+
+.tree-bg-7 {
+  background-image: url(../../static/bg/7.jpg);
+}
+
+.tree-bg-8 {
+  background-image: url(../../static/bg/8.jpg);
+}
+
+.tree-bg-9 {
+  background-image: url(../../static/bg/9.jpg);
+}
+
+.tree-bg-10 {
+  background-image: url(../../static/bg/10.jpg);
+}
+
+.tree-style-1 {
+  background-image: url(../../static/tree/1.png);
+}
+
+.tree-style-2 {
+  background-image: url(../../static/tree/2.png);
+}
+
+.tree-style-3 {
+  background-image: url(../../static/tree/3.png);
+}
+
+.tree-style-4 {
+  background-image: url(../../static/tree/4.png);
+}
+
+.tree-style-5 {
+  background-image: url(../../static/tree/5.png);
+}
+
+.tree-style-6 {
+  background-image: url(../../static/tree/6.png);
+}

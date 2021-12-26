@@ -13,12 +13,12 @@ interface INavItem {
 }
 
 interface IHeader {
-  favToysNumber?: number;
+  pickedToysNumber?: number;
   onSearch?: (query: string) => void;
 }
 
 export const Header: FC<IHeader> = ({
-  favToysNumber,
+  pickedToysNumber,
   onSearch,
 }) => {
   const { pathname } = useLocation();
@@ -54,18 +54,23 @@ export const Header: FC<IHeader> = ({
             navItems.map((navItem, idx) => <Link key={idx} to={navItem.url} className={classNames(styles['nav-bar__link'], navItem.url===pathname ? styles['nav-bar__link_active']: '')}>{navItem.name}</Link>)
           }
         </nav>
-        <div className={styles['header-controls']}>
-          <div className={styles['search-container']}>
-            {
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-              <input type="search" className={styles['input']} placeholder={searchPlaceholder} value={searchQuery} autoComplete='false' onChange={onSearchInputChanged} autoFocus/>
-            }
-            <span className={styles['submit']}/>
-          </div>
-          <div className={styles['counter']}>
-            <span className={styles['inner']}>{favToysNumber}</span>
-          </div>
-        </div>
+        {pathname === AppRoutes.ToysManager &&
+           (
+             <div className={styles['header-controls']}>
+               <div className={styles['search-container']}>
+                 {
+                   // eslint-disable-next-line jsx-a11y/no-autofocus
+                   <input type="search" className={styles['input']} placeholder={searchPlaceholder} value={searchQuery} autoComplete='false' onChange={onSearchInputChanged} autoFocus/>
+                 }
+                 <span className={styles['submit']}/>
+               </div>
+               <div className={styles['counter']}>
+                 <span className={styles['inner']}>{pickedToysNumber}</span>
+               </div>
+             </div>
+           )
+
+        }
       </div>
     </header>
   );
