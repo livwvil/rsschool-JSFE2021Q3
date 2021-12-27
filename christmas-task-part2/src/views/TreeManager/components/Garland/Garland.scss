@@ -28,7 +28,7 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      animation-name: red;
+      animation-name: animred;
       animation-fill-mode: both;
       animation-iteration-count: infinite;
       animation-duration: 2s;
@@ -46,35 +46,35 @@
       }
 
       &.red {
-        animation-name: red;
+        animation-name: animred;
       }
       &.green {
-        animation-name: green;
+        animation-name: animgreen;
       }
       &.blue {
-        animation-name: blue;
+        animation-name: animblue;
       }
       &.yellow {
-        animation-name: yellow;
+        animation-name: animyellow;
       }
 
       &.multicolor:nth-child(1n + 1) {
-        animation-name: red;
+        animation-name: animred;
       }
       &:nth-child(2n + 2).multicolor {
-        animation-name: green;
+        animation-name: animgreen;
       }
       &:nth-child(3n + 3).multicolor {
-        animation-name: blue;
+        animation-name: animblue;
       }
       &:nth-child(4n + 4).multicolor {
-        animation-name: yellow;
+        animation-name: animyellow;
       }
     }
   }
 }
 
-@keyframes green {
+@keyframes animgreen {
   0%,
   100% {
     background: rgba(0, 247, 165, 1);
@@ -85,7 +85,7 @@
     box-shadow: 0px 2px 12px 2px rgba(0, 247, 165, 0.2);
   }
 }
-@keyframes blue {
+@keyframes animblue {
   0%,
   100% {
     background: rgba(0, 255, 255, 1);
@@ -96,7 +96,7 @@
     box-shadow: 0px 2px 12px 2px rgba(0, 255, 255, 0.2);
   }
 }
-@keyframes red {
+@keyframes animred {
   0%,
   100% {
     background: rgba(247, 0, 118, 1);
@@ -107,7 +107,7 @@
     box-shadow: 0px 2px 12px 2px rgba(247, 0, 118, 0.2);
   }
 }
-@keyframes yellow {
+@keyframes animyellow {
   0%,
   100% {
     background: rgba(255, 255, 0, 1);

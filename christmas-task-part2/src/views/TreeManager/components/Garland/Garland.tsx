@@ -52,7 +52,7 @@ export const Garland: FC<IGarland> = ({
 
   return (
     <div ref={container} className={styles['container']}>
-      { getLightRopes(8) }
+      { getLightRopes(6) }
     </div>
   );
 };
