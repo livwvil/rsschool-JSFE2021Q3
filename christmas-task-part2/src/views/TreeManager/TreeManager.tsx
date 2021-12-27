@@ -187,11 +187,11 @@ export const TreeManager = (): JSX.Element => {
 
             <div className={classNames(styles['christmas-tree-container'], styles[settings.treeBgStyle])}>
               { settings.snow && <Snow/> }
-              <map name="tree-map">
-                <area coords="250, 7, 124, 296, 30, 606, 221, 686, 460, 623, 400, 362, 288, 79" shape="poly" alt='dropArea'/>
-              </map>
               <div className={classNames(styles['christmas-tree'], styles[settings.treeStyle])}>
-                <img useMap='#tree-map' width="100%" height="100%" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" />
+                <map id='dropArea' name="tree-map">
+                  <area coords="250, 7, 124, 296, 30, 606, 221, 686, 460, 623, 400, 362, 288, 79" shape="poly" alt=''/>
+                </map>
+                <img useMap='#tree-map' width="100%" height="100%" style={{position: 'absolute'}} src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" />
                 { settings.lightropes && <Garland color={settings.lightropes}/> }
               </div>
             </div>
